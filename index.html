@@ -1,0 +1,1419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ALPHA - Next-Gen AI Directory</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-primary: #000000;
+            --bg-secondary: #0a0a0a;
+            --accent-primary: #00ff88;
+            --accent-secondary: #ff00ff;
+            --accent-tertiary: #00ffff;
+            --text-primary: #ffffff;
+            --text-secondary: #888888;
+            --card-bg: rgba(255, 255, 255, 0.02);
+            --border: rgba(255, 255, 255, 0.1);
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            overflow-x: hidden;
+            cursor: none;
+        }
+
+        /* Custom Cursor */
+        .cursor {
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--accent-primary);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 10000;
+            transition: all 0.1s ease;
+            transform: translate(-50%, -50%);
+        }
+
+        .cursor-dot {
+            width: 4px;
+            height: 4px;
+            background: var(--accent-primary);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 10001;
+            transform: translate(-50%, -50%);
+        }
+
+        .cursor.hover {
+            width: 40px;
+            height: 40px;
+            border-color: var(--accent-secondary);
+            background: rgba(255, 0, 255, 0.1);
+        }
+
+        /* Animated Background */
+        .bg-animation {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: -1;
+            background: linear-gradient(45deg, #000000, #0a0a0a);
+            overflow: hidden;
+        }
+
+        .grid-lines {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(0, 255, 136, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 255, 136, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            animation: grid-move 10s linear infinite;
+        }
+
+        @keyframes grid-move {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(50px, 50px); }
+        }
+
+        .floating-shapes {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+
+        .shape {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(40px);
+            opacity: 0.5;
+            animation: float 20s infinite ease-in-out;
+        }
+
+        .shape1 {
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, var(--accent-primary), transparent);
+            top: 10%;
+            left: 10%;
+        }
+
+        .shape2 {
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, var(--accent-secondary), transparent);
+            top: 60%;
+            right: 10%;
+            animation-delay: -5s;
+        }
+
+        .shape3 {
+            width: 250px;
+            height: 250px;
+            background: radial-gradient(circle, var(--accent-tertiary), transparent);
+            bottom: 10%;
+            left: 50%;
+            animation-delay: -10s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            25% { transform: translate(50px, -30px) scale(1.1); }
+            50% { transform: translate(-30px, 50px) scale(0.9); }
+            75% { transform: translate(30px, 30px) scale(1.05); }
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 20px 50px;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(20px);
+            z-index: 1000;
+            border-bottom: 1px solid var(--border);
+            transition: all 0.3s ease;
+        }
+
+        nav.scrolled {
+            padding: 15px 50px;
+            background: rgba(0, 0, 0, 0.8);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 2.5rem;
+            font-family: 'Orbitron', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            font-weight: 900;
+            letter-spacing: 4px;
+            background: linear-gradient(90deg, #00ff88, #00ffff, #ff00ff, #00ff88 80%);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            /* Remove unnecessary/invalid properties */
+            text-shadow: none;
+            filter: none;
+            transition: none;
+            animation: none;
+            border-radius: 0;
+            padding: 0;
+        }
+
+        .logo:hover {
+            text-shadow: none;
+            filter: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            list-style: none;
+        }
+
+        .nav-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            position: relative;
+            transition: color 0.3s ease;
+            cursor: none;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: var(--text-primary);
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            padding: 0 20px;
+        }
+
+        .hero-content {
+            text-align: center;
+            z-index: 2;
+            animation: hero-enter 1.5s ease-out;
+        }
+
+        @keyframes hero-enter {
+            from {
+                opacity: 0;
+                transform: translateY(100px) scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .hero h1 {
+            font-size: clamp(4rem, 10vw, 8rem);
+            font-weight: 900;
+            margin-bottom: 20px;
+            line-height: 0.9;
+            letter-spacing: -2px;
+        }
+
+        .glitch {
+            position: relative;
+            font-family: 'Orbitron', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            font-size: clamp(4rem, 10vw, 8rem);
+            font-weight: 900;
+            letter-spacing: 2px;
+            background: linear-gradient(90deg, #00ff88, #00ffff, #ff00ff, #00ff88 80%);
+            background-size: 300% auto;
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            color: unset;
+            text-shadow: none;
+            animation: none;
+        }
+
+        .hero-subtitle {
+            font-size: 1.5rem;
+            color: var(--text-secondary);
+            margin-bottom: 40px;
+            opacity: 0;
+            animation: fade-in 1s ease-out 0.5s forwards;
+        }
+
+        @keyframes fade-in {
+            to { opacity: 1; }
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 15px 40px;
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            color: var(--bg-primary);
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.1rem;
+            border-radius: 50px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            cursor: none;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { box-shadow: 0 0 20px rgba(0, 255, 136, 0.5); }
+            50% { box-shadow: 0 0 40px rgba(255, 0, 255, 0.5); }
+        }
+
+        .cta-button:hover {
+            transform: scale(1.05);
+        }
+
+        /* Categories Section */
+        .categories {
+            padding: 100px 20px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 80px;
+        }
+
+        .section-title {
+            font-size: 3rem;
+            font-weight: 900;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, var(--accent-tertiary), var(--accent-primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .categories-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+        }
+
+        .category {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            cursor: none;
+        }
+
+        .category:hover {
+            transform: translateY(-10px);
+            border-color: var(--accent-primary);
+            box-shadow: 0 20px 40px rgba(0, 255, 136, 0.2);
+        }
+
+        .category-header {
+            padding: 30px;
+            background: linear-gradient(135deg, rgba(0, 255, 136, 0.1), rgba(255, 0, 255, 0.1));
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .category-header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transform: rotate(45deg);
+            transition: all 0.5s ease;
+            opacity: 0;
+        }
+
+        .category-header:hover::before {
+            animation: shine 0.5s ease;
+        }
+
+        @keyframes shine {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); opacity: 0; }
+            50% { opacity: 1; }
+            100% { transform: translateX(100%) translateY(100%) rotate(45deg); opacity: 0; }
+        }
+
+        .category-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            display: inline-block;
+            animation: icon-float 3s ease-in-out infinite;
+        }
+
+        @keyframes icon-float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .category-name {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .category-description {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .expand-icon {
+            position: absolute;
+            right: 30px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.5rem;
+            transition: transform 0.3s ease;
+        }
+
+        .category.expanded .expand-icon {
+            transform: translateY(-50%) rotate(180deg);
+        }
+
+        .tools-container {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease;
+        }
+
+        .category.expanded .tools-container {
+            max-height: 1000px;
+        }
+
+        .tool {
+            padding: 20px 30px;
+            border-top: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .tool::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 3px;
+            height: 100%;
+            background: linear-gradient(180deg, var(--accent-primary), var(--accent-secondary));
+            transform: scaleY(0);
+            transition: transform 0.3s ease;
+        }
+
+        .tool:hover {
+            background: rgba(0, 255, 136, 0.05);
+            padding-left: 40px;
+        }
+
+        .tool:hover::before {
+            transform: scaleY(1);
+        }
+
+        .tool-info {
+            flex: 1;
+        }
+
+        .tool-name {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .tool-desc {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .tool-link {
+            padding: 10px 25px;
+            background: transparent;
+            border: 2px solid var(--accent-primary);
+            color: var(--accent-primary);
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            cursor: none;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .tool-link::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: var(--accent-primary);
+            transition: left 0.3s ease;
+            z-index: -1;
+        }
+
+        .tool-link:hover {
+            color: var(--bg-primary);
+        }
+
+        .tool-link:hover::before {
+            left: 0;
+        }
+
+        /* Footer */
+        footer {
+            padding: 50px 20px;
+            text-align: center;
+            border-top: 1px solid var(--border);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .footer-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .footer-text {
+            color: var(--text-secondary);
+            margin-bottom: 10px;
+        }
+
+        .creator {
+            font-size: 1.2rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Particles */
+        .particles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+        }
+
+        .particle {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: var(--accent-primary);
+            border-radius: 50%;
+            animation: particle-float 10s infinite linear;
+        }
+
+        @keyframes particle-float {
+            from { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            to { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            nav {
+                padding: 15px 20px;
+            }
+            
+            .hero h1 {
+                font-size: 4rem;
+            }
+            
+            .categories-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .cursor, .cursor-dot {
+                display: none;
+            }
+            
+            body {
+                cursor: auto;
+            }
+            
+            * {
+                cursor: auto !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Custom Cursor -->
+    <div class="cursor"></div>
+    <div class="cursor-dot"></div>
+
+    <!-- Animated Background -->
+    <div class="bg-animation">
+        <div class="grid-lines"></div>
+        <div class="floating-shapes">
+            <div class="shape shape1"></div>
+            <div class="shape shape2"></div>
+            <div class="shape shape3"></div>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="reveal-on-scroll">
+        <div class="nav-container">
+            <div class="logo">ALPHA</div>
+            <ul class="nav-links">
+                <li><a href="#home" class="nav-link">Home</a></li>
+                <li><a href="#categories" class="nav-link">Explore</a></li>
+                <li><a href="#about" class="nav-link">About</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero reveal-on-scroll">
+        <div class="hero-content">
+            <h1><span class="glitch">ALPHA</span></h1>
+            <p class="hero-subtitle">The Ultimate AI Tools Directory</p>
+            <a href="#categories" class="cta-button">Explore AI Universe</a>
+        </div>
+        <div class="particles" id="hero-particles"></div>
+    </section>
+
+    <!-- Categories Section -->
+    <section id="categories" class="categories reveal-on-scroll">
+        <div class="section-header">
+            <h2 class="section-title">AI Categories</h2>
+            <p class="section-subtitle">Click to explore tools in each category</p>
+        </div>
+
+        <div class="categories-container">
+            <!-- Chatbots Category -->
+            <div class="category" data-category="chatbots">
+                <div class="category-header">
+                    <div class="category-icon">💬</div>
+                    <h3 class="category-name">AI Chatbots</h3>
+                    <p class="category-description">Conversational AI assistants</p>
+                    <span class="expand-icon">▼</span>
+                </div>
+                <div class="tools-container">
+                    <div class="tool">
+                        <div class="tool-info">
+                            <h4 class="tool-name">ChatGPT</h4>
+                            <p class="tool-desc">OpenAI's powerful conversational AI</p>
+                        </div>
+                        <a href="https://chat.openai.com" target="_blank" class="tool-link">Visit</a>
+                    </div>
+                    <div class="tool">
+                        <div class="tool-info">
+                            <h4 class="tool-name">Claude</h4>
+                            <p class="tool-desc">Anthropic's helpful AI assistant</p>
+                        </div>
+                        <a href="https://claude.ai" target="_blank" class="tool-link">Visit</a>
+                    </div>
+                    <div class="tool">
+                        <div class="tool-info">
+                            <h4 class="tool-name">DeepSeek</h4>
+                            <p class="tool-desc">Advanced AI reasoning model</p>
+                        </div>
+                        <a href="https://chat.deepseek.com" target="_blank" class="tool-link">Visit</a>
+                    </div>
+                    <div class="tool">
+                        <div class="tool-info">
+                            <h4 class="tool-name">Google Gemini</h4>
+                            <p class="tool-desc">Google's multimodal AI model</p>
+                        </div>
+                        <a href="https://gemini.google.com" target="_blank" class="tool-link">Visit</a>
+                    </div>
+                    <div class="tool">
+                        <div class="tool-info">
+                            <h4 class="tool-name">Perplexity</h4>
+                            <p class="tool-desc">AI-powered search engine</p>
+                        </div>
+                        <a href="https://perplexity.ai" target="_blank" class="tool-link">Visit</a>
+                    </div>
+                    <div class="tool">
+                        <div class="tool-info">
+                            <h4 class="tool-name">GenSpark</h4>
+                            <p class="tool-desc">Fast, creative, and multilingual AI chatbot</p>
+                        </div>
+                        <a href="https://genspark.ai" target="_blank" class="tool-link">Visit</a>
+                    </div>
+                    <div class="tool">
+                        <div class="tool-info">
+                            <h4 class="tool-name">Manus</h4>
+                            <p class="tool-desc">AI assistant for research and productivity</p>
+                        </div>
+                        <a href="https://manus.ai" target="_blank" class="tool-link">Visit</a>
+                    </div>
+                    <div class="tool">
+                        <div class="tool-info">
+                            <h4 class="tool-name">Kimi</h4>
+                            <p class="tool-desc">Powerful Chinese-English AI chatbot</p>
+                        </div>
+                        <a href="https://kimi.moonshot.cn" target="_blank" class="tool-link">Visit</a>
+                    </div>
+                    <div class="tool">
+                        <div class="tool-info">
+                            <h4 class="tool-name">GLM-4.5</h4>
+                            <p class="tool-desc">Multilingual, multimodal AI chatbot</p>
+                        </div>
+                        <a href="https://chatglm.cn" target="_blank" class="tool-link">Visit</a>
+                    </div>
+                    <div class="tool">
+                        <div class="tool-info">
+                            <h4 class="tool-name">Copilot</h4>
+                            <p class="tool-desc">Microsoft's AI assistant for productivity</p>
+                        </div>
+                        <a href="https://copilot.microsoft.com" target="_blank" class="tool-link">Visit</a>
+                    </div>
+                    <div class="tool">
+                        <div class="tool-info">
+                            <h4 class="tool-name">Pi</h4>
+                            <p class="tool-desc">Personal AI companion by Inflection</p>
+                        </div>
+                        <a href="https://pi.ai" target="_blank" class="tool-link">Visit</a>
+                    </div>
+                    <div class="tool">
+                        <div class="tool-info">
+                            <h4 class="tool-name">YouChat</h4>
+                            <p class="tool-desc">AI chatbot by You.com</p>
+                        </div>
+                        <a href="https://you.com" target="_blank" class="tool-link">Visit</a>
+                    </div>
+                </div>
+            </div>
+            <!-- NEW CATEGORIES -->
+            <div class="category" data-category="search">
+                <div class="category-header">
+                    <div class="category-icon">🔎</div>
+                    <h3 class="category-name">AI Search Engines</h3>
+                    <p class="category-description">AI-powered web and knowledge search</p>
+                    <span class="expand-icon">▼</span>
+                </div>
+                <div class="tools-container">
+                    <div class="tool">
+                        <div class="tool-info">
+                            <h4 class="tool-name">Andi</h4>
+                            <p class="tool-desc">Conversational AI search engine</p>
+                        </div>
+                        <a href="https://andisearch.com" target="_blank" class="tool-link">Visit</a>
+                    </div>
+                    <div class="tool">
+                        <div class="tool-info">
+                            <h4 class="tool-name">Neeva</h4>
+                            <p class="tool-desc">Private, ad-free AI search</p>
+                        </div>
+                        <a href="https://neeva.com" target="_blank" class="tool-link">Visit</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="category" data-category="health">
+                <div class="category-header">
+                    <div class="category-icon">🩺</div>
+                    <h3 class="category-name">AI Health Assistants</h3>
+                    <p class="category-description">AI for health, wellness, and medical advice</p>
+                    <span class="expand-icon">▼</span>
+                </div>
+                <div class="tools-container">
+                    <div class="tool">
+                        <div class="tool-info">
+                            <h4 class="tool-name">HealthGPT</h4>
+                            <p class="tool-desc">Personal AI health assistant</p>
+                        </div>
+                        <a href="https://healthgpt.com" target="_blank" class="tool-link">Visit</a>
+                    </div>
+                    <div class="tool">
+                        <div class="tool-info">
+                            <h4 class="tool-name">Ada Health</h4>
+                            <p class="tool-desc">AI-powered symptom checker</p>
+                        </div>
+                        <a href="https://ada.com" target="_blank" class="tool-link">Visit</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="category" data-category="travel">
+                <div class="category-header">
+                    <div class="category-icon">✈️</div>
+                    <h3 class="category-name">AI Travel Assistants</h3>
+                    <p class="category-description">AI for trip planning and travel advice</p>
+                    <span class="expand-icon">▼</span>
+                </div>
+                <div class="tools-container">
+                    <div class="tool">
+                        <div class="tool-info">
+                            <h4 class="tool-name">GuideGeek</h4>
+                            <p class="tool-desc">AI travel guide and planner</p>
+                        </div>
+                        <a href="https://guidegeek.com" target="_blank" class="tool-link">Visit</a>
+                    </div>
+                    <div class="tool">
+                        <div class="tool-info">
+                            <h4 class="tool-name">Roam Around</h4>
+                            <p class="tool-desc">AI trip itinerary generator</p>
+                        </div>
+                        <a href="https://roamaround.io" target="_blank" class="tool-link">Visit</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="category" data-category="fashion">
+                <div class="category-header">
+                    <div class="category-icon">👗</div>
+                    <h3 class="category-name">AI Fashion & Style</h3>
+                    <p class="category-description">AI for fashion, style, and shopping</p>
+                    <span class="expand-icon">▼</span>
+                </div>
+                <div class="tools-container">
+                    <div class="tool">
+                        <div class="tool-info">
+                            <h4 class="tool-name">Vue.ai</h4>
+                            <p class="tool-desc">AI for retail and fashion automation</p>
+                        </div>
+                        <a href="https://vue.ai" target="_blank" class="tool-link">Visit</a>
+                    </div>
+                    <div class="tool">
+                        <div class="tool-info">
+                            <h4 class="tool-name">Fashwell</h4>
+                            <p class="tool-desc">Visual search and style recommendations</p>
+                        </div>
+                        <a href="https://fashwell.com" target="_blank" class="tool-link">Visit</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Image Generation Category -->
+            <div class="category" data-category="image">
+                <div class="category-header">
+                    <div class="category-icon">🎨</div>
+                    <h3 class="category-name">Image Generation</h3>
+                    <p class="category-description">AI-powered image creation tools</p>
+                    <span class="expand-icon">▼</span>
+                </div>
+                <div class="tools-container">
+                    <div class="tool">
+                        <div class="tool-info">
+                            <h4 class="tool-name">Midjourney</h4>
+                            <p class="tool-desc">High-quality AI art generation</p>
+                        </div>
+                        <a href="https://midjourney.com" target="_blank" class="tool-link">Visit</a>
+                    </div>
+                    <div class="tool">
+                        <div class="tool-info">
+                            <h4 class="tool-name">DALL-E 3</h4>
+                            <p class="tool-desc">OpenAI's image generation model</p>
+                        </div>
+                        <a href="https://openai.com/dall-e-3" target="_blank" class="tool-link">Visit</a>
+                    </div>
+                    <div class="tool">
+                        <div class="tool-info">
+                            <h4 class="tool-name">Stable Diffusion</h4>
+                            <p class="tool-desc">Open-source image generation</p>
+                        </div>
+                        <a href="https://stability.ai" target="_blank" class="tool-link">Visit</a>
+                    </div>
+                    <div class="tool">
+                        <div class="tool-info">
+                            <h4 class="tool-name">Adobe Firefly</h4>
+                            <p class="tool-desc">Adobe's creative AI suite</p>
+                        </div>
+                        <a href="https://firefly.adobe.com" target="_blank" class="tool-link">Visit</a>
+                    </div>
+                    <div class="tool">
+                        <div class="tool-info">
+                            <h4 class="tool-name">Leonardo AI</h4>
+                            <p class="tool-desc">Professional AI image creation</p>
+                        </div>
+                        <a href="https://leonardo.ai" target="_blank" class="tool-link">Visit</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Code Assistants Category -->
+            <div class="category" data-category="code">
+                <div class="category-header">
+                    <div class="category-icon">💻</div>
+                    <h3 class="category-name">Code Assistants</h3>
+                    <p class="category-description">AI-powered coding tools</p>
+                    <span class="expand-icon">▼</span>
+                </div>
+                <div class="tools-container">
+                    <div class="tool">
+                        <div class="tool-info">
+                            <h4 class="tool-name">GitHub Copilot</h4>
+                            <p class="tool-desc">AI pair programmer</p>
+                        </div>
+                        <a href="https://copilot.github.com" target="_blank" class="tool-link">Visit</a>
+                    </div>
+                    <div class="tool">
+                        <div class="tool-info">
+                            <h4 class="tool-name">Cursor</h4>
+                            <p class="tool-desc">AI-first code editor</p>
+                        </div>
+                        <a href="https://cursor.sh" target="_blank" class="tool-link">Visit</a>
+                    </div>
+                    <div class="tool">
+                        <div class="tool-info">
+                            <h4 class="tool-name">Tabnine</h4>
+                            <p class="tool-desc">AI code completion</p>
+                        </div>
+                        <a href="https://tabnine.com" target="_blank" class="tool-link">Visit</a>
+                    </div>
+                    <div class="tool">
+                        <div class="tool-info">
+                            <h4 class="tool-name">Replit AI</h4>
+                            <p class="tool-desc">Collaborative AI coding</p>
+                        </div>
+                        <a href="https://replit.com" target="_blank" class="tool-link">Visit</a>
+                    </div>
+                    <div class="tool">
+                        <div class="tool-info">
+                            <h4 class="tool-name">Codeium</h4>
+                            <p class="tool-desc">Free AI code assistant</p>
+                        </div>
+                        <a href="https://codeium.com" target="_blank" class="tool-link">Visit</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Voice & Audio Category -->
+            <div class="category" data-category="voice">
+                <div class="category-header">
+                    <div class="category-icon">🎤</div>
+                    <h3 class="category-name">Voice & Audio AI</h3>
+                    <p class="category-description">Speech and audio generation</p>
+                    <span class="expand-icon">▼</span>
+                </div>
+                <div class="tools-container">
+                    <div class="tool">
+                        <div class="tool-info">
+                            <h4 class="tool-name">ElevenLabs</h4>
+                            <p class="tool-desc">Realistic voice synthesis</p>
+                        </div>
+                        <a href="https://elevenlabs.io" target="_blank" class="tool-link">Visit</a>
+                    </div>
+                    <div class="tool">
+                        <div class="tool-info">
+                            <h4 class="tool-name">Murf AI</h4>
+                            <p class="tool-desc">AI voice generator</p>
+                        </div>
+                        <a href="https://murf.ai" target="_blank" class="tool-link">Visit</a>
+                    </div>
+                    <div class="tool">
+                        <div class="tool-info">
+                            <h4 class="tool-name">Suno AI</h4>
+                            <p class="tool-desc">AI music generation</p>
+                        </div>
+                        <a href="https://suno.com" target="_blank" class="tool-link">Visit</a>
+                    </div>
+                    <div class="tool">
+                        <div class="tool-info">
+                            <h4 class="tool-name">Udio</h4>
+                            <p class="tool-desc">AI music creation platform</p>
+                        </div>
+                        <a href="https://udio.com" target="_blank" class="tool-link">Visit</a>
+                    </div>
+                    <div class="tool">
+                        <div class="tool-info">
+                            <h4 class="tool-name">Resemble AI</h4>
+                            <p class="tool-desc">Custom voice cloning</p>
+                        </div>
+                        <a href="https://resemble.ai" target="_blank" class="tool-link">Visit</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Video Generation Category -->
+            <div class="category" data-category="video">
+                <div class="category-header">
+                    <div class="category-icon">🎬</div>
+                    <h3 class="category-name">Video Generation</h3>
+                    <p class="category-description">AI-powered video creation</p>
+                    <span class="expand-icon">▼</span>
+                </div>
+                <div class="tools-container">
+                    <div class="tool">
+                        <div class="tool-info">
+                            <h4 class="tool-name">Runway</h4>
+                            <p class="tool-desc">AI video generation and editing</p>
+                        </div>
+                        <a href="https://runwayml.com" target="_blank" class="tool-link">Visit</a>
+                    </div>
+                    <div class="tool">
+                        <div class="tool-info">
+                            <h4 class="tool-name">Pika Labs</h4>
+                            <p class="tool-desc">Text-to-video AI platform</p>
+                        </div>
+                        <a href="https://pika.art" target="_blank" class="tool-link">Visit</a>
+                    </div>
+                    <div class="tool">
+                        <div class="tool-info">
+                            <h4 class="tool-name">Synthesia</h4>
+                            <p class="tool-desc">AI avatar video creation</p>
+                        </div>
+                        <a href="https://synthesia.io" target="_blank" class="tool-link">Visit</a>
+                    </div>
+                    <div class="tool">
+                        <div class="tool-info">
+                            <h4 class="tool-name">HeyGen</h4>
+                            <p class="tool-desc">AI spokesperson videos</p>
+                        </div>
+                        <a href="https://heygen.com" target="_blank" class="tool-link">Visit</a>
+                    </div>
+                    <div class="tool">
+                        <div class="tool-info">
+                            <h4 class="tool-name">Luma AI</h4>
+                            <p class="tool-desc">3D capture and rendering</p>
+                        </div>
+                        <a href="https://lumalabs.ai" target="_blank" class="tool-link">Visit</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Writing Tools Category -->
+            <div class="category" data-category="writing">
+                <div class="category-header">
+                    <div class="category-icon">✍️</div>
+                    <h3 class="category-name">Writing Tools</h3>
+                    <p class="category-description">AI-powered writing assistants</p>
+                    <span class="expand-icon">▼</span>
+                </div>
+                <div class="tools-container">
+                    <div class="tool">
+                        <div class="tool-info">
+                            <h4 class="tool-name">Jasper</h4>
+                            <p class="tool-desc">AI content creation platform</p>
+                        </div>
+                        <a href="https://jasper.ai" target="_blank" class="tool-link">Visit</a>
+                    </div>
+                    <div class="tool">
+                        <div class="tool-info">
+                            <h4 class="tool-name">Copy.ai</h4>
+                            <p class="tool-desc">AI copywriting assistant</p>
+                        </div>
+                        <a href="https://copy.ai" target="_blank" class="tool-link">Visit</a>
+                    </div>
+                    <div class="tool">
+                        <div class="tool-info">
+                            <h4 class="tool-name">Writesonic</h4>
+                            <p class="tool-desc">AI article and blog writer</p>
+                        </div>
+                        <a href="https://writesonic.com" target="_blank" class="tool-link">Visit</a>
+                    </div>
+                    <div class="tool">
+                        <div class="tool-info">
+                            <h4 class="tool-name">Grammarly</h4>
+                            <p class="tool-desc">AI writing enhancement</p>
+                        </div>
+                        <a href="https://grammarly.com" target="_blank" class="tool-link">Visit</a>
+                    </div>
+                    <div class="tool">
+                        <div class="tool-info">
+                            <h4 class="tool-name">Notion AI</h4>
+                            <p class="tool-desc">AI-powered workspace</p>
+                        </div>
+                        <a href="https://notion.so" target="_blank" class="tool-link">Visit</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Data Analysis Category -->
+            <div class="category" data-category="data-analysis">
+                <div class="category-header">
+                    <div class="category-icon">📊</div>
+                    <h3 class="category-name">Data Analysis</h3>
+                    <p class="category-description">AI tools for data insights</p>
+                    <span class="expand-icon">▼</span>
+                </div>
+                <div class="tools-container">
+                    <div class="tool">
+                        <div class="tool-info">
+                            <h4 class="tool-name">DataRobot</h4>
+                            <p class="tool-desc">Automated machine learning platform</p>
+                        </div>
+                        <a href="https://datarobot.com" target="_blank" class="tool-link">Visit</a>
+                    </div>
+                    <div class="tool">
+                        <div class="tool-info">
+                            <h4 class="tool-name">Alteryx</h4>
+                            <p class="tool-desc">Data analytics and automation</p>
+                        </div>
+                        <a href="https://alteryx.com" target="_blank" class="tool-link">Visit</a>
+                    </div>
+                    <div class="tool">
+                        <div class="tool-info">
+                            <h4 class="tool-name">BigML</h4>
+                            <p class="tool-desc">Machine learning made simple</p>
+                        </div>
+                        <a href="https://bigml.com" target="_blank" class="tool-link">Visit</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Education Tools Category -->
+            <div class="category" data-category="education">
+                <div class="category-header">
+                    <div class="category-icon">📚</div>
+                    <h3 class="category-name">Education Tools</h3>
+                    <p class="category-description">AI tools for learning and teaching</p>
+                    <span class="expand-icon">▼</span>
+                </div>
+                <div class="tools-container">
+                    <div class="tool">
+                        <div class="tool-info">
+                            <h4 class="tool-name">Khanmigo</h4>
+                            <p class="tool-desc">AI tutor by Khan Academy</p>
+                        </div>
+                        <a href="https://khanacademy.org" target="_blank" class="tool-link">Visit</a>
+                    </div>
+                    <div class="tool">
+                        <div class="tool-info">
+                            <h4 class="tool-name">Quizlet</h4>
+                            <p class="tool-desc">AI-powered study tools</p>
+                        </div>
+                        <a href="https://quizlet.com" target="_blank" class="tool-link">Visit</a>
+                    </div>
+                    <div class="tool">
+                        <div class="tool-info">
+                            <h4 class="tool-name">Socratic</h4>
+                            <p class="tool-desc">AI homework helper</p>
+                        </div>
+                        <a href="https://socratic.org" target="_blank" class="tool-link">Visit</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Productivity Tools Category -->
+            <div class="category" data-category="productivity">
+                <div class="category-header">
+                    <div class="category-icon">🛠️</div>
+                    <h3 class="category-name">Productivity Tools</h3>
+                    <p class="category-description">AI tools to boost productivity</p>
+                    <span class="expand-icon">▼</span>
+                </div>
+                <div class="tools-container">
+                    <div class="tool">
+                        <div class="tool-info">
+                            <h4 class="tool-name">Motion</h4>
+                            <p class="tool-desc">AI-powered task management</p>
+                        </div>
+                        <a href="https://usemotion.com" target="_blank" class="tool-link">Visit</a>
+                    </div>
+                    <div class="tool">
+                        <div class="tool-info">
+                            <h4 class="tool-name">Friday</h4>
+                            <p class="tool-desc">AI daily planner</p>
+                        </div>
+                        <a href="https://friday.app" target="_blank" class="tool-link">Visit</a>
+                    </div>
+                    <div class="tool">
+                        <div class="tool-info">
+                            <h4 class="tool-name">Otter.ai</h4>
+                            <p class="tool-desc">AI meeting transcription</p>
+                        </div>
+                        <a href="https://otter.ai" target="_blank" class="tool-link">Visit</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Cybersecurity Tools Category -->
+            <div class="category" data-category="cybersecurity">
+                <div class="category-header">
+                    <div class="category-icon">🔒</div>
+                    <h3 class="category-name">Cybersecurity</h3>
+                    <p class="category-description">AI tools for security and protection</p>
+                    <span class="expand-icon">▼</span>
+                </div>
+                <div class="tools-container">
+                    <div class="tool">
+                        <div class="tool-info">
+                            <h4 class="tool-name">Darktrace</h4>
+                            <p class="tool-desc">AI for cyber defense</p>
+                        </div>
+                        <a href="https://darktrace.com" target="_blank" class="tool-link">Visit</a>
+                    </div>
+                    <div class="tool">
+                        <div class="tool-info">
+                            <h4 class="tool-name">CrowdStrike</h4>
+                            <p class="tool-desc">AI endpoint protection</p>
+                        </div>
+                        <a href="https://crowdstrike.com" target="_blank" class="tool-link">Visit</a>
+                    </div>
+                    <div class="tool">
+                        <div class="tool-info">
+                            <h4 class="tool-name">Vectra AI</h4>
+                            <p class="tool-desc">AI threat detection</p>
+                        </div>
+                        <a href="https://vectra.ai" target="_blank" class="tool-link">Visit</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="about" class="reveal-on-scroll">
+        <div class="footer-content">
+            <p class="footer-text">Test Project</p>
+            <p class="creator">Created by ALI ARIF MUHAMMED</p>
+        </div>
+    </footer>
+
+    <script>
+        // Custom Cursor
+        const cursor = document.querySelector('.cursor');
+        const cursorDot = document.querySelector('.cursor-dot');
+        
+        if (window.innerWidth > 768) {
+            document.addEventListener('mousemove', (e) => {
+                cursor.style.left = e.clientX + 'px';
+                cursor.style.top = e.clientY + 'px';
+                cursorDot.style.left = e.clientX + 'px';
+                cursorDot.style.top = e.clientY + 'px';
+            });
+
+            document.querySelectorAll('a, button, .category-header, .tool-link').forEach(el => {
+                el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
+                el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
+            });
+        }
+
+        // Smooth Scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+
+        // Nav Background on Scroll
+        window.addEventListener('scroll', () => {
+            const nav = document.querySelector('nav');
+            if (window.scrollY > 50) {
+                nav.classList.add('scrolled');
+            } else {
+                nav.classList.remove('scrolled');
+            }
+        });
+
+        // Category Expand/Collapse
+        document.querySelectorAll('.category-header').forEach(header => {
+            header.addEventListener('click', function() {
+                const category = this.parentElement;
+                const isExpanded = category.classList.contains('expanded');
+                
+                // Close all other categories
+                document.querySelectorAll('.category').forEach(cat => {
+                    cat.classList.remove('expanded');
+                });
+                
+                // Toggle current category
+                if (!isExpanded) {
+                    category.classList.add('expanded');
+                    
+                    // Animate tools appearance
+                    const tools = category.querySelectorAll('.tool');
+                    tools.forEach((tool, index) => {
+                        tool.style.opacity = '0';
+                        tool.style.transform = 'translateX(-20px)';
+                        setTimeout(() => {
+                            tool.style.transition = 'all 0.3s ease';
+                            tool.style.opacity = '1';
+                            tool.style.transform = 'translateX(0)';
+                        }, index * 50);
+                    });
+                }
+            });
+        });
+
+        // Generate Particles
+        function createParticle(container) {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            particle.style.left = Math.random() * 100 + '%';
+            particle.style.animationDelay = Math.random() * 10 + 's';
+            particle.style.animationDuration = (10 + Math.random() * 10) + 's';
+            container.appendChild(particle);
+        }
+
+        const particlesContainer = document.getElementById('hero-particles');
+        if (particlesContainer) {
+            for (let i = 0; i < 50; i++) {
+                createParticle(particlesContainer);
+            }
+        }
+
+        // Intersection Observer for Animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '0';
+                    entry.target.style.transform = 'translateY(50px)';
+                    
+                    setTimeout(() => {
+                        entry.target.style.transition = 'all 0.8s ease';
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }, 100);
+                    
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        // Observe categories
+        document.querySelectorAll('.category').forEach(category => {
+            observer.observe(category);
+        });
+
+        // Add hover sound effect (visual feedback)
+        document.querySelectorAll('.tool-link, .cta-button').forEach(button => {
+            button.addEventListener('mouseenter', function() {
+                this.style.transform = 'scale(1.05)';
+            });
+            
+            button.addEventListener('mouseleave', function() {
+                this.style.transform = 'scale(1)';
+            });
+        });
+
+        // Dynamic background gradient animation
+        let gradientAngle = 0;
+        function animateBackground() {
+            gradientAngle += 0.5;
+            const bgAnimation = document.querySelector('.bg-animation');
+            if (bgAnimation) {
+                bgAnimation.style.background = `linear-gradient(${gradientAngle}deg, #000000, #0a0a0a)`;
+            }
+            requestAnimationFrame(animateBackground);
+        }
+        animateBackground();
+
+        // Typing effect for hero subtitle
+        const subtitle = document.querySelector('.hero-subtitle');
+        if (subtitle) {
+            const text = subtitle.textContent;
+            subtitle.textContent = '';
+            let i = 0;
+            
+            function typeWriter() {
+                if (i < text.length) {
+                    subtitle.textContent += text.charAt(i);
+                    i++;
+                    setTimeout(typeWriter, 50);
+                }
+            }
+            
+            setTimeout(typeWriter, 1000);
+        }
+
+        // Add magnetic effect to buttons
+        document.querySelectorAll('.tool-link, .cta-button').forEach(button => {
+            button.addEventListener('mousemove', function(e) {
+                const rect = this.getBoundingClientRect();
+                const x = e.clientX - rect.left - rect.width / 2;
+                const y = e.clientY - rect.top - rect.height / 2;
+                
+                this.style.transform = `translate(${x * 0.1}px, ${y * 0.1}px) scale(1.05)`;
+            });
+            
+            button.addEventListener('mouseleave', function() {
+                this.style.transform = 'translate(0, 0) scale(1)';
+            });
+        });
+
+        // Performance optimization
+        let ticking = false;
+        function updateAnimations() {
+            if (!ticking) {
+                window.requestAnimationFrame(() => {
+                    // Update animations here
+                    ticking = false;
+                });
+                ticking = true;
+            }
+        }
+        
+        window.addEventListener('scroll', updateAnimations);
+        window.addEventListener('resize', updateAnimations);
+
+        // Scroll direction detection for animation
+        let lastScrollY = window.scrollY;
+        function handleScrollDirection() {
+            const body = document.body;
+            const currentScrollY = window.scrollY;
+            if (currentScrollY > lastScrollY) {
+                body.classList.add('scroll-down');
+                body.classList.remove('scroll-up');
+            } else if (currentScrollY < lastScrollY) {
+                body.classList.add('scroll-up');
+                body.classList.remove('scroll-down');
+            }
+            lastScrollY = currentScrollY;
+        }
+        window.addEventListener('scroll', handleScrollDirection);
+    </script>
+</body>
+</html>
