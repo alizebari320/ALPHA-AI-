@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ALPHA - Enter</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;600;700&family=Orbitron:wght@400;700;900&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Rajdhani', sans-serif;
+            background: #000000;
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        /* Enhanced animated background */
+        .animated-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            background: 
+                radial-gradient(circle at 25% 25%, rgba(0, 255, 255, 0.2) 0%, transparent 50%),
+                radial-gradient(circle at 75% 75%, rgba(0, 100, 255, 0.15) 0%, transparent 50%);
+            animation: backgroundShift 8s ease-in-out infinite alternate;
+        }
+
+        @keyframes backgroundShift {
+            0% {
+                background: 
+                    radial-gradient(circle at 25% 25%, rgba(0, 255, 255, 0.2) 0%, transparent 50%),
+                    radial-gradient(circle at 75% 75%, rgba(0, 100, 255, 0.15) 0%, transparent 50%);
+            }
+            100% {
+                background: 
+                    radial-gradient(circle at 75% 25%, rgba(0, 255, 255, 0.15) 0%, transparent 50%),
+                    radial-gradient(circle at 25% 75%, rgba(0, 100, 255, 0.2) 0%, transparent 50%);
+            }
+        }
+
+        /* Floating geometric shapes */
+        .floating-shapes {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .shape {
+            position: absolute;
+            border: 1px solid rgba(0, 255, 255, 0.3);
+            animation: float 15s infinite linear;
+        }
+
+        .shape.triangle {
+            width: 0;
+            height: 0;
+            border-left: 20px solid transparent;
+            border-right: 20px solid transparent;
+            border-bottom: 35px solid rgba(0, 255, 255, 0.1);
+            border-top: none;
+        }
+
+        .shape.square {
+            width: 25px;
+            height: 25px;
+            background: rgba(0, 255, 255, 0.05);
+        }
+
+        .shape.circle {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: rgba(0, 255, 255, 0.08);
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Grid overlay with animation */
+        .grid-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 120%;
+            height: 120%;
+            opacity: 0.08;
+            background-image: 
+                linear-gradient(rgba(0, 255, 255, 0.5) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 255, 255, 0.5) 1px, transparent 1px);
+            background-size: 60px 60px;
+            animation: gridFlow 25s linear infinite;
+        }
+
+        @keyframes gridFlow {
+            0% { transform: translate(-60px, -60px) rotate(0deg); }
+            100% { transform: translate(0px, 0px) rotate(1deg); }
+        }
+
+        /* Main container */
+        .main-container {
+            text-align: center;
+            z-index: 10;
+            position: relative;
+        }
+
+        /* Logo styling - KEEP INLINE */
+        .logo-container {
+            position: relative;
+            margin-bottom: 4rem;
+            display: inline-block;
+        }
+
+        .main-logo {
+            font-size: 12rem;
+            font-weight: 900;
+            font-family: 'Orbitron', monospace;
+            color: #00ffff;
+            text-shadow: 
+                0 0 20px #00ffff,
+                0 0 40px #00ffff,
+                0 0 60px #00ffff;
+            letter-spacing: 0.1em;
+            position: relative;
+            display: inline-block;
+            animation: logoGlow 4s ease-in-out infinite alternate;
+        }
+
+        @keyframes logoGlow {
+            from {
+                text-shadow: 
+                    0 0 20px #00ffff,
+                    0 0 40px #00ffff,
+                    0 0 60px #00ffff;
+                transform: scale(1);
+            }
+            to {
+                text-shadow: 
+                    0 0 30px #00ffff,
+                    0 0 60px #00ffff,
+                    0 0 90px #00ffff,
+                    0 0 120px #00ffff;
+                transform: scale(1.02);
+            }
+        }
+
+        /* Keep characters inline */
+        .char {
+            display: inline-block;
+            opacity: 1;
+            transition: all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            position: relative;
+        }
+
+        .char.fade-out {
+            opacity: 0;
+            transform: scale(0.3) rotateY(180deg);
+        }
+
+        .char.fade-in {
+            opacity: 0;
+            transform: scale(1.5) rotateY(-180deg);
+            animation: charReveal 1s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
+        }
+
+        @keyframes charReveal {
+            to {
+                opacity: 1;
+                transform: scale(1) rotateY(0deg);
+            }
+        }
+
+        /* Holographic effects */
+        .holo-ring {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 500px;
+            height: 500px;
+            margin: -250px 0 0 -250px;
+            border: 2px solid rgba(0, 255, 255, 0.3);
+            border-radius: 50%;
+            animation: holoSpin 20s linear infinite;
+        }
+
+        .holo-ring:nth-child(2) {
+            width: 600px;
+            height: 600px;
+            margin: -300px 0 0 -300px;
+            animation: holoSpin 25s linear infinite reverse;
+            border-color: rgba(0, 150, 255, 0.2);
+        }
+
+        @keyframes holoSpin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Enhanced enter button */
+        .enter-button {
+            background: linear-gradient(45deg, transparent, rgba(0, 255, 255, 0.1), transparent);
+            border: 2px solid #00ffff;
+            color: #00ffff;
+            padding: 1.5rem 4rem;
+            font-size: 1.6rem;
+            font-weight: 700;
+            font-family: 'Rajdhani', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 0.3em;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s ease;
+            opacity: 0;
+            transform: translateY(40px);
+            animation: buttonRise 1.2s ease 4s forwards;
+            clip-path: polygon(15px 0%, 100% 0%, calc(100% - 15px) 100%, 0% 100%);
+            box-shadow: 
+                0 0 20px rgba(0, 255, 255, 0.3),
+                inset 0 0 20px rgba(0, 255, 255, 0.05);
+        }
+
+        .enter-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 255, 255, 0.6), transparent);
+            transition: left 0.8s ease;
+        }
+
+        .enter-button::after {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, #00ffff, #0080ff, #00ffff);
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            clip-path: polygon(15px 0%, 100% 0%, calc(100% - 15px) 100%, 0% 100%);
+        }
+
+        .enter-button:hover {
+            color: #000000;
+            background: #00ffff;
+            transform: translateY(-8px) scale(1.05);
+            box-shadow: 
+                0 10px 40px rgba(0, 255, 255, 0.6),
+                0 0 60px rgba(0, 255, 255, 0.4);
+            text-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
+        }
+
+        .enter-button:hover::before {
+            left: 100%;
+        }
+
+        .enter-button:hover::after {
+            opacity: 1;
+        }
+
+        @keyframes buttonRise {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Enhanced scanning effect */
+        .scan-line {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #00ffff, transparent);
+            animation: scanMove 3s ease-in-out infinite;
+            box-shadow: 0 0 10px #00ffff;
+        }
+
+        @keyframes scanMove {
+            0% { top: 0%; opacity: 0; }
+            50% { opacity: 1; }
+            100% { top: 100%; opacity: 0; }
+        }
+
+        /* Loading enhancement */
+        .loading-state {
+            display: none;
+            margin-top: 3rem;
+        }
+
+        .loading-text {
+            color: #00ffff;
+            font-size: 1.4rem;
+            font-weight: 600;
+            letter-spacing: 0.4em;
+            animation: loadingGlow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes loadingGlow {
+            from {
+                opacity: 0.6;
+                text-shadow: 0 0 10px #00ffff;
+            }
+            to {
+                opacity: 1;
+                text-shadow: 0 0 20px #00ffff, 0 0 30px #00ffff;
+            }
+        }
+
+        .loading-bar-container {
+            width: 400px;
+            height: 4px;
+            background: rgba(0, 255, 255, 0.2);
+            margin: 2rem auto;
+            position: relative;
+            overflow: hidden;
+            border-radius: 2px;
+        }
+
+        .loading-progress {
+            height: 100%;
+            background: linear-gradient(90deg, #00ffff, #0080ff, #00ffff);
+            width: 0%;
+            animation: progressFill 3s ease-out forwards;
+            box-shadow: 0 0 10px #00ffff;
+        }
+
+        @keyframes progressFill {
+            to { width: 100%; }
+        }
+
+        /* Particle system */
+        .particle {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            background: #00ffff;
+            border-radius: 50%;
+            animation: particleFloat 8s infinite linear;
+            box-shadow: 0 0 6px #00ffff;
+        }
+
+        @keyframes particleFloat {
+            0% {
+                transform: translateY(100vh) translateX(0) scale(0);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+                transform: translateY(90vh) translateX(20px) scale(1);
+            }
+            90% {
+                opacity: 1;
+                transform: translateY(10vh) translateX(-20px) scale(1);
+            }
+            100% {
+                transform: translateY(-10vh) translateX(0) scale(0);
+                opacity: 0;
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .main-logo {
+                font-size: 8rem;
+            }
+            .enter-button {
+                padding: 1.2rem 3rem;
+                font-size: 1.4rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .main-logo {
+                font-size: 6rem;
+                letter-spacing: 0.05em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="animated-bg"></div>
+    <div class="grid-overlay"></div>
+    <div class="floating-shapes" id="shapes"></div>
+    
+    <div class="main-container">
+        <div class="holo-ring"></div>
+        <div class="holo-ring"></div>
+        <div class="scan-line"></div>
+        
+        <div class="logo-container">
+            <div class="main-logo" id="mainLogo">
+                <span class="char">A</span><span class="char">L</span><span class="char">P</span><span class="char">H</span><span class="char">A</span><span class="char">7</span>
+            </div>
+        </div>
+        
+        <button class="enter-button" id="enterBtn" onclick="enterSite()">
+            Enter Alpha System
+        </button>
+        
+        <div class="loading-state" id="loadingState">
+            <div class="loading-text">INITIALIZING ALPHA CORE...</div>
+            <div class="loading-bar-container">
+                <div class="loading-progress"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let transformationTriggered = false;
+
+        // Create floating shapes
+        function createFloatingShapes() {
+            const container = document.getElementById('shapes');
+            const shapes = ['triangle', 'square', 'circle'];
+            
+            for (let i = 0; i < 15; i++) {
+                const shape = document.createElement('div');
+                const shapeType = shapes[Math.floor(Math.random() * shapes.length)];
+                shape.className = `shape ${shapeType}`;
+                shape.style.left = Math.random() * 100 + '%';
+                shape.style.animationDelay = Math.random() * 15 + 's';
+                shape.style.animationDuration = (Math.random() * 10 + 10) + 's';
+                container.appendChild(shape);
+            }
+        }
+
+        // Create particles
+        function createParticles() {
+            for (let i = 0; i < 25; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 8 + 's';
+                particle.style.animationDuration = (Math.random() * 4 + 6) + 's';
+                document.body.appendChild(particle);
+            }
+        }
+
+        function startTransformation() {
+            if (transformationTriggered) return;
+            transformationTriggered = true;
+
+            setTimeout(() => {
+                const chars = document.querySelectorAll('.char');
+                
+                // Fade out ALPHA7 (keeping inline)
+                chars.forEach((char, index) => {
+                    setTimeout(() => {
+                        char.classList.add('fade-out');
+                    }, index * 150);
+                });
+                
+                // Transform to A7 after fade out (keeping inline)
+                setTimeout(() => {
+                    const logo = document.getElementById('mainLogo');
+                    logo.innerHTML = '<span class="char fade-in">A</span><span class="char fade-in">7</span>';
+                }, 1200);
+                
+            }, 3000);
+        }
+
+        function enterSite() {
+            const button = document.getElementById('enterBtn');
+            const loading = document.getElementById('loadingState');
+            
+            // Smooth transition
+            button.style.opacity = '0';
+            button.style.transform = 'translateY(30px) scale(0.8)';
+            
+            setTimeout(() => {
+                button.style.display = 'none';
+                loading.style.display = 'block';
+            }, 400);
+            
+            setTimeout(() => {
+                window.location.href = 'index.html';
+            }, 4000);
+        }
+
+        // Initialize everything
+        window.addEventListener('load', () => {
+            createFloatingShapes();
+            createParticles();
+            startTransformation();
+        });
+
+        // Interactive background
+        document.addEventListener('mousemove', (e) => {
+            const x = (e.clientX / window.innerWidth) * 100;
+            const y = (e.clientY / window.innerHeight) * 100;
+            
+            document.querySelector('.animated-bg').style.background = `
+                radial-gradient(circle at ${x}% ${y}%, rgba(0, 255, 255, 0.25) 0%, transparent 50%),
+                radial-gradient(circle at ${100-x}% ${100-y}%, rgba(0, 150, 255, 0.2) 0%, transparent 50%)
+            `;
+        });
+    </script>
+</body>
+</html>
