@@ -25,46 +25,43 @@ Route::get('/', function () {
 Route::get('/login', [AdminController::class, 'showLogin'])->name('login');
 Route::get('/profile', function () {
     return view('profile');
-})->name('profile');
+})->middleware('admin')->name('profile');
 
 
 // ==========================================
-// بەشی کۆرسەکان (Courses)
+// بەشی بینینی گشتی (Public read-only pages)
 // ==========================================
 Route::get('/courses', [AdminController::class, 'showCourses']);
-Route::post('/store-course', [AdminController::class, 'storeCourse'])->name('store.course');
-// بۆ کردنەوەی پەڕەی دەستکاریکردن
-Route::get('/courses/{id}/edit', [AdminController::class, 'editCourse'])->name('edit.course');
-// بۆ سەیڤکردنی دەستکاریکردنەکە
-Route::put('/courses/{id}', [AdminController::class, 'updateCourse'])->name('update.course');
-// بۆ سڕینەوە
-Route::delete('/courses/{id}', [AdminController::class, 'destroyCourse'])->name('destroy.course');
-
-
-// ==========================================
-// بەشی ئامرازەکانی زیرەکی دەستکرد (AI Tools)
-// ==========================================
 Route::get('/ai-tools', [AdminController::class, 'showAiTools']);
-Route::post('/store-ai-tool', [AdminController::class, 'storeAiTool'])->name('store.ai_tool');
-// بۆ کردنەوەی پەڕەی دەستکاریکردن
-Route::get('/ai-tools/{id}/edit', [AdminController::class, 'editAiTool'])->name('edit.ai_tool');
-// بۆ سەیڤکردنی دەستکاریکردنەکە
-Route::put('/ai-tools/{id}', [AdminController::class, 'updateAiTool'])->name('update.ai_tool');
-// بۆ سڕینەوە
-Route::delete('/ai-tools/{id}', [AdminController::class, 'destroyAiTool'])->name('destroy.ai_tool');
-
-
-// ==========================================
-// بەشی ڕێنیشاندەری ئەکادیمی (Academic Guide / FAQs)
-// ==========================================
 Route::get('/academic-guide', [AdminController::class, 'showAcademicGuide']);
-Route::post('/store-academic-guide', [AdminController::class, 'storeAcademicGuide'])->name('store.academic_guide');
-// بۆ کردنەوەی پەڕەی دەستکاریکردن
-Route::get('/academic-guide/{id}/edit', [AdminController::class, 'editAcademicGuide'])->name('edit.academic_guide');
-// بۆ سەیڤکردنی دەستکاریکردنەکە
-Route::put('/academic-guide/{id}', [AdminController::class, 'updateAcademicGuide'])->name('update.academic_guide');
-// بۆ سڕینەوە
-Route::delete('/academic-guide/{id}', [AdminController::class, 'destroyAcademicGuide'])->name('destroy.academic_guide');
+Route::get('/ferga', [AdminController::class, 'showFerga']);
+
+
+// ==========================================
+// بەشی ئەدمین — پارێزراو بە middleware('admin')
+// Every route that mutates Firebase data lives in this group.
+// ==========================================
+Route::middleware('admin')->group(function () {
+
+    // کۆرسەکان (Courses)
+    Route::post('/store-course', [AdminController::class, 'storeCourse'])->name('store.course');
+    Route::get('/courses/{id}/edit', [AdminController::class, 'editCourse'])->name('edit.course');
+    Route::put('/courses/{id}', [AdminController::class, 'updateCourse'])->name('update.course');
+    Route::delete('/courses/{id}', [AdminController::class, 'destroyCourse'])->name('destroy.course');
+
+    // ئامرازەکانی زیرەکی دەستکرد (AI Tools)
+    Route::post('/store-ai-tool', [AdminController::class, 'storeAiTool'])->name('store.ai_tool');
+    Route::get('/ai-tools/{id}/edit', [AdminController::class, 'editAiTool'])->name('edit.ai_tool');
+    Route::put('/ai-tools/{id}', [AdminController::class, 'updateAiTool'])->name('update.ai_tool');
+    Route::delete('/ai-tools/{id}', [AdminController::class, 'destroyAiTool'])->name('destroy.ai_tool');
+
+    // ڕێنیشاندەری ئەکادیمی (Academic Guide / FAQs)
+    Route::post('/store-academic-guide', [AdminController::class, 'storeAcademicGuide'])->name('store.academic_guide');
+    Route::get('/academic-guide/{id}/edit', [AdminController::class, 'editAcademicGuide'])->name('edit.academic_guide');
+    Route::put('/academic-guide/{id}', [AdminController::class, 'updateAcademicGuide'])->name('update.academic_guide');
+    Route::delete('/academic-guide/{id}', [AdminController::class, 'destroyAcademicGuide'])->name('destroy.academic_guide');
+
+});
 
 
 
@@ -85,7 +82,6 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile-breeze', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile-breeze', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
-Route::get('/ferga', [AdminController::class, 'showFerga']);
 Route::get('/about', function () {
     return view('about');
 });

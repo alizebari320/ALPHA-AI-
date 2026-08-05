@@ -6,5 +6,16 @@ use Illuminate\Database\Eloquent\Model;
 
 class Course extends Model
 {
-    //
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var list<string>
+     */
+    protected $fillable = [
+        'title',
+        'description',
+        'video_url',
+        'price',
+        'image_url',
+    ];
 }
