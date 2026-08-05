@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\FirebaseAuthController;
+use App\Http\Controllers\ToolController;
 use App\Models\Faq;
 
 // سنگکرۆنی نیشتنیشانەکانی Firebase لەگەڵ نیشتنیشانەی Laravel (Breeze)
@@ -26,6 +27,21 @@ Route::get('/login', [AdminController::class, 'showLogin'])->name('login');
 Route::get('/profile', function () {
     return view('profile');
 })->middleware('admin')->name('profile');
+
+
+// ==========================================
+// ڕێنمای ئامرازەکانی زیرەکیا دەستکرد (AI Tools Directory)
+// ==========================================
+Route::get('/tools', [ToolController::class, 'index'])->name('tools.index');
+Route::post('/tools/submit', [ToolController::class, 'submit'])
+    ->middleware('throttle:10,1')
+    ->name('tools.submit');
+Route::post('/tools/{id}/rate', [ToolController::class, 'upvote'])
+    ->middleware('throttle:30,1')
+    ->name('tools.rate');
+Route::post('/tools/{id}/view', [ToolController::class, 'view'])
+    ->middleware('throttle:120,1')
+    ->name('tools.view');
 
 
 // ==========================================
@@ -72,11 +88,11 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 Route::get('/lang/{lang}', function ($lang) {
-    if (in_array($lang, ['en', 'ar', 'ckb', 'kmr'])) {
+    if (array_key_exists($lang, config('alphaai.locales', []))) {
         session(['locale' => $lang]);
     }
     return redirect()->back();
-});
+})->name('lang.switch');
 Route::middleware('auth')->group(function () {
     Route::get('/profile-breeze', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile-breeze', [ProfileController::class, 'update'])->name('profile.update');
