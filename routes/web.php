@@ -6,6 +6,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\FirebaseAuthController;
 use App\Http\Controllers\ToolController;
 use App\Models\Faq;
+use Illuminate\Support\Str;
 
 // سنگکرۆنی نیشتنیشانەکانی Firebase لەگەڵ نیشتنیشانەی Laravel (Breeze)
 Route::post('/api/firebase-auth-sync', [FirebaseAuthController::class, 'sync']);
@@ -16,10 +17,72 @@ Route::post('/api/firebase-auth-sync', [FirebaseAuthController::class, 'sync']);
 |--------------------------------------------------------------------------
 */
 
-// پەڕەی سەرەکی
+// پەڕەی سەرەکی — enhanced with platform data
 Route::get('/', function () {
-    $faqs = Faq::all(); // هەموو پرسیارەکان بهێنە
-    return view('home', compact('faqs'));
+    $faqs = Faq::all();
+
+    // Fetch approved AI tools from Firebase
+    $rawTools = app('firebase.database')->getReference('ai_tools')->getValue();
+    $tools = [];
+    $locale = app()->getLocale();
+    if (is_array($rawTools)) {
+        foreach ($rawTools as $key => $node) {
+            if (!is_array($node) || ($node['status'] ?? 'approved') !== 'approved') continue;
+            $tool = [
+                'id' => (string)($node['id'] ?? $key),
+                'name' => $node['name'][$locale] ?? $node['name']['en'] ?? $node['title_so'] ?? 'AI Tool',
+                'tagline' => $node['tagline'][$locale] ?? $node['tagline']['en'] ?? '',
+                'description' => $node['description'][$locale] ?? $node['description']['en'] ?? $node['desc_so'] ?? '',
+                'category' => $node['category'] ?? 'dev',
+                'pricing_type' => $node['pricing_type'] ?? 'free',
+                'website_url' => $node['website_url'] ?? $node['tool_url'] ?? '#',
+                'icon_url' => $node['icon_url'] ?? $node['image_url'] ?? '',
+                'rating_avg' => round((float)($node['rating_avg'] ?? 0), 2),
+                'rating_count' => (int)($node['rating_count'] ?? 0),
+                'views_count' => (int)($node['views_count'] ?? 0),
+            ];
+            $tools[] = $tool;
+        }
+        usort($tools, fn($a, $b) => [$b['views_count'], $b['rating_avg']] <=> [$a['views_count'], $a['rating_avg']]);
+    }
+
+    // Fetch courses from Firebase
+    $rawCourses = app('firebase.database')->getReference('courses')->getValue();
+    $courses = [];
+    if (is_array($rawCourses)) {
+        foreach ($rawCourses as $key => $node) {
+            if (!is_array($node)) continue;
+            $courses[] = [
+                'id' => (string)($node['id'] ?? $key),
+                'title' => $node['title'] ?? 'Untitled Course',
+                'description' => $node['description'] ?? '',
+                'video_url' => $node['video_url'] ?? '',
+                'price' => $node['price'] ?? 0,
+                'image_url' => $node['image_url'] ?? '',
+            ];
+        }
+    }
+
+    // Fetch news from Firebase
+    $rawNews = app('firebase.database')->getReference('news')->getValue();
+    $news = [];
+    if (is_array($rawNews)) {
+        foreach ($rawNews as $key => $node) {
+            if (!is_array($node)) continue;
+            $news[] = [
+                'id' => (string)($node['id'] ?? $key),
+                'title' => $node['title'][$locale] ?? $node['title']['en'] ?? $node['title'] ?? 'News',
+                'slug' => $node['slug'] ?? Str::slug($node['title'][$locale] ?? $node['title']['en'] ?? 'news'),
+                'excerpt' => $node['excerpt'][$locale] ?? $node['excerpt']['en'] ?? $node['excerpt'] ?? '',
+                'image_url' => $node['image_url'] ?? '',
+                'source' => $node['source'] ?? 'ALPHA/AI',
+                'published_at' => $node['published_at'] ?? now()->toIso8601String(),
+            ];
+        }
+        usort($news, fn($a, $b) => strtotime($b['published_at']) <=> strtotime($a['published_at']));
+    }
+
+    return view('home', compact('faqs', 'tools', 'courses', 'news'));
 });
 
 // پەڕەکانی چوونەژوورەوە و پڕۆفایل
@@ -50,7 +113,6 @@ Route::post('/tools/{id}/view', [ToolController::class, 'view'])
 Route::get('/courses', [AdminController::class, 'showCourses']);
 Route::get('/ai-tools', [AdminController::class, 'showAiTools']);
 Route::get('/academic-guide', [AdminController::class, 'showAcademicGuide']);
-Route::get('/ferga', [AdminController::class, 'showFerga']);
 
 
 // ==========================================

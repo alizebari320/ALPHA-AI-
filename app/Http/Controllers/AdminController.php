@@ -143,13 +143,6 @@ class AdminController extends Controller
     // ==========================================
     // بەشی فێرگە (Ferga - Learning Platform)
     // ==========================================
-    public function showFerga()
-    {
-        // هێنانی زانیارییەکانی فێرگە لە فایەربەیسەوە بۆ ئەگەری بەکارهێنانی لە باکێند
-        $lessons = $this->db()->getReference('ferga_lessons')->getValue();
-        return view('ferga', compact('lessons'));
-    }
-
     public function destroyFergaLesson($id)
     {
         $this->db()->getReference('ferga_lessons/' . $id)->remove();
