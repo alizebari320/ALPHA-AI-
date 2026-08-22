@@ -13,25 +13,32 @@ export default {
     theme: {
         extend: {
             colors: {
-                // Light theme (default)
-                bg: '#fafafa',
-                'bg-elevated': '#ffffff',
-                'bg-muted': '#f0f1f5',
-                fg: '#0f141e',
-                'fg-muted': '#5a6377',
-                'fg-faint': '#9aa3b3',
-                border: '#e2e5ec',
-                'border-strong': '#cfd4dd',
+                bg: '#07080c',
+                'bg-elevated': '#10121a',
+                'bg-muted': '#0c0e14',
+                fg: '#f4f5f7',
+                'fg-muted': '#9a9eac',
+                'fg-faint': '#5c6070',
+                border: '#242733',
+                'border-strong': '#3a3e4c',
 
-                primary: '#1e2a4a',
-                'primary-hover': '#162038',
-                'primary-light': '#e8ecf3',
-                'primary-glow': 'rgba(30, 42, 74, 0.12)',
+                primary: '#8b7cff',
+                'primary-hover': '#a59aff',
+                'primary-light': 'rgba(139, 124, 255, 0.14)',
+                'primary-glow': 'rgba(139, 124, 255, 0.24)',
 
-                accent: '#e86c4d',
-                'accent-hover': '#d4583a',
-                'accent-light': '#fdf2ef',
-                'accent-glow': 'rgba(232, 108, 77, 0.18)',
+                accent: '#b8ff5c',
+                'accent-hover': '#d0ff91',
+                'accent-light': 'rgba(184, 255, 92, 0.12)',
+                'accent-glow': 'rgba(184, 255, 92, 0.2)',
+
+                // Compatibility aliases for existing AlphaAi views.
+                void: '#07080c',
+                surface: '#0c0e14',
+                card: '#10121a',
+                edge: '#242733',
+                'neon-blue': '#8b7cff',
+                'neon-cyan': '#b8ff5c',
 
                 success: '#1a7f3f',
                 'success-light': '#eaf7ee',

@@ -10,7 +10,7 @@
         <div class="absolute -top-32 -start-1/4 w-[500px] h-[500px] rounded-full bg-cyan-400/10 blur-[150px] pointer-events-none"></div>
         <div class="absolute -bottom-24 -end-1/4 w-[400px] h-[400px] rounded-full bg-pink-400/10 blur-[120px] pointer-events-none"></div>
 
-        <div class="relative max-w-5xl mx-auto px-4 py-24 sm:py-32 lg:py-40 text-center">
+        <div class="relative max-w-5xl mx-auto px-4 py-24 sm:py-32 lg:py-40 text-start">
             <p class="font-mono text-[11px] uppercase tracking-[0.3em] text-cyan-400 mb-6">// {{ __('About the Platform') }}</p>
             <h1 class="font-mega text-5xl sm:text-7xl lg:text-8xl tracking-tight leading-[0.92] mb-8">
                 <span class="block text-white">دەربارەی</span>
@@ -64,19 +64,19 @@
     <section class="border-t-2 border-edge border-b-2 bg-card/30">
         <div class="max-w-7xl mx-auto px-4 py-12">
             <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
-                <div class="text-center p-6 rounded-2xl bg-card/40 border-2 border-edge backdrop-blur-sm">
+                <div class="text-start p-6 rounded-2xl bg-card/40 border-2 border-edge backdrop-blur-sm">
                     <div class="font-mega text-4xl sm:text-5xl bg-gradient-to-r from-cyan-400 to-violet-400 bg-clip-text text-transparent">200+</div>
                     <p class="font-mono text-[11px] uppercase tracking-widest text-zinc-500 mt-2">{{ __('AI Tools') }}</p>
                 </div>
-                <div class="text-center p-6 rounded-2xl bg-card/40 border-2 border-edge backdrop-blur-sm">
+                <div class="text-start p-6 rounded-2xl bg-card/40 border-2 border-edge backdrop-blur-sm">
                     <div class="font-mega text-4xl sm:text-5xl bg-gradient-to-r from-violet-400 to-pink-400 bg-clip-text text-transparent">50+</div>
                     <p class="font-mono text-[11px] uppercase tracking-widest text-zinc-500 mt-2">{{ __('Courses') }}</p>
                 </div>
-                <div class="text-center p-6 rounded-2xl bg-card/40 border-2 border-edge backdrop-blur-sm">
+                <div class="text-start p-6 rounded-2xl bg-card/40 border-2 border-edge backdrop-blur-sm">
                     <div class="font-mega text-4xl sm:text-5xl bg-gradient-to-r from-pink-400 to-cyan-400 bg-clip-text text-transparent">4</div>
                     <p class="font-mono text-[11px] uppercase tracking-widest text-zinc-500 mt-2">{{ __('Languages') }}</p>
                 </div>
-                <div class="text-center p-6 rounded-2xl bg-card/40 border-2 border-edge backdrop-blur-sm">
+                <div class="text-start p-6 rounded-2xl bg-card/40 border-2 border-edge backdrop-blur-sm">
                     <div class="font-mega text-4xl sm:text-5xl bg-gradient-to-r from-cyan-400 to-lime-400 bg-clip-text text-transparent">24/7</div>
                     <p class="font-mono text-[11px] uppercase tracking-widest text-zinc-500 mt-2">{{ __('Access') }}</p>
                 </div>
@@ -85,7 +85,7 @@
     </section>
 
     {{-- Mission Statement --}}
-    <section class="max-w-4xl mx-auto px-4 py-20 lg:py-28 text-center">
+    <section class="max-w-4xl mx-auto px-4 py-16 sm:py-20 lg:py-28 text-start">
         <h2 class="font-mega text-3xl sm:text-4xl lg:text-5xl tracking-tight text-white mb-6">{{ __('Built for Kurdish AI') }}</h2>
         <p class="text-zinc-400 text-lg leading-relaxed">
             {{ __('ALPHA/AI is the first platform designed specifically for Kurdish-language learners navigating artificial intelligence. From curated tool directories to structured academic guides, everything is designed to reduce friction and accelerate understanding.') }}

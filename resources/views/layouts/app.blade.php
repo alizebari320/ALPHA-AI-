@@ -1,7 +1,8 @@
 @php
     $locale = app()->getLocale();
     $locales = config('alphaai.locales', []);
-    $dir = $locales[$locale]['dir'] ?? 'ltr';
+    $isRtl = in_array($locale, ['ar', 'ckb', 'badini'], true);
+    $dir = $isRtl ? 'rtl' : 'ltr';
     $path = trim(request()->path(), '/');
     $isActive = fn (string $p) => $path === $p || ($p !== '' && str_starts_with($path, $p . '/'));
 @endphp
@@ -21,7 +22,7 @@
         html { scroll-behavior: smooth; scroll-padding-top: 72px; }
     </style>
 </head>
-<body class="bg-bg text-fg font-sans antialiased overflow-x-hidden {{ $dir === 'rtl' ? '' : '' }}">
+<body dir="{{ $dir }}" class="bg-bg text-fg font-sans antialiased overflow-x-hidden {{ $isRtl ? 'text-right' : 'text-left' }}">
 
     <header id="main-header" class="nav-shell" role="banner">
         <div class="container flex h-[72px] items-center gap-4">
@@ -40,7 +41,7 @@
             </nav>
 
             <div class="ms-auto flex items-center gap-2">
-                <div class="hidden sm:flex items-center gap-1.5" role="group" aria-label="Language selection">
+                <div class="language-segment hidden sm:flex items-center gap-1" role="group" aria-label="Language selection">
                     @foreach ($locales as $code => $meta)
                         <a href="{{ route('lang.switch', $code) }}"
                            class="lang-btn {{ $locale === $code ? 'active' : '' }}"

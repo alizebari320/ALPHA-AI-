@@ -28,6 +28,7 @@
     data-description="{{ Str::lower($tool['description']) }}"
     data-category="{{ $tool['category'] }}"
     data-pricing="{{ $tool['pricing_type'] }}"
+    data-languages="{{ implode(',', $tool['languages'] ?? ['en', 'ckb', 'badini', 'ar']) }}"
     data-tool="{{ json_encode([
         'id' => $tool['key'],
         'name' => $tool['name'],

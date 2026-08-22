@@ -353,6 +353,10 @@ class ToolController extends Controller
                 (array) ($node['example_prompts'] ?? []),
                 fn ($p) => is_string($p) && trim($p) !== ''
             )),
+            'languages' => array_values(array_intersect(
+                ['en', 'ckb', 'badini', 'ar'],
+                array_values((array) ($node['supported_languages'] ?? ['en', 'ckb', 'badini', 'ar']))
+            )),
         ];
     }
 

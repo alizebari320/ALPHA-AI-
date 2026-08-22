@@ -19,8 +19,7 @@
         'paid' => __('Paid'),
     ];
 
-    $pillBase = 'shrink-0 px-4 py-2 rounded-lg border-2 font-mono text-[11px] uppercase tracking-wider
-                 transition-all duration-300 ease-out transform hover:-translate-y-0.5';
+    $pillBase = 'segment-pill';
 @endphp
 
 <div class="tools-page">
@@ -69,38 +68,53 @@
     {{-- ══════════════ filters ══════════════ --}}
     <section class="tools-filters">
         <div class="max-w-7xl mx-auto px-4 py-5 space-y-3">
-            <div class="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-none">
+            <div class="flex items-center gap-3 overflow-x-auto pb-1 scrollbar-none">
                 <span class="filter-label">{{ __('Explore by focus') }}</span>
 
-                <button type="button" data-filter-category="all"
-                         class="{{ $pillBase }} filter-pill-active" data-active="true">
-                    {{ __('All') }}
-                </button>
-
-                @foreach ($categories as $cat)
-                    <button type="button" data-filter-category="{{ $cat }}"
-                             class="{{ $pillBase }} filter-pill">
-                        {{ $categoryLabels[$cat] ?? $cat }}
+                <div class="segment-group">
+                    <button type="button" data-filter-category="all"
+                             class="{{ $pillBase }} filter-pill-active" data-active="true">
+                        {{ __('All') }}
                     </button>
-                @endforeach
+
+                    @foreach ($categories as $cat)
+                        <button type="button" data-filter-category="{{ $cat }}"
+                                 class="{{ $pillBase }} filter-pill">
+                            {{ $categoryLabels[$cat] ?? $cat }}
+                        </button>
+                    @endforeach
+                </div>
             </div>
 
             <div class="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-none">
+                <label for="tool-language" class="filter-label">{{ __('Language') }}</label>
+                <select id="tool-language" class="filter-pill-select" aria-label="{{ __('Filter by language') }}">
+                    <option value="all">{{ __('All languages') }}</option>
+                    <option value="en">{{ __('English') }}</option>
+                    <option value="ckb">{{ __('Kurdish (Sorani)') }}</option>
+                    <option value="badini">{{ __('Kurdish (Badini)') }}</option>
+                    <option value="ar">{{ __('Arabic') }}</option>
+                </select>
+            </div>
+
+            <div class="flex items-center gap-3 overflow-x-auto pb-1 scrollbar-none">
                 <span class="filter-label">
                     {{ __('Pricing') }}
                 </span>
 
-                <button type="button" data-filter-pricing="all"
-                        class="{{ $pillBase }} border-accent bg-accent/15 text-accent" data-active="true">
-                    {{ __('All') }}
-                </button>
-
-                @foreach ($pricingTypes as $type)
-                    <button type="button" data-filter-pricing="{{ $type }}"
-                            class="{{ $pillBase }} border-edge bg-surface text-zinc-400 hover:border-accent/50 hover:text-accent">
-                        {{ $pricingLabels[$type] ?? $type }}
+                <div class="segment-group">
+                    <button type="button" data-filter-pricing="all"
+                            class="{{ $pillBase }} filter-pill-active" data-active="true">
+                        {{ __('All') }}
                     </button>
-                @endforeach
+
+                    @foreach ($pricingTypes as $type)
+                        <button type="button" data-filter-pricing="{{ $type }}"
+                                class="{{ $pillBase }} filter-pill">
+                            {{ $pricingLabels[$type] ?? $type }}
+                        </button>
+                    @endforeach
+                </div>
             </div>
         </div>
     </section>
@@ -125,7 +139,7 @@
         </div>
 
         {{-- empty state --}}
-        <div id="tool-empty" class="{{ count($tools) ? 'hidden' : '' }} py-20 text-center">
+        <div id="tool-empty" class="{{ count($tools) ? 'hidden' : '' }} py-20 text-start">
             <p class="font-mega text-4xl tracking-widest text-zinc-700">// {{ __('No tools found') }}</p>
             <p class="mt-3 text-sm text-zinc-500">{{ __('Try a different search or category.') }}</p>
             <button type="button" id="tool-clear"
@@ -177,6 +191,7 @@
     const params = new URLSearchParams(window.location.search);
     let activeCategory = params.get('category') || 'all';
     let activePricing  = params.get('pricing') || 'all';
+    let activeLanguage = params.get('language') || 'all';
     let query          = '';
 
     const ACTIVE   = ['filter-pill-active'];
@@ -199,8 +214,9 @@
             const matchPricing  = activePricing  === 'all' || card.dataset.pricing  === activePricing;
             const haystack = `${card.dataset.name} ${card.dataset.tagline} ${card.dataset.description}`;
             const matchQuery = query === '' || haystack.includes(query);
+            const matchLanguage = activeLanguage === 'all' || (card.dataset.languages || '').split(',').includes(activeLanguage);
 
-            const visible = matchCategory && matchPricing && matchQuery;
+            const visible = matchCategory && matchPricing && matchQuery && matchLanguage;
 
             card.classList.toggle('hidden', !visible);
 
@@ -220,6 +236,9 @@
 
     setPillState('category', activeCategory);
     setPillState('pricing', activePricing);
+    const languageSelect = document.getElementById('tool-language');
+    if (languageSelect) languageSelect.value = activeLanguage;
+    languageSelect?.addEventListener('change', () => { activeLanguage = languageSelect.value; apply(); });
     apply();
 
     let debounce;
@@ -248,8 +267,10 @@
     document.getElementById('tool-clear')?.addEventListener('click', () => {
         activeCategory = 'all';
         activePricing  = 'all';
+        activeLanguage = 'all';
         query = '';
         if (search) search.value = '';
+        if (languageSelect) languageSelect.value = 'all';
         setPillState('category', 'all');
         setPillState('pricing', 'all');
         apply();
