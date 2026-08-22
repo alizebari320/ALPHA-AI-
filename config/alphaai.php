@@ -70,4 +70,8 @@ return [
         'statuses' => ['approved', 'pending'],
     ],
 
+    'prompt_categories' => [
+        'coding', 'writing', 'research', 'study', 'design', 'marketing', 'business', 'translation', 'image_generation', 'productivity',
+    ],
+
 ];

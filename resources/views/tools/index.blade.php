@@ -23,70 +23,34 @@
                  transition-all duration-300 ease-out transform hover:-translate-y-0.5';
 @endphp
 
-<div class="min-h-screen bg-surface">
+<div class="tools-page">
 
-    {{-- ══════════════ top bar ══════════════ --}}
-    <header class="sticky top-0 z-50 border-b-2 border-edge bg-surface/90 backdrop-blur-lg">
-        <div class="max-w-7xl mx-auto px-4 h-16 flex items-center gap-4">
-            <a href="/" class="font-mega text-2xl tracking-wider text-zinc-100 hover:text-accent transition-colors">
-                ALPHA<span class="text-accent">/</span>AI
-            </a>
-
-            <nav class="hidden md:flex items-center gap-1 ms-4">
-                <a href="/" class="px-3 py-2 rounded-lg text-sm text-zinc-400 hover:text-accent transition-colors">{{ __('Home') }}</a>
-                <a href="{{ route('tools.index') }}" class="px-3 py-2 rounded-lg text-sm text-accent border-2 border-accent/30 bg-accent/10">{{ __('AI Tools') }}</a>
-                <a href="/news" class="px-3 py-2 rounded-lg text-sm text-zinc-400 hover:text-accent transition-colors">{{ __('News') }}</a>
-                <a href="/about" class="px-3 py-2 rounded-lg text-sm text-zinc-400 hover:text-accent transition-colors">{{ __('About') }}</a>
-            </nav>
-
-            {{-- language switcher --}}
-            <div class="ms-auto flex items-center gap-2">
-                <div class="hidden sm:flex items-center gap-1 p-1 rounded-lg border-2 border-edge bg-card">
-                    @foreach (config('alphaai.locales', []) as $code => $meta)
-                        <a href="{{ route('lang.switch', $code) }}"
-                           class="px-2.5 py-1 rounded-md font-mono text-[11px] uppercase tracking-wider transition-all duration-200
-                                  {{ app()->getLocale() === $code
-                                      ? 'bg-accent/20 text-accent border border-accent/40'
-                                      : 'text-zinc-500 hover:text-zinc-200 border border-transparent' }}">
-                            {{ $code === 'badini' ? 'BAD' : Str::upper($code) }}
-                        </a>
-                    @endforeach
-                </div>
-
-                <button type="button" data-submit-open
-                        class="hidden sm:inline-flex items-center gap-2 px-4 py-2 rounded-lg
-                               border-2 border-accent bg-accent/15 text-accent
-                               font-display text-sm font-semibold tracking-wide
-                               transition-all duration-300 transform
-                               hover:bg-accent hover:text-surface hover:-translate-y-0.5 hover:shadow-offset">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/>
-                    </svg>
-                    {{ __('Submit Tool') }}
-                </button>
-            </div>
-        </div>
-    </header>
+    {{-- floating submit button (opens the submit modal) --}}
+    <button type="button" data-submit-open
+            class="fixed bottom-6 end-6 z-40 inline-flex items-center gap-2 px-5 py-3 rounded-xl
+                   border-2 border-accent bg-accent/15 text-accent backdrop-blur-lg
+                   font-display text-sm font-semibold tracking-wide shadow-offset
+                   transition-all duration-300 transform
+                   hover:bg-accent hover:text-surface hover:-translate-y-0.5">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/>
+        </svg>
+        {{ __('Submit Tool') }}
+    </button>
 
     {{-- ══════════════ hero ══════════════ --}}
-    <section class="relative overflow-hidden border-b-2 border-edge">
-        <div class="pointer-events-none absolute -top-24 start-1/4 w-96 h-96 rounded-full bg-accent/10 blur-3xl"></div>
+    <section class="tools-hero">
+        <div class="tools-hero-glow" aria-hidden="true"></div>
 
         <div class="relative max-w-7xl mx-auto px-4 py-14 sm:py-20">
-            <p class="font-mono text-[11px] uppercase tracking-[0.3em] text-accent mb-4">
-                // {{ __('Artificial Intelligence') }}
-            </p>
+            <p class="eyebrow mb-4"><span class="pulse-dot"></span>{{ __('Artificial intelligence, organized') }}</p>
 
-            <h1 class="font-mega text-5xl sm:text-7xl tracking-wide text-zinc-100 leading-[0.95]">
-                {{ __('AI Tools Directory') }}
-            </h1>
+            <h1 class="tools-title">{{ __('Find the right tool.') }}<br><span>{{ __('Move faster.') }}</span></h1>
 
-            <p class="mt-5 max-w-2xl text-base sm:text-lg text-zinc-400 leading-relaxed">
-                {{ __('A curated directory of artificial intelligence tools, in your language.') }}
-            </p>
+            <p class="tools-lede">{{ __('A curated directory of artificial intelligence tools, in your language. Search by what you want to make, not by what you already know.') }}</p>
 
             {{-- search --}}
-            <div class="mt-9 max-w-xl relative">
+            <div class="tool-search-wrap">
                 <span class="absolute inset-y-0 start-0 ps-4 flex items-center pointer-events-none">
                     <svg class="w-5 h-5 text-zinc-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.2-5.2M17 10a7 7 0 11-14 0 7 7 0 0114 0z"/>
@@ -96,37 +60,33 @@
                 <input id="tool-search" type="search" autocomplete="off"
                        placeholder="{{ __('Search AI tools...') }}"
                        aria-label="{{ __('Search') }}"
-                       class="w-full ps-12 pe-4 py-4 rounded-xl bg-card border-2 border-edge
-                              text-zinc-100 placeholder:text-zinc-600
-                              transition-all duration-300
-                              focus:border-accent focus:ring-0 focus:outline-none focus:shadow-offset">
+                       class="tool-search-input">
             </div>
+            <div class="tools-stats"><span><b>{{ count($tools) }}</b> {{ __('curated tools') }}</span><span><b>{{ count($categories) }}</b> {{ __('categories') }}</span><span><b>4</b> {{ __('languages') }}</span></div>
         </div>
     </section>
 
     {{-- ══════════════ filters ══════════════ --}}
-    <section class="border-b-2 border-edge bg-card/40">
+    <section class="tools-filters">
         <div class="max-w-7xl mx-auto px-4 py-5 space-y-3">
             <div class="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-none">
-                <span class="shrink-0 font-mono text-[10px] uppercase tracking-widest text-zinc-600 me-1">
-                    {{ __('Category') }}
-                </span>
+                <span class="filter-label">{{ __('Explore by focus') }}</span>
 
                 <button type="button" data-filter-category="all"
-                        class="{{ $pillBase }} border-accent bg-accent/15 text-accent" data-active="true">
+                         class="{{ $pillBase }} filter-pill-active" data-active="true">
                     {{ __('All') }}
                 </button>
 
                 @foreach ($categories as $cat)
                     <button type="button" data-filter-category="{{ $cat }}"
-                            class="{{ $pillBase }} border-edge bg-surface text-zinc-400 hover:border-accent/50 hover:text-accent">
+                             class="{{ $pillBase }} filter-pill">
                         {{ $categoryLabels[$cat] ?? $cat }}
                     </button>
                 @endforeach
             </div>
 
             <div class="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-none">
-                <span class="shrink-0 font-mono text-[10px] uppercase tracking-widest text-zinc-600 me-1">
+                <span class="filter-label">
                     {{ __('Pricing') }}
                 </span>
 
@@ -214,12 +174,13 @@
     const empty   = document.getElementById('tool-empty');
     const counter = document.getElementById('tool-count');
 
-    let activeCategory = 'all';
-    let activePricing  = 'all';
+    const params = new URLSearchParams(window.location.search);
+    let activeCategory = params.get('category') || 'all';
+    let activePricing  = params.get('pricing') || 'all';
     let query          = '';
 
-    const ACTIVE   = ['border-accent', 'bg-accent/15', 'text-accent'];
-    const INACTIVE = ['border-edge', 'bg-surface', 'text-zinc-400'];
+    const ACTIVE   = ['filter-pill-active'];
+    const INACTIVE = ['filter-pill'];
 
     function setPillState(group, value) {
         document.querySelectorAll(`[data-filter-${group}]`).forEach((pill) => {
@@ -256,6 +217,10 @@
         if (empty)   empty.classList.toggle('hidden', shown > 0);
         if (grid)    grid.classList.toggle('hidden', shown === 0);
     }
+
+    setPillState('category', activeCategory);
+    setPillState('pricing', activePricing);
+    apply();
 
     let debounce;
     search?.addEventListener('input', (e) => {

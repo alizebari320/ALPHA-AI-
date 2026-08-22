@@ -5,11 +5,13 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\FirebaseAuthController;
 use App\Http\Controllers\ToolController;
+use App\Http\Controllers\ProductController;
 use App\Models\Faq;
 use Illuminate\Support\Str;
 
 // سنگکرۆنی نیشتنیشانەکانی Firebase لەگەڵ نیشتنیشانەی Laravel (Breeze)
-Route::post('/api/firebase-auth-sync', [FirebaseAuthController::class, 'sync']);
+Route::post('/api/firebase-auth-sync', [FirebaseAuthController::class, 'sync'])
+    ->middleware('throttle:10,1');
 
 /*
 |--------------------------------------------------------------------------
@@ -22,7 +24,12 @@ Route::get('/', function () {
     $faqs = Faq::all();
 
     // Fetch approved AI tools from Firebase
-    $rawTools = app('firebase.database')->getReference('ai_tools')->getValue();
+    try {
+        $rawTools = app('firebase.database')->getReference('ai_tools')->getValue();
+    } catch (\Throwable $e) {
+        report($e);
+        $rawTools = [];
+    }
     $tools = [];
     $locale = app()->getLocale();
     if (is_array($rawTools)) {
@@ -47,7 +54,12 @@ Route::get('/', function () {
     }
 
     // Fetch courses from Firebase
-    $rawCourses = app('firebase.database')->getReference('courses')->getValue();
+    try {
+        $rawCourses = app('firebase.database')->getReference('courses')->getValue();
+    } catch (\Throwable $e) {
+        report($e);
+        $rawCourses = [];
+    }
     $courses = [];
     if (is_array($rawCourses)) {
         foreach ($rawCourses as $key => $node) {
@@ -64,7 +76,12 @@ Route::get('/', function () {
     }
 
     // Fetch news from Firebase
-    $rawNews = app('firebase.database')->getReference('news')->getValue();
+    try {
+        $rawNews = app('firebase.database')->getReference('news')->getValue();
+    } catch (\Throwable $e) {
+        report($e);
+        $rawNews = [];
+    }
     $news = [];
     if (is_array($rawNews)) {
         foreach ($rawNews as $key => $node) {
@@ -86,7 +103,6 @@ Route::get('/', function () {
 });
 
 // پەڕەکانی چوونەژوورەوە و پڕۆفایل
-Route::get('/login', [AdminController::class, 'showLogin'])->name('login');
 Route::get('/profile', function () {
     return view('profile');
 })->middleware('admin')->name('profile');
@@ -96,6 +112,7 @@ Route::get('/profile', function () {
 // ڕێنمای ئامرازەکانی زیرەکیا دەستکرد (AI Tools Directory)
 // ==========================================
 Route::get('/tools', [ToolController::class, 'index'])->name('tools.index');
+Route::get('/tools/{id}', [ToolController::class, 'show'])->where('id', '[A-Za-z0-9_-]+')->name('tools.show');
 Route::post('/tools/submit', [ToolController::class, 'submit'])
     ->middleware('throttle:10,1')
     ->name('tools.submit');
@@ -113,6 +130,11 @@ Route::post('/tools/{id}/view', [ToolController::class, 'view'])
 Route::get('/courses', [AdminController::class, 'showCourses']);
 Route::get('/ai-tools', [AdminController::class, 'showAiTools']);
 Route::get('/academic-guide', [AdminController::class, 'showAcademicGuide']);
+Route::get('/kurdish-ai', function () { return view('kurdish-ai'); })->name('kurdish-ai');
+Route::get('/robots.txt', [ProductController::class, 'robots']);
+Route::get('/sitemap.xml', [ProductController::class, 'sitemap']);
+Route::get('/prompts', [ProductController::class, 'prompts'])->name('prompts.index');
+Route::post('/analytics/events', [ProductController::class, 'track'])->middleware('throttle:120,1')->name('analytics.track');
 
 
 // ==========================================
@@ -146,9 +168,15 @@ Route::middleware('admin')->group(function () {
 // ==========================================
 // بەشی لاراڤێڵ بریز (ئەگەر پێشتر ئینستاڵت کردبێت)
 // ==========================================
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/dashboard', [ProductController::class, 'dashboard'])->middleware(['auth', 'verified'])->name('dashboard');
+Route::middleware('auth')->group(function () {
+    Route::post('/tools/save', [ProductController::class, 'saveTool'])->middleware('throttle:30,1')->name('tools.save');
+    Route::post('/prompts', [ProductController::class, 'storePrompt'])->middleware('throttle:20,1')->name('prompts.store');
+    Route::post('/prompts/{prompt}/copy', [ProductController::class, 'copyPrompt'])->withoutMiddleware('auth')->middleware('throttle:60,1')->name('prompts.copy');
+    Route::post('/prompts/{prompt}/save', [ProductController::class, 'savePrompt'])->middleware('throttle:30,1')->name('prompts.save');
+    Route::get('/assistant', [ProductController::class, 'assistant'])->name('assistant.index');
+    Route::post('/assistant/ask', [ProductController::class, 'askAssistant'])->middleware('throttle:30,1')->name('assistant.ask');
+});
 Route::get('/lang/{lang}', function ($lang) {
     if (array_key_exists($lang, config('alphaai.locales', []))) {
         session(['locale' => $lang]);
@@ -163,9 +191,8 @@ Route::middleware('auth')->group(function () {
 Route::get('/about', function () {
     return view('about');
 });
-Route::get('/news', function () {
-    return view('news');
-});
+Route::get('/news', [ProductController::class, 'news'])->name('news.index');
+Route::get('/news/{slug}', [ProductController::class, 'newsShow'])->where('slug', '[A-Za-z0-9-]+')->name('news.show');
 Route::get('/universities', function () {
     return view('universities');
 });

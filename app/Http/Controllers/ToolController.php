@@ -75,6 +75,24 @@ class ToolController extends Controller
         ]);
     }
 
+    public function show(string $id)
+    {
+        try {
+            $raw = $this->db()->getReference(self::NODE)->getValue();
+        } catch (\Throwable $e) {
+            report($e);
+            abort(503, __('The tool directory is temporarily unavailable.'));
+        }
+        foreach (is_array($raw) ? $raw : [] as $key => $node) {
+            if (! is_array($node)) continue;
+            $tool = $this->normalize((string) $key, $node, app()->getLocale());
+            if ($tool['status'] === 'approved' && ($key === $id || $tool['id'] === $id || $tool['slug'] === $id)) {
+                return view('tools.show', ['tool' => $tool]);
+            }
+        }
+        abort(404);
+    }
+
     // ==========================================================
     // Submissions
     // ==========================================================
