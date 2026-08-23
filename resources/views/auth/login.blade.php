@@ -73,12 +73,10 @@
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
         import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, sendEmailVerification, signOut, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
-        const firebaseConfig = { apiKey: "AIzaSyB-6_Ga6o3i3VYfjOX_UmKtI2qpsGHycJs", authDomain: "alphaai-d4f4c.firebaseapp.com", databaseURL: "https://alphaai-d4f4c-default-rtdb.firebaseio.com", projectId: "alphaai-d4f4c", storageBucket: "alphaai-d4f4c.firebasestorage.app", messagingSenderId: "518050080770", appId: "1:518050080770:web:c00d17cdbbbacb8ddd1f1b" };
+        const firebaseConfig = JSON.parse(document.getElementById('firebase-config').textContent);
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
         auth.useDeviceLanguage();
-
-        const adminEmails = ["alphaaiteam@gmail.com"];
 
         document.addEventListener('alpine:init', () => {
             Alpine.data('authForm', () => ({
@@ -118,7 +116,7 @@
                     try {
                         const userCredential = await signInWithEmailAndPassword(auth, this.email, this.password);
                         const user = userCredential.user;
-                        if (!user.emailVerified && !adminEmails.includes(user.email)) {
+                        if (!user.emailVerified) {
                             await signOut(auth);
                             this.showError("تکایە سەرەتا سەردانی ئیمێڵەکەت بکە و هەژمارەکەت پشتڕاست بکەرەوە.");
                         } else {
@@ -223,6 +221,7 @@
             }));
         });
     </script>
+    <script id="firebase-config" type="application/json">{!! json_encode(config('alphaai.firebase_client'), JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT) !!}</script>
 
     @stack('scripts')
 @endsection

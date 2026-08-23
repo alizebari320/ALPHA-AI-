@@ -112,8 +112,8 @@ class ToolController extends Controller
             'name' => ['required', 'string', 'max:120'],
             'tagline' => ['nullable', 'string', 'max:200'],
             'description' => ['nullable', 'string', 'max:2000'],
-            'website_url' => ['required', 'url', 'max:2048'],
-            'icon_url' => ['nullable', 'url', 'max:2048'],
+            'website_url' => ['required', 'url:http,https', 'max:2048'],
+            'icon_url' => ['nullable', 'url:http,https', 'max:2048'],
             'category' => ['required', Rule::in(config('alphaai.tools.categories', []))],
             'pricing_type' => ['required', Rule::in(config('alphaai.tools.pricing_types', []))],
             'lang' => ['required', Rule::in($locales)],
@@ -215,6 +215,10 @@ class ToolController extends Controller
     {
         try {
             $value = $this->transact(self::NODE.'/'.$id, function (array $node): array {
+                if ($node === []) {
+                    throw new \UnexpectedValueException('Tool does not exist.');
+                }
+
                 $node['views_count'] = (int) ($node['views_count'] ?? 0) + 1;
 
                 return $node;

@@ -20,8 +20,6 @@
 @endphp
 
 <article
-    role="button"
-    tabindex="0"
     data-tool-card
     data-name="{{ Str::lower($tool['name']) }}"
     data-tagline="{{ Str::lower($tool['tagline']) }}"
@@ -49,7 +47,7 @@
     <div class="tool-card-head">
         <div class="tool-card-icon">
             @if ($tool['icon_url'])
-                <img src="{{ $tool['icon_url'] }}" alt="" loading="lazy" class="w-full h-full object-contain p-2">
+                <img src="{{ $tool['icon_url'] }}" alt="{{ $tool['name'] }} {{ __('icon') }}" loading="lazy" width="48" height="48" class="w-full h-full object-contain p-2">
             @else
                 <span>{{ Str::upper(Str::substr($tool['name'], 0, 1)) }}</span>
             @endif
@@ -100,5 +98,8 @@
                 {{ $tool['views_count'] }}
             </span>
         </span>
+        <button type="button" data-tool-preview class="btn btn-ghost btn-sm" aria-label="{{ __('Quick view') }} {{ $tool['name'] }}">
+            {{ __('Quick view') }}
+        </button>
     </div>
 </article>

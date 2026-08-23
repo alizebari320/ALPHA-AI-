@@ -25,7 +25,7 @@ class AdminController extends Controller
 
     public function showLogin()
     {
-        return view('login');
+        return view('auth.login');
     }
 
 
@@ -40,7 +40,13 @@ class AdminController extends Controller
 
     public function storeCourse(Request $request)
     {
-        $data = $request->except('_token');
+        $data = $request->validate([
+            'title' => ['required', 'string', 'max:200'],
+            'description' => ['nullable', 'string', 'max:5000'],
+            'video_url' => ['nullable', 'url:http,https', 'max:2048'],
+            'price' => ['nullable', 'numeric', 'min:0', 'max:1000000'],
+            'image_url' => ['nullable', 'url:http,https', 'max:2048'],
+        ]);
         $this->db()->getReference('courses')->push($data);
         return redirect()->back()->with('success', 'کۆرسەکە بە سەرکەوتوویی زیادکرا!');
     }
@@ -60,7 +66,13 @@ class AdminController extends Controller
 
     public function updateCourse(Request $request, $id)
     {
-        $data = $request->except(['_token', '_method']);
+        $data = $request->validate([
+            'title' => ['sometimes', 'required', 'string', 'max:200'],
+            'description' => ['nullable', 'string', 'max:5000'],
+            'video_url' => ['nullable', 'url:http,https', 'max:2048'],
+            'price' => ['nullable', 'numeric', 'min:0', 'max:1000000'],
+            'image_url' => ['nullable', 'url:http,https', 'max:2048'],
+        ]);
         $this->db()->getReference('courses/' . $id)->update($data);
         return redirect('/courses')->with('success', 'کۆرسەکە بە سەرکەوتوویی نوێکرایەوە!');
     }
@@ -74,7 +86,7 @@ class AdminController extends Controller
 
     public function updateAiTool(Request $request, $id)
     {
-        $data = $request->except(['_token', '_method']);
+        $data = $request->validate($this->toolRules(false));
         $this->db()->getReference('ai_tools/' . $id)->update($data);
         return redirect('/ai-tools')->with('success', 'ئامرازەکە بە سەرکەوتوویی نوێکرایەوە!');
     }
@@ -88,7 +100,11 @@ class AdminController extends Controller
 
     public function updateAcademicGuide(Request $request, $id)
     {
-        $data = $request->except(['_token', '_method']);
+        $data = $request->validate([
+            'question' => ['sometimes', 'required', 'string', 'max:500'],
+            'answer' => ['sometimes', 'required', 'string', 'max:5000'],
+            'category' => ['nullable', 'string', 'max:60'],
+        ]);
         $this->db()->getReference('academic_guide/' . $id)->update($data);
         return redirect('/academic-guide')->with('success', 'پرسیارەکە بە سەرکەوتوویی نوێکرایەوە!');
     }
@@ -105,7 +121,7 @@ class AdminController extends Controller
 
     public function storeAiTool(Request $request)
     {
-        $data = $request->except('_token');
+        $data = $request->validate($this->toolRules(true));
         $this->db()->getReference('ai_tools')->push($data);
         return redirect()->back()->with('success', 'ئامرازەکە بە سەرکەوتوویی زیادکرا!');
     }
@@ -128,7 +144,11 @@ class AdminController extends Controller
 
     public function storeAcademicGuide(Request $request)
     {
-        $data = $request->except('_token');
+        $data = $request->validate([
+            'question' => ['required', 'string', 'max:500'],
+            'answer' => ['required', 'string', 'max:5000'],
+            'category' => ['nullable', 'string', 'max:60'],
+        ]);
         $this->db()->getReference('academic_guide')->push($data);
         return redirect()->back()->with('success', 'پرسیارەکە بە سەرکەوتوویی زیادکرا!');
     }
@@ -147,5 +167,21 @@ class AdminController extends Controller
     {
         $this->db()->getReference('ferga_lessons/' . $id)->remove();
         return redirect()->back()->with('success', 'وانەکە بە سەرکەوتوویی سڕایەوە!');
+    }
+
+    private function toolRules(bool $creating): array
+    {
+        $required = $creating ? 'required' : 'sometimes';
+
+        return [
+            'name' => [$required, 'string', 'max:160'],
+            'tagline' => ['nullable', 'string', 'max:240'],
+            'description' => ['nullable', 'string', 'max:5000'],
+            'website_url' => ['nullable', 'url:http,https', 'max:2048'],
+            'icon_url' => ['nullable', 'url:http,https', 'max:2048'],
+            'category' => ['nullable', 'string', 'max:60'],
+            'pricing_type' => ['nullable', 'string', 'max:30'],
+            'status' => ['nullable', 'in:approved,pending'],
+        ];
     }
 }

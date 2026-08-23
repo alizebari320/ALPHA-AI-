@@ -120,7 +120,7 @@ Route::post('/tools/{id}/rate', [ToolController::class, 'upvote'])
     ->middleware('throttle:30,1')
     ->name('tools.rate');
 Route::post('/tools/{id}/view', [ToolController::class, 'view'])
-    ->middleware('throttle:120,1')
+    ->middleware('throttle:30,1')
     ->name('tools.view');
 
 

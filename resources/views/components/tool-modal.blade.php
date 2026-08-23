@@ -2,7 +2,7 @@
     Glassmorphic tool detail modal.
     Populated client-side from the focused card's data-tool payload.
 --}}
-<div id="tool-modal" class="fixed inset-0 z-[70] hidden" role="dialog" aria-modal="true"
+<div id="tool-modal" class="fixed inset-0 z-[70] hidden" role="dialog" aria-modal="true" tabindex="-1"
      aria-labelledby="tool-modal-name">
 
     {{-- backdrop --}}

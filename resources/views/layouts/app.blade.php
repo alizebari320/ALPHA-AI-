@@ -18,9 +18,7 @@
     @stack('styles')
     <meta name="description" content="@yield('meta_description', 'AlphaAi helps Kurdish learners discover AI tools, prompts, courses, news, and practical resources.')">
     <link rel="canonical" href="{{ url()->current() }}">
-    <style>
-        html { scroll-behavior: smooth; scroll-padding-top: 72px; }
-    </style>
+    <style>html { scroll-behavior: smooth; scroll-padding-top: 72px; }</style>
 </head>
 <body dir="{{ $dir }}" class="bg-bg text-fg font-sans antialiased overflow-x-hidden {{ $isRtl ? 'text-right' : 'text-left' }}">
 

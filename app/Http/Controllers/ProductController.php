@@ -44,7 +44,7 @@ class ProductController extends Controller
         $data = $request->validate([
             'title' => ['required', 'string', 'max:160'],
             'body' => ['required', 'string', 'max:10000'],
-            'category' => ['required', 'string', 'max:60'],
+            'category' => ['required', 'string', \Illuminate\Validation\Rule::in(config('alphaai.prompt_categories'))],
             'locale' => ['required', 'in:en,ar,ckb,badini'],
             'tool_key' => ['nullable', 'string', 'max:120'],
             'is_public' => ['sometimes', 'boolean'],
@@ -115,7 +115,7 @@ class ProductController extends Controller
             'path' => ['nullable', 'string', 'max:500'],
             'entity_type' => ['nullable', 'string', 'max:60'],
             'entity_key' => ['nullable', 'string', 'max:160'],
-            'metadata' => ['nullable', 'array'],
+            'metadata' => ['nullable', 'array', 'max:20'],
         ]);
         AnalyticsEvent::create(array_merge($data, [
             'user_id' => $request->user()?->id,

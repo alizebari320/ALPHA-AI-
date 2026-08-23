@@ -281,6 +281,7 @@
     const backdrop = document.getElementById('tool-modal-backdrop');
     let currentId  = null;
     let lastFocus  = null;
+    let submitLastFocus = null;
 
     const $ = (id) => document.getElementById(id);
 
@@ -378,10 +379,11 @@
         currentId = null;
     }
 
-    cards.forEach((card) => {
-        card.addEventListener('click', () => openModal(card));
-        card.addEventListener('keydown', (e) => {
-            if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openModal(card); }
+    document.querySelectorAll('[data-tool-preview]').forEach((button) => {
+        button.addEventListener('click', (event) => {
+            event.preventDefault();
+            event.stopPropagation();
+            openModal(button.closest('[data-tool-card]'));
         });
     });
 
@@ -448,6 +450,7 @@
     const formError = document.getElementById('submit-tool-error');
 
     function openSubmit() {
+        submitLastFocus = document.activeElement;
         submitModal.classList.remove('hidden');
         document.body.style.overflow = 'hidden';
         requestAnimationFrame(() => submitBackdrop.classList.replace('opacity-0', 'opacity-100'));
@@ -459,6 +462,7 @@
         setTimeout(() => {
             submitModal.classList.add('hidden');
             document.body.style.overflow = '';
+            submitLastFocus?.focus();
         }, 200);
     }
 
@@ -509,9 +513,22 @@
 
     // ───────────────────────── escape key ─────────────────────────
     document.addEventListener('keydown', (e) => {
-        if (e.key !== 'Escape') return;
-        if (!submitModal.classList.contains('hidden')) closeSubmit();
-        else if (!modal.classList.contains('hidden')) closeModal();
+        const activeModal = !submitModal.classList.contains('hidden') ? submitModal : (!modal.classList.contains('hidden') ? modal : null);
+        if (!activeModal) return;
+
+        if (e.key === 'Escape') {
+            if (activeModal === submitModal) closeSubmit();
+            else closeModal();
+            return;
+        }
+
+        if (e.key !== 'Tab') return;
+        const focusable = Array.from(activeModal.querySelectorAll('a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])'));
+        if (!focusable.length) return;
+        const first = focusable[0];
+        const last = focusable[focusable.length - 1];
+        if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+        else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
     });
 })();
 </script>

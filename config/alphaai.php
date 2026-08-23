@@ -17,8 +17,18 @@ return [
 
     'admin_emails' => array_values(array_filter(array_map(
         'trim',
-        explode(',', (string) env('ADMIN_EMAILS', 'alphaaiteam@gmail.com'))
+        explode(',', (string) env('ADMIN_EMAILS', env('APP_ENV') === 'testing' ? 'alphaaiteam@gmail.com' : ''))
     ))),
+
+    'firebase_client' => [
+        'apiKey' => env('FIREBASE_WEB_API_KEY'),
+        'authDomain' => env('FIREBASE_WEB_AUTH_DOMAIN'),
+        'databaseURL' => env('FIREBASE_WEB_DATABASE_URL'),
+        'projectId' => env('FIREBASE_WEB_PROJECT_ID'),
+        'storageBucket' => env('FIREBASE_WEB_STORAGE_BUCKET'),
+        'messagingSenderId' => env('FIREBASE_WEB_MESSAGING_SENDER_ID'),
+        'appId' => env('FIREBASE_WEB_APP_ID'),
+    ],
 
     /*
     |--------------------------------------------------------------------------
