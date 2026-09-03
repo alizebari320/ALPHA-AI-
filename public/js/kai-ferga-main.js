@@ -1188,7 +1188,7 @@ ${code}
 </style>
 </head>
 <body>
-<h1 class="demo-h1">Kurd AI - CSS Preview</h1>
+<h1 class="demo-h1">ALPHA AI - CSS Preview</h1>
 <p class="demo-p">This is a sample paragraph. Write your CSS and watch it apply to these elements.</p>
 <div class="demo-box">Box 1</div>
 <div class="demo-box">Box 2</div>

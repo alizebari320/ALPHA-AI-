@@ -31,17 +31,17 @@
     </script>
     <!-- Quill rich text editor is lazy-loaded by initQuill() only when an admin edits content -->
     <!-- Favicon -->
-    <link rel="icon" href="/favicon.png" type="image/png">
+    <link rel="icon" href="/favicon-alpha.svg" type="image/svg+xml">
     <!-- Meta Tags -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <meta name="description" content="کورد ئەی ئای - یەکەمین پلاتفۆرمی کوردی بۆ فێربوونی ژیریی دەستکرد و پرۆگرامسازی بە شێوازێکی مۆدێرن.">
+    <meta name="description" content="ALPHA AI — فێربوونی پرۆگرامسازی و ژیریی دەستکرد بە زمانی کوردی.">
     <meta property="og:type" content="website">
-    <meta property="og:title" content="کورد ئەی ئای - Kurd AI">
+    <meta property="og:title" content="ALPHA AI">
     <meta property="og:description" content="پەرە بە تواناکانت بدە لەگەڵ باشترین کۆرسەکانی ژیریی دەستکرد و پرۆگرامسازی.">
-    <meta property="og:image" content="/logo.jpg">
-    <title>فێرگە - کورد ئەی ئای</title>
+    <meta property="og:image" content="/logo-alpha.svg">
+    <title>فێرگە — ALPHA AI</title>
 
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -181,7 +181,9 @@
         @media (prefers-reduced-motion: reduce) { #answer-continue-bar, #answer-continue-bar * { animation: none !important; transition: none !important; } }
     </style>
 
-    @include('partials.kurdai-design')
+    <link rel="stylesheet" href="/css/alpha-theme.css?v=1">
+    <script src="/js/alpha-core.js?v=1" data-kai-shared defer></script>
+    <script src="/js/kai-firebase.js?v=1" data-kai-shared defer></script>
     <link rel="stylesheet" href="/css/kai-ferga.css?v=8">
     <script src="/js/kai-ferga.js?v=4" defer></script>
 </head>
@@ -190,7 +192,7 @@
     <canvas id="confetti-canvas" class="fixed inset-0 w-full h-full pointer-events-none z-[9999]" style="display:none;"></canvas>
     <div id="xp-notification-container"></div>
 
-    @include('partials.nav', ['active' => 'ferga'])
+    @include('partials.alpha-nav', ['active' => 'ferga'])
 
     <!-- قۆناغی 1: هەڵبژاردنی زمان -->
     <div id="home-view" class="relative min-h-[85vh] py-16 px-4 overflow-hidden flex flex-col items-center justify-center">

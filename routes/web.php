@@ -84,9 +84,6 @@ Route::delete('/academic-guide/{id}', [AdminController::class, 'destroyAcademicG
 // ==========================================
 // بەشی لاراڤێڵ بریز (ئەگەر پێشتر ئینستاڵت کردبێت)
 // ==========================================
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
 Route::get('/lang/{lang}', function ($lang) {
     if (in_array($lang, ['en', 'ar', 'ckb', 'kmr'])) {
         session(['locale' => $lang]);

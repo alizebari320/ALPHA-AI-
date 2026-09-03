@@ -1,424 +1,92 @@
 <!DOCTYPE html>
 <html lang="ckb" dir="rtl">
 <head>
-<meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="/favicon.png" type="image/png">
-    <title>سەرەکی - ئەلفا ئەی ئای</title>
-
-    <meta name="description" content="ALPHA AI - پلاتفۆرمی فێربوونی زیرەکی دەستکرد و پرۆگرامسازی بە زمانی کوردی">
-    <meta name="keywords" content="ALPHA AI, ئەلفا ئەی ئای, زیرەکی دەستکرد, پرۆگرامسازی, کوردی, فێربوون, AI, programming">
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://alpha-ai.com">
-    <meta property="og:title" content="ALPHA AI - پلاتفۆرمی فێربوونی زیرەکی دەستکرد">
-    <meta property="og:description" content="فێربوونی زیرەکی دەستکرد و پرۆگرامسازی بە زمانی کوردی، لەگەڵ کۆرس، ئامرازەکانی AI، و ڕێنیشاندەری ئەکادیمی">
-    <meta property="og:image" content="https://alpha-ai.com/logo.jpg">
-    <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="https://alpha-ai.com">
-    <meta property="twitter:title" content="ALPHA AI - پلاتفۆرمی فێربوونی زیرەکی دەستکرد">
-    <meta property="twitter:description" content="فێربوونی زیرەکی دەستکرد و پرۆگرامسازی بە زمانی کوردی، لەگەڵ کۆرس، ئامرازەکانی AI، و ڕێنیشاندەری ئەکادیمی">
-    <meta property="twitter:image" content="https://alpha-ai.com/logo.jpg">
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-    <script>
-        const theme = localStorage.getItem('color-theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-        if (theme === 'dark') document.documentElement.classList.add('dark');
-    </script>
-
-    {{-- Essential CSS --}}
-    <link rel="stylesheet" href="/css/kai-tailwind.css">
-    <link rel="stylesheet" href="/css/kai-hero.css?v=4" media="print" onload="this.media='all'">
-    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@300;400;700;900&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'"><noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@300;400;700;900&display=swap"></noscript>
-    <style>
-        .glass-card {
-            background: rgba(255, 255, 255, 0.7);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-        }
-        .dark .glass-card {
-            background: rgba(17, 24, 39, 0.7);
-            border: 1px solid rgba(55, 65, 81, 0.5);
-        }
-        .animation-delay-2000 { animation-delay: 2s; }
-        .animation-delay-4000 { animation-delay: 4s; }
-        .animation-delay-200 { animation-delay: 0.2s; }
-        .animation-delay-400 { animation-delay: 0.4s; }
-        .animation-delay-600 { animation-delay: 0.6s; }
-        .gradient-text {
-            background: linear-gradient(135deg, #3b82f6, #06b6d4);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-        .custom-scrollbar::-webkit-scrollbar { width: 6px; }
-        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
-        .custom-scrollbar::-webkit-scrollbar-thumb { background-color: #cbd5e1; border-radius: 20px; }
-        .dark .custom-scrollbar::-webkit-scrollbar-thumb { background-color: #475569; }
-        .service-card {
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-        .service-card:hover {
-            transform: translateY(-8px) scale(1.02);
-        }
-        .floating-shape {
-            position: absolute;
-            border-radius: 50%;
-            filter: blur(60px);
-            opacity: 0.15;
-            pointer-events: none;
-        }
-    </style>
-
-    @include('partials.kurdai-design')
-    <script src="/js/kai-hero.js?v=5" defer></script>
+    @include('partials.alpha-head')
+    <meta name="description" content="ALPHA AI — فێربوونی پرۆگرامسازی و ژیریی دەستکرد بە زمانی کوردی.">
+    <title>ALPHA AI — سەرەکی</title>
 </head>
+<body class="al-body">
 
-<body class="bg-gray-50 text-gray-900 dark:bg-[#0a0f1c] dark:text-white min-h-screen transition-colors duration-300">
+@include('partials.alpha-nav', ['active' => 'home'])
 
-@include('partials.nav', ['active' => 'home'])
-
-<!-- ===== هێدەری سەرەکی (Hero — Neural Horizon) ===== -->
-<header id="kai-hero" class="kai-hero relative min-h-[92vh] flex items-center overflow-hidden">
-<div class="absolute inset-0 w-full h-full overflow-hidden pointer-events-none" aria-hidden="true">
-        <div class="floating-shape bg-cyan-500 w-[32rem] h-[32rem] -top-44 -right-40 animate-blob" style="opacity:.14"></div>
-        <div class="floating-shape bg-purple-600 w-[28rem] h-[28rem] -bottom-32 -left-32 animate-blob animation-delay-2000" style="opacity:.16"></div>
-        <div class="floating-shape bg-blue-600 w-80 h-80 top-1/3 left-1/2 animate-blob animation-delay-4000" style="opacity:.12"></div>
-        <div class="absolute inset-0 bg-[linear-gradient(to_right,#4fd7ff0d_1px,transparent_1px),linear-gradient(to_bottom,#4fd7ff0d_1px,transparent_1px)] bg-[size:26px_26px]"></div>
-    </div>
-
-    <div class="relative container mx-auto px-4 lg:px-6 z-10 w-full">
-        <div class="grid lg:grid-cols-2 gap-10 lg:gap-6 items-center py-24 lg:py-16">
-
-            <!-- چەپ: تایپۆگرافی (RTL-safe: forced to the visual left) -->
-            <div class="text-center lg:text-start relative z-10 lg:order-last">
-                <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-cyan-400/25 text-cyan-200 font-bold text-sm mb-8 shadow-[0_0_22px_rgba(34,211,238,.14)] backdrop-blur-md kai-hero-in">
-                    <span class="relative flex h-3 w-3">
-                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
-                        <span class="relative inline-flex rounded-full h-3 w-3 bg-cyan-400"></span>
-                    </span>
-                    <span class="lang-str" data-so="تایبەت بە خوێندکارانی ژیریی دەستکرد" data-ba="تایبەت ب قوتابیێن ژیرییا دەستکرد">تایبەت بە خوێندکارانی ژیریی دەستکرد</span>
-                </div>
-
-                <h2 class="kai-neon-title kai-hero-in--d1 text-5xl md:text-6xl xl:text-7xl font-black mb-3 tracking-tight leading-tight">
-                    ALPHA AI
-                </h2>
-                <p class="text-xl md:text-2xl font-black text-slate-200/90 mb-2 kai-hero-in--d2 lang-str"
-                   data-so="دەروازەیەک بەرەو داهاتووی ژیریی دەستکرد"
-                   data-ba="دەرگەهەک بەرەڤ پاشەڕۆژا ژیرییا دەستکرد">
-                   دەروازەیەک بەرەو داهاتووی ژیریی دەستکرد
-                </p>
-
-                <div class="kai-type-wrap mt-1 mb-6 kai-hero-in--d3" dir="auto">
-                    <span id="kai-typewriter" class="kai-typewriter"></span><span class="kai-caret" aria-hidden="true"></span>
-                </div>
-
-                <p class="text-lg text-slate-400 max-w-xl mx-auto lg:mx-0 font-medium leading-relaxed mb-9 kai-hero-in--d3 lang-str"
-                   data-so="یەکەمین پلاتفۆرمی پێشکەوتووی کوردی بۆ فێربوون، ڕێنمایی ئەکادیمی و بەکارهێنانی ئامرازەکانی AI بە شێوەیەکی پراکتیکی."
-                   data-ba="ئێکەمین پلاتفۆرما پێشکەفتییا کوردی بۆ فێربوون، ڕێنماییێن ئەکادیمی و ب کارئینانا ئامرازێن AI ب شێوەیەکێ پراکتیکی.">
-                   یەکەمین پلاتفۆرمی پێشکەوتووی کوردی بۆ فێربوون، ڕێنمایی ئەکادیمی و بەکارهێنانی ئامرازەکانی AI بە شێوەیەکی پراکتیکی.
-                </p>
-
-                <div class="flex flex-wrap justify-center lg:justify-start gap-4 mb-10 kai-hero-in--d4">
-                    <a href="/ferga" class="kbtn kbtn-primary !px-9 !py-4 !text-lg group/btn">
-                        <span class="kbtn-spin" aria-hidden="true"></span>
-                        <svg class="w-5 h-5 group-hover/btn:rotate-12 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path></svg>
-                        <span class="lang-str" data-so="دەستبکە بە فێربوون" data-ba="دەستبکە بە فێربوونێ">دەستبکە بە فێربوون</span>
-                    </a>
-                </div>
-
-                <div class="flex flex-wrap justify-center lg:justify-start gap-3 kai-hero-in--d4">
-                    <span class="kai-stat-chip"><span class="kai-tick">✔</span><span class="lang-str" data-so="بە تەواوی بە زمانی کوردی" data-ba="ب تەواوی ب زمانی کوردی">بە تەواوی بە زمانی کوردی</span></span>
-                    <span class="kai-stat-chip"><span class="kai-tick">✔</span><span class="lang-str" data-so="بەتەواوی بەخۆڕاییە" data-ba="ب تەواوی بێ بەرامبەر">بەتەواوی بەخۆڕاییە</span></span>
-                    <span class="kai-stat-chip"><span class="kai-tick">✔</span><span class="lang-str" data-so="فێربوونی پراکتیکی" data-ba="فێربوونەکا پراکتیکی">فێربوونی پراکتیکی</span></span>
-                </div>
-            </div>
-
-            <!-- ڕاست: 3D neural sphere + floating tech chips -->
-            <div class="kai-sphere-stage lg:order-first" aria-hidden="true">
-                <div class="kai-sphere-halo"></div>
-                <div class="kai-orbit-ring kai-orbit-ring--outer"></div>
-                <div class="kai-orbit-ring kai-orbit-ring--inner"></div>
-                <div id="kai-neuro-sphere"></div>
-                <div class="kai-orbit-core">
-                    <span class="kai-orbit-core__signal"><i></i> NEURAL CORE</span>
-                    <strong>ALPHA AI</strong>
-                    <span class="kai-orbit-core__sub">LEARN / BUILD / SHARE</span>
-                </div>
-                <span class="kai-chip kai-chip--a"><span class="kai-chip-dot"></span>Python</span>
-                <span class="kai-chip kai-chip--b"><span class="kai-chip-dot"></span>C++</span>
-                <span class="kai-chip kai-chip--c"><span class="kai-chip-dot"></span>JavaScript</span>
-                <span class="kai-chip kai-chip--d"><span class="kai-chip-dot"></span>PyTorch</span>
-                <span class="kai-chip kai-chip--e"><span class="kai-chip-dot"></span>LLM</span>
-                <span class="kai-orbit-status"><i></i><span>ALPHA AI SYSTEM ONLINE</span><b>01</b></span>
-            </div>
-
-        </div>
-    </div>
-
-    <div class="kai-scroll-cue" aria-hidden="true">
-        <div class="kai-scroll-cue__mouse"><div class="kai-scroll-cue__wheel"></div></div>
-    </div>
-
-    <div class="absolute bottom-0 w-full overflow-hidden leading-none z-0">
-        <svg class="relative block w-full h-[60px] md:h-[100px]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none" aria-hidden="true">
-            <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V120H0V95.8C59.71,118.08,130.83,126.38,189.9,117.84,235.32,111.27,278.71,85.29,321.39,56.44Z" fill="#0a0f1d" opacity=".9"></path>
-        </svg>
-    </div>
-</header>
-
-<!-- ===== ئامارەکان (Stats) ===== -->
-
-
-<!-- ===== بەشەکانی پلاتفۆرم (Services) ===== -->
-<section class="relative bg-gray-50 dark:bg-[#0a0f1c] py-24 px-4 overflow-hidden">
-    <div class="floating-shape bg-blue-500 w-96 h-96 -top-40 -left-40 animate-blob"></div>
-    
-    <div class="container mx-auto max-w-7xl relative z-10">
-        <div class="text-center mb-16">
-            <span class="inline-block px-4 py-1.5 bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 text-sm font-black rounded-full mb-4">بەشەکان</span>
-            <h3 class="text-4xl md:text-5xl font-black mb-4 text-gray-900 dark:text-white kai-grad-text lang-str" data-so="بەشەکانی پلاتفۆرمی ئەلفا ئەی ئای" data-ba="بەشێن پلاتفۆرما ئەلفا ئەی ئای">بەشەکانی پلاتفۆرمی ئەلفا ئەی ئای</h3>
-            <p class="text-gray-500 dark:text-gray-400 text-lg max-w-2xl mx-auto lang-str" data-so="هەموو ئەوەی پێویستە بۆ فێربوون و پەرەپێدان لە بواری ژیریی دەستکرددا، لە یەک شوێن." data-ba="هەمی ئەوا پێدڤی بۆ فێربوون و پێشڤەبرنێ د بوارێ ژیرییا دەستکرد دا، د ئێک جهی دا.">هەموو ئەوەی پێویستە بۆ فێربوون و پەرەپێدان لە بواری ژیریی دەستکرددا، لە یەک شوێن.</p>
-        </div>
-        
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 kai-bento">
-            <a href="/ferga" class="kai-cat kai-cat--featured kai-tilt group md:col-span-2" style="--i:0; --beam-a:#22d3ee; --beam-b:#6366f1; --kai-cat-glow-c:#22d3ee26;">
-                <span class="kai-beam"></span>
-                <span class="kai-cat-glow"></span>
-                <span class="kai-cat-deco-arrow"><svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7-7 7M21 12H3"/></svg></span>
-                <div class="kai-featured-row">
-                    <div class="min-w-0">
-                        <span class="kai-cat-icon kai-cat-icon--xl">
-                            <span class="kai-cat-icon-bg bg-gradient-to-br from-blue-500 to-cyan-400"></span>
-                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path></svg>
-                        </span>
-                        <h4 class="kai-cat-title kai-cat-title--lg lang-str" data-so="فێرگەی پڕۆگرامزاسی و ژیری دەستکرد" data-ba="فێرگەها پڕۆگرامسازیێ و ژیرییا دەستکرد">فێرگەی پڕۆگرامزاسی و ژیری دەستکرد</h4>
-                        <p class="kai-cat-sub lang-str" data-so="فێربوونی زمانەکانی پڕۆگرامینگ لەگەڵ تاقیکردنەوەی کۆدەکان ڕاستەوخۆ لەناو وێبسایتەکەدا." data-ba="فێربوونا زمانێن پرۆگرامسازی دگەل تاقیکرنا کۆدان ڕاستەوخۆ د ناڤ وێبسایتێ دا.">فێربوونی زمانەکانی پڕۆگرامینگ لەگەڵ تاقیکردنەوەی کۆدەکان ڕاستەوخۆ لەناو وێبسایتەکەدا.</p>
-                        <span class="kai-cat-cta lang-str" data-so="دەستپێبکە ئێستا" data-ba="دەستپێبکە نوکە">دەستپێبکە ئێستا<svg class="kai-cat-arrow" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7-7 7M21 12H3"/></svg></span>
-                    </div>
-                    <div class="kai-code-deco hidden lg:block" aria-hidden="true">
-                        <div class="kai-code-deco-bar"><span></span><span></span><span></span><em>main.py</em></div>
-                        <div class="kai-code-lines">
-                            <i style="--w:74%; --n:0"></i>
-                            <i style="--w:52%; --n:1"></i>
-                            <i style="--w:66%; --n:2"></i>
-                            <i style="--w:38%; --n:3"></i>
-                        </div>
-                    </div>
-                </div>
-            </a>
-            <a href="/courses" class="kai-cat kai-tilt group" style="--i:1; --beam-a:#6366f1; --beam-b:#a855f7; --kai-cat-glow-c:#6366f126;">
-                <span class="kai-beam"></span>
-                <span class="kai-cat-glow"></span>
-                <span class="kai-cat-deco-arrow"><svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7-7 7M21 12H3"/></svg></span>
-                <span class="kai-cat-icon">
-                    <span class="kai-cat-icon-bg bg-gradient-to-br from-indigo-500 to-purple-400"></span>
-                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
-                </span>
-                <h4 class="kai-cat-title lang-str" data-so="کۆرسە ئەکادیمییەکان" data-ba="کۆرسێن ئەکادیمی">کۆرسە ئەکادیمییەکان</h4>
-                <p class="kai-cat-sub lang-str" data-so="بەشی ڤیدیۆیی و کتێبخانەی دیجیتاڵی بۆ بابەتە زانستییەکانی پەیوەست بە ژیریی دەستکرد." data-ba="بەشێ ڤیدیۆیی و پەرتووکخانا دیجیتاڵی بۆ بابەتێن زانستی یێن گرێدای ب ژیرییا دەستکرد.">بەشی ڤیدیۆیی و کتێبخانەی دیجیتاڵی بۆ بابەتە زانستییەکانی پەیوەست بە ژیریی دەستکرد.</p>
-            </a>
-            <a href="/ai-tools" class="kai-cat kai-tilt group" style="--i:2; --beam-a:#a855f7; --beam-b:#ec4899; --kai-cat-glow-c:#a855f726;">
-                <span class="kai-beam"></span>
-                <span class="kai-cat-glow"></span>
-                <span class="kai-cat-deco-arrow"><svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7-7 7M21 12H3"/></svg></span>
-                <span class="kai-cat-icon">
-                    <span class="kai-cat-icon-bg bg-gradient-to-br from-purple-500 to-pink-400"></span>
-                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
-                </span>
-                <h4 class="kai-cat-title lang-str" data-so="ئامرازە زیرەکەکان (AI Tools)" data-ba="ئامرازێن ژیر (AI Tools)">ئامرازە زیرەکەکان (AI Tools)</h4>
-                <p class="kai-cat-sub lang-str" data-so="کۆمەڵێک ئامرازی پێشکەوتووی AI بۆ یارمەتیدانت لە نووسین، شیکردنەوەی داتا و ڕاپۆرتەکانت." data-ba="کۆمەڵەکا ئامرازێن پێشکەفتی یێن AI بۆ هاریکاریکرنا تە د نڤێسین، شیکرنا داتایان و ڕاپۆرتێن تە دا.">کۆمەڵێک ئامرازی پێشکەوتووی AI بۆ یارمەتیدانت لە نووسین، شیکردنەوەی داتا و ڕاپۆرتەکانت.</p>
-            </a>
-            <a href="/academic-guide" class="kai-cat kai-tilt group" style="--i:3; --beam-a:#14b8a6; --beam-b:#22d3ee; --kai-cat-glow-c:#14b8a626;">
-                <span class="kai-beam"></span>
-                <span class="kai-cat-glow"></span>
-                <span class="kai-cat-deco-arrow"><svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7-7 7M21 12H3"/></svg></span>
-                <span class="kai-cat-icon">
-                    <span class="kai-cat-icon-bg bg-gradient-to-br from-teal-400 to-emerald-400"></span>
-                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                </span>
-                <h4 class="kai-cat-title lang-str" data-so="ڕێنیشاندەری ئەکادیمی" data-ba="ڕێبەرێ ئەکادیمی">ڕێنیشاندەری ئەکادیمی</h4>
-                <p class="kai-cat-sub lang-str" data-so="وەڵامی پرسیارە باوەکان و ڕێنمایی زانستی بۆ تێپەڕاندنی قۆناغەکانی خوێندن بە سەرکەوتوویی." data-ba="بەرسڤا پرسیارێن بەربەلاڤ و ڕێنماییێن زانستی بۆ دەربازکرنا قۆناغێن خواندنێ ب سەرکەفتیانە.">وەڵامی پرسیارە باوەکان و ڕێنمایی زانستی بۆ تێپەڕاندنی قۆناغەکانی خوێندن بە سەرکەوتوویی.</p>
-            </a>
-            <a href="/universities" class="kai-cat kai-tilt group" style="--i:4; --beam-a:#f59e0b; --beam-b:#f43f5e; --kai-cat-glow-c:#f59e0b26;">
-                <span class="kai-beam"></span>
-                <span class="kai-cat-glow"></span>
-                <span class="kai-cat-deco-arrow"><svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7-7 7M21 12H3"/></svg></span>
-                <span class="kai-cat-icon">
-                    <span class="kai-cat-icon-bg bg-gradient-to-br from-orange-400 to-red-400"></span>
-                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path></svg>
-                </span>
-                <h4 class="kai-cat-title lang-str" data-so="زانکۆکانی زیرەکی دەستکرد" data-ba="زانکۆیێن زیرەکیا دەستکرد">زانکۆکانی زیرەکی دەستکرد</h4>
-                <p class="kai-cat-sub lang-str" data-so="دۆزینەوەی ئەو زانکۆیانەی بەشی AI یان هەیە لەگەڵ خشتەی وانەکانی." data-ba="دیتنا وان زانکۆیێن کو بەشێ AI هەن، دگەل خشتەیا وانەیان.">دۆزینەوەی ئەو زانکۆیانەی بەشی AI یان هەیە لەگەڵ خشتەی وانەکانی.</p>
-            </a>
-            <a href="/news" class="kai-cat kai-tilt group" style="--i:5; --beam-a:#38bdf8; --beam-b:#3b82f6; --kai-cat-glow-c:#38bdf826;">
-                <span class="kai-beam"></span>
-                <span class="kai-cat-glow"></span>
-                <span class="kai-cat-deco-arrow"><svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7-7 7M21 12H3"/></svg></span>
-                <span class="kai-cat-icon">
-                    <span class="kai-cat-icon-bg bg-gradient-to-br from-sky-400 to-blue-400"></span>
-                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"></path></svg>
-                </span>
-                <h4 class="kai-cat-title lang-str" data-so="هەواڵەکان" data-ba="نووچە">هەواڵەکان</h4>
-                <p class="kai-cat-sub lang-str" data-so="دوایین هەواڵ و ڕووداوەکانی جیهانی تەکنەلۆژیا و زیرەکی دەستکرد." data-ba="دوماهیک نووچە و ڕووداوێن جیهانا تەکنەلۆژیایێ و ژیرییا دەستکرد.">دوایین هەواڵ و ڕووداوەکانی جیهانی تەکنەلۆژیا و زیرەکی دەستکرد.</p>
-                        <span class="kai-cat-count lang-str" data-so="بەردەوام نوێ دەکرێتەوە" data-ba="بەردەوام دێتە نویکرن">بەردەوام نوێ دەکرێتەوە</span>
-            </a>
-
-    </div>
-</section>
-
-<!-- ===== تایبەتمەندییەکان (Why Choose Us) ===== -->
-<section class="relative bg-white dark:bg-[#0d1326] py-24 px-4 overflow-hidden">
-    <div class="floating-shape bg-indigo-500 w-96 h-96 -bottom-40 -right-40 animate-blob animation-delay-2000"></div>
-    
-    <div class="container mx-auto max-w-7xl relative z-10">
-        <div class="text-center mb-16">
-            <span class="inline-block px-4 py-1.5 bg-indigo-100 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-300 text-sm font-black rounded-full mb-4 lang-str" data-so="بۆچی ئەلفا ئەی ئای؟" data-ba="بۆچی ئەلفا ئەی ئای؟">بۆچی ئەلفا ئەی ئای؟</span>
-            <h3 class="text-4xl md:text-5xl font-black mb-4 text-gray-900 dark:text-white kai-grad-text lang-str" data-so="بۆچی ALPHA AI هەڵبژێرین؟" data-ba="بۆچی ALPHA AI هەڵبژێری؟">بۆچی ALPHA AI هەڵبژێرین؟</h3>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            <div class="text-center p-8">
-                <div class="w-16 h-16 mx-auto mb-5 bg-gradient-to-br from-blue-500 to-cyan-400 rounded-2xl flex items-center justify-center shadow-lg shadow-blue-500/30">
-                    <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 21v-4m0 0V5a2 2 0 012-2h6.5l1 1H21l-3 6 3 6h-8.5l-1-1H5a2 2 0 00-2 2zm9-13.5V9"></path></svg>
-                </div>
-                <h4 class="text-lg font-black mb-2 text-gray-900 dark:text-white lang-str" data-so="بە زمانی کوردی" data-ba="ب زمانی کوردی">بە زمانی کوردی</h4>
-                <p class="text-sm text-gray-500 dark:text-gray-400 leading-relaxed lang-str" data-so="هەموو ناوەڕۆکەکان بە هەردوو شێوەزاری سۆرانی و بادینی." data-ba="هەمی ناوەڕۆک ب هەردوو شێوەزارێن سۆرانی و بادینی.">هەموو ناوەڕۆکەکان بە هەردوو شێوەزاری سۆرانی و بادینی.</p>
-            </div>
-            <div class="text-center p-8">
-                <div class="w-16 h-16 mx-auto mb-5 bg-gradient-to-br from-indigo-500 to-purple-400 rounded-2xl flex items-center justify-center shadow-lg shadow-indigo-500/30">
-                    <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                </div>
-                <h4 class="text-lg font-black mb-2 text-gray-900 dark:text-white lang-str" data-so="فێربوونی پراکتیکی" data-ba="فێربوونەکا پراکتیکی">فێربوونی پراکتیکی</h4>
-                <p class="text-sm text-gray-500 dark:text-gray-400 leading-relaxed lang-str" data-so="تاقیکردنەوەی کۆد ڕاستەوخۆ لەناو پلاتفۆرمەکەدا." data-ba="تاقیکرنا کۆدان ڕاستەوخۆ د ناڤ پلاتفۆرمێ دا.">تاقیکردنەوەی کۆد ڕاستەوخۆ لەناو پلاتفۆرمەکەدا.</p>
-            </div>
-            <div class="text-center p-8">
-                <div class="w-16 h-16 mx-auto mb-5 bg-gradient-to-br from-purple-500 to-pink-400 rounded-2xl flex items-center justify-center shadow-lg shadow-purple-500/30">
-                    <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
-                </div>
-                <h4 class="text-lg font-black mb-2 text-gray-900 dark:text-white lang-str" data-so="بە تەواوی خۆڕایی" data-ba="ب تەواوی بێ بەرامبەر">بە تەواوی خۆڕایی</h4>
-                <p class="text-sm text-gray-500 dark:text-gray-400 leading-relaxed lang-str" data-so="هەموو خزمەتگوزارییەکان بە خۆڕایی." data-ba="هەمی خزمەتگوزاری بێ بەرامبەر.">هەموو خزمەتگوزارییەکان بە خۆڕایی.</p>
-            </div>
-            <div class="text-center p-8">
-                <div class="w-16 h-16 mx-auto mb-5 bg-gradient-to-br from-teal-400 to-emerald-400 rounded-2xl flex items-center justify-center shadow-lg shadow-teal-500/30">
-                    <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
-                </div>
-                <h4 class="text-lg font-black mb-2 text-gray-900 dark:text-white lang-str" data-so="بەردەوام نوێکردنەوە" data-ba="نویکرنا بەردەوام">بەردەوام نوێکردنەوە</h4>
-                <p class="text-sm text-gray-500 dark:text-gray-400 leading-relaxed lang-str" data-so="زیادکردنی کۆرس و ئامرازی نوێ بە بەردەوامی." data-ba="زێدەکرنا کۆرس و ئامرازێن نوی ب بەردەوامی.">زیادکردنی کۆرس و ئامرازی نوێ بە بەردەوامی.</p>
-            </div>
+<section class="al-hero">
+    <div class="al-container">
+        <span class="al-kicker lang-str" data-so="پلاتفۆرمی فێربوون" data-ba="پلاتفۆرما فێربوونێ">پلاتفۆرمی فێربوون</span>
+        <h1 class="lang-str" data-so="فێربوونی پرۆگرامسازی و ژیریی دەستکرد — بە زمانی کوردی" data-ba="فێربوونا پرۆگرامسازیێ و ژیرییا دەستکرد — بە زمانێ کوردی">فێربوونی پرۆگرامسازی و ژیریی دەستکرد — بە زمانی کوردی</h1>
+        <p class="al-hero__sub lang-str" data-so="لە وانەکانی فێرگەوە تا کۆرس و ئامرازەکانی ئەی ئای — هەموو شتێک لە یەک شوێن." data-ba="ژ وانێن فێرگێیێ تا کۆرس و ئامرازێن ئەی ئای — هەر شێ ب یەک جێیێ.">لە وانەکانی فێرگەوە تا کۆرس و ئامرازەکانی ئەی ئای — هەموو شتێک لە یەک شوێن.</p>
+        <div style="display:flex; gap:12px; margin-top:28px; flex-wrap:wrap">
+            <a href="/ferga" class="al-btn al-btn--solid lang-str" data-so="دەستپێبکە" data-ba="دەستپێبکە">دەستپێبکە</a>
+            <a href="/ai-tools" class="al-btn al-btn--ghost lang-str" data-so="ئامرازەکان" data-ba="ئامراز">ئامرازەکان</a>
         </div>
     </div>
 </section>
 
-<!-- ===== بانگەشە بۆ دەستپێکردن (CTA) ===== -->
-<section class="relative bg-gradient-to-br from-blue-600 via-indigo-600 to-purple-700 py-20 px-4 overflow-hidden">
-    <div class="absolute inset-0 w-full h-full overflow-hidden pointer-events-none">
-        <div class="absolute top-0 -left-4 w-72 h-72 bg-white/10 rounded-full blur-3xl"></div>
-        <div class="absolute bottom-0 -right-4 w-96 h-96 bg-white/10 rounded-full blur-3xl"></div>
-    </div>
-    <div class="relative container mx-auto max-w-4xl text-center z-10">
-        <h3 class="text-4xl md:text-5xl font-black mb-6 text-white lang-str" data-so="ئامادەییت بۆ دەستپێکردن؟" data-ba="ئامادەیی بۆ دەستپێکرنێ؟">ئامادەییت بۆ دەستپێکردن؟</h3>
-        <p class="text-xl text-blue-100 mb-10 max-w-2xl mx-auto lang-str" data-so="بەشداربە لە گەشەپێدانی تواناکانت لە بواری ژیریی دەستکرددا، بە تەواوی خۆڕایی." data-ba="بەشداربە د پێشڤەبرنا شیانێن خۆ دا د بوارێ ژیرییا دەستکرد دا، ب تەواوی بێ بەرامبەر.">بەشداربە لە گەشەپێدانی تواناکانت لە بواری ژیریی دەستکرددا، بە تەواوی خۆڕایی.</p>
-        <div class="flex flex-wrap justify-center gap-4">
-            <a href="/ferga" class="px-10 py-4 bg-white text-indigo-700 font-black rounded-2xl text-lg shadow-xl hover:shadow-2xl hover:-translate-y-1 transition-all lang-str" data-so="دەستپێبکە ئێستا" data-ba="دەستپێبکە نوکە">دەستپێبکە ئێستا</a>
-        </div>
-    </div>
-</section>
+<main class="al-container al-section">
+    <div class="al-grid">
 
-<!-- ===== فووتەری سەرەکی (Footer) ===== -->
-<footer class="bg-gray-900 dark:bg-[#050a18] text-gray-400">
-    <div class="container mx-auto max-w-7xl px-4 py-16">
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
-            
-            <div>
-                <div class="flex items-center gap-3 mb-6">
-                    <img src="logo.jpg" alt="ALPHA AI" class="h-10 w-auto object-contain dark:invert">
-                    <div>
-                        <h4 class="text-lg font-black text-white">ALPHA AI</h4>
-                        <span class="text-[0.5rem] font-black tracking-widest text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-400">INNOVATION - FUTURE</span>
-                    </div>
-                </div>
-                <p class="text-sm leading-relaxed lang-str" data-so="یەکەمین پلاتفۆرمی کوردی بۆ فێربوونی ژیریی دەستکرد و پرۆگرامسازی." data-ba="ئێکەمین پلاتفۆرما کوردی بۆ فێربوونا ژیرییا دەستکرد و پرۆگرامسازیێ.">یەکەمین پلاتفۆرمی کوردی بۆ فێربوونی ژیریی دەستکرد و پرۆگرامسازی.</p>
+        <a href="/ferga" class="al-card al-fade-in" style="text-decoration:none">
+            <div class="al-item__media">
+                <svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" style="color:var(--al-accent)"><path stroke-linecap="round" stroke-linejoin="round" d="M8 6l-6 6 6 6M16 6l6 6-6 6"/></svg>
             </div>
-
-            <div>
-                <h5 class="text-white font-black mb-5 lang-str" data-so="بەشەکان" data-ba="بەش">بەشەکان</h5>
-                <ul class="space-y-3 text-sm">
-                    <li><a href="/ferga" class="hover:text-blue-400 transition lang-str" data-so="فێرگە" data-ba="فێرگە">فێرگە</a></li>
-                    <li><a href="/courses" class="hover:text-blue-400 transition lang-str" data-so="کۆرسەکان" data-ba="کۆرس">کۆرسەکان</a></li>
-                    <li><a href="/ai-tools" class="hover:text-blue-400 transition lang-str" data-so="ئامرازەکان" data-ba="ئامراز">ئامرازەکان</a></li>
-                    <li><a href="/news" class="hover:text-blue-400 transition lang-str" data-so="هەواڵەکان" data-ba="نووچە">هەواڵەکان</a></li>
-                </ul>
+            <div class="al-item__body">
+                <div class="al-item__title lang-str" data-so="فێرگە — وانەکانی پرۆگرامسازی" data-ba="فێرگە — وانێن پرۆگرامسازیێ">فێرگە — وانەکانی پرۆگرامسازی</div>
+                <p class="al-item__desc lang-str" data-so="وانەی واکار و تاقیکردنەوە بۆ HTML, CSS, JS, Python, C++, Java, Rust و زیاتر." data-ba="وانێن کارێ و تاقیکرنێ بۆ HTML, CSS, JS, Python, C++, Java, Rust و زێدەتر.">وانەی واکار و تاقیکردنەوە بۆ HTML, CSS, JS, Python, C++, Java, Rust و زیاتر.</p>
             </div>
+        </a>
 
-            <div>
-                <h5 class="text-white font-black mb-5 lang-str" data-so="ڕێنمایی" data-ba="ڕێنمایی">ڕێنمایی</h5>
-                <ul class="space-y-3 text-sm">
-                    <li><a href="/academic-guide" class="hover:text-blue-400 transition lang-str" data-so="ڕێنیشاندەر" data-ba="ڕێبەر">ڕێنیشاندەر</a></li>
-                    <li><a href="/universities" class="hover:text-blue-400 transition lang-str" data-so="زانکۆکان" data-ba="زانکۆ">زانکۆکان</a></li>
-                </ul>
+        <a href="/courses" class="al-card al-fade-in" style="text-decoration:none">
+            <div class="al-item__media">
+                <svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" style="color:var(--al-accent)"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.247m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.247"/></svg>
             </div>
+            <div class="al-item__body">
+                <div class="al-item__title lang-str" data-so="کۆرسەکان" data-ba="کۆرس">کۆرسەکان</div>
+                <p class="al-item__desc lang-str" data-so="کۆرسی تایبەت بە بوارە جیاوازەکان لەگەڵ ڤیدیۆ و سەرچاوە." data-ba="کۆرسێ تایبەت ب بەرێن جیاوازن لگەڵ ڤیدیۆ و سەرچاوە.">کۆرسی تایبەت بە بوارە جیاوازەکان لەگەڵ ڤیدیۆ و سەرچاوە.</p>
+            </div>
+        </a>
 
-        </div>
+        <a href="/ai-tools" class="al-card al-fade-in" style="text-decoration:none">
+            <div class="al-item__media">
+                <svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" style="color:var(--al-accent)"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+            </div>
+            <div class="al-item__body">
+                <div class="al-item__title lang-str" data-so="ئامرازەکانی AI" data-ba="ئامرازێن AI">ئامرازەکانی AI</div>
+                <p class="al-item__desc lang-str" data-so="ڕێنمایی بۆ باشترین ئامرازەکانی ژیریی دەستکرد بۆ کار و دروستکردن." data-ba="ڕێنمایی بۆ باشترین ئامرازێن ژیرییا دەستکرد بۆ کار و دروستکرن.">ڕێنمایی بۆ باشترین ئامرازەکانی ژیریی دەستکرد بۆ کار و دروستکردن.</p>
+            </div>
+        </a>
+
+        <a href="/news" class="al-card al-fade-in" style="text-decoration:none">
+            <div class="al-item__media">
+                <svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" style="color:var(--al-accent)"><path stroke-linecap="round" stroke-linejoin="round" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"/></svg>
+            </div>
+            <div class="al-item__body">
+                <div class="al-item__title lang-str" data-so="هەواڵی تەکنەلۆژیا" data-ba="نووچێن تەکنەلۆژیایێ">هەواڵی تەکنەلۆژیا</div>
+                <p class="al-item__desc lang-str" data-so="دوایین هەواڵەکانی جیهانی ژیریی دەستکرد و تەکنەلۆژیا." data-ba="دوماهیک نووچێن جیهانا ژیرییا دەستکرد و تەکنەلۆژیایێ.">دوایین هەواڵەکانی جیهانی ژیریی دەستکرد و تەکنەلۆژیا.</p>
+            </div>
+        </a>
+
+        <a href="/universities" class="al-card al-fade-in" style="text-decoration:none">
+            <div class="al-item__media">
+                <svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" style="color:var(--al-accent)"><path stroke-linecap="round" stroke-linejoin="round" d="M12 14l9-5-9-5-9 5 9 5z"/><path stroke-linecap="round" stroke-linejoin="round" d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z"/></svg>
+            </div>
+            <div class="al-item__body">
+                <div class="al-item__title lang-str" data-so="زانکۆکان" data-ba="زانکۆ">زانکۆکان</div>
+                <p class="al-item__desc lang-str" data-so="زانیاری بەرفراوان لە زانکۆکانی کوردستان و دەرەوە." data-ba="زانیاری بەفرەح ژ زانکۆێن کوردستانێ و دەرڤە.">زانیاری بەرفراوان لە زانکۆکانی کوردستان و دەرەوە.</p>
+            </div>
+        </a>
+
+        <a href="/academic-guide" class="al-card al-fade-in" style="text-decoration:none">
+            <div class="al-item__media">
+                <svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" style="color:var(--al-accent)"><path stroke-linecap="round" stroke-linejoin="round" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-1.447-.894L15 4m0 13V4m0 0L9 7"/></svg>
+            </div>
+            <div class="al-item__body">
+                <div class="al-item__title lang-str" data-so="ڕێنیشاندەری خوێندن" data-ba="ڕێبەرێ خوێندنێ">ڕێنیشاندەری خوێندن</div>
+                <p class="al-item__desc lang-str" data-so="وەڵامی پرسیارە باوەکانی خوێندن و بوارەکانی داهاتوو." data-ba="وەڵاما پرسیارێن باوێن خوێندنێ و بەرێن داهاتوویێ.">وەڵامی پرسیارە باوەکانی خوێندن و بوارەکانی داهاتوو.</p>
+            </div>
+        </a>
+
     </div>
-    <div class="border-t border-gray-800 py-6">
-        <p class="text-center text-sm text-gray-500 lang-str" data-so="گەشەپێدراوە لەلایەن تیمی ئەلفا ئەی ئای &copy; ٢٠٢٦" data-ba="هاتیە پێشڤەبرن ژ لایێ تیمێ ئەلفا ئەی ئای &copy; ٢٠٢٦">گەشەپێدراوە لەلایەن تیمی ئەلفا ئەی ئای &copy; ٢٠٢٦</p>
-    </div>
-</footer>
+</main>
 
-<script type="application/json" id="kurdai-firebase-config">{!! json_encode(config('kurdai.firebase'), 15) !!}</script>
-<script type="module">
-    const KaiF = window.KaiFirebase || {};
-    const auth = KaiF.auth ? KaiF.auth() : null;
-    const onAuthStateChanged = KaiF.onAuthStateChanged || function () {};
-    const signOut = KaiF.signOut || (function () { return Promise.resolve(); });
-    KaiTrack.visit('home');
-
-    let currentLang = localStorage.getItem('site-lang') || 'so';
-
-    function applyLanguage() {
-        const langBtnText = document.getElementById('lang-text');
-        if (langBtnText) { langBtnText.innerText = currentLang === 'so' ? 'Badini' : 'سۆرانی'; }
-        
-        document.querySelectorAll('.lang-str').forEach(el => {
-            el.innerText = el.getAttribute(`data-${currentLang}`) || el.getAttribute('data-so');
-        });
-    }
-
-    document.getElementById('lang-toggle').addEventListener('click', () => {
-        currentLang = currentLang === 'so' ? 'ba' : 'so';
-        localStorage.setItem('site-lang', currentLang);
-        applyLanguage();
-    });
-
-    applyLanguage();
-
-    function toggleTheme() {
-        if (document.documentElement.classList.contains('dark')) {
-            document.documentElement.classList.remove('dark');
-            localStorage.setItem('color-theme', 'light');
-        } else {
-            document.documentElement.classList.add('dark');
-            localStorage.setItem('color-theme', 'dark');
-        }
-    }
-
-    document.getElementById('theme-toggle').addEventListener('click', toggleTheme);
-
-    onAuthStateChanged((user) => { 
-        if (user && ["team@alpha-ai.com", "mahamadkamaran890@gmail.com"].includes(user.email)) {
-            document.querySelectorAll('.admin-only').forEach(el => el.classList.remove('hidden'));
-        }
-    });
-    
-    const logoutBtn = document.getElementById('logout-btn');
-    if(logoutBtn) {
-        logoutBtn.addEventListener('click', () => signOut().then(() => window.location.href = "/login"));
-    }
-</script>
-
-
+@include('partials.alpha-foot')
 </body>
 </html>

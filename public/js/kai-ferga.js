@@ -1,5 +1,5 @@
 /* ==========================================================================
-   KURD AI — فێرگە (Ferga) · Lesson experience  ·  v3
+   ALPHA AI — فێرگە (Ferga) · Lesson experience  ·  v3
    Loaded ONLY on /ferga. Purely presentational — no page logic touched.
    Targets the READING/LEARNING view only: reading progress bar, lesson-title
    pop, read-along content reveal, staggered code lines, sidebar row cascade,
