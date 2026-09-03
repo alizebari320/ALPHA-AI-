@@ -3,12 +3,31 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AdminController;
-use App\Http\Controllers\FirebaseAuthController;
-use App\Http\Controllers\ToolController;
-use App\Models\Faq;
+use App\Http\Controllers\FeedbackController;
+use App\Http\Controllers\AnalyticsController;
+use App\Http\Controllers\AdminAnalyticsController;
+Route::get('/', function () {
+    return view('home'); // بینێرە بۆ home.blade.php
+});
 
-// سنگکرۆنی نیشتنیشانەکانی Firebase لەگەڵ نیشتنیشانەی Laravel (Breeze)
-Route::post('/api/firebase-auth-sync', [FirebaseAuthController::class, 'sync']);
+// ==========================================
+// ئامارەکانی بەکارهێنان (Site Analytics) — تەنها ئەدمین
+// Blade Auth (Laravel session) یان Firebase tokenی ئەدمین
+// ==========================================
+Route::post('/api/analytics/visit', [AnalyticsController::class, 'track']);
+Route::get('/api/admin/analytics', [AdminAnalyticsController::class, 'data']);
+
+// ==========================================
+// بەشی فیدباک (Feedback)
+// ==========================================
+Route::get('/feedback', function () {
+    return view('feedback');
+})->name('feedback');
+Route::post('/feedback/store', [FeedbackController::class, 'store']);
+Route::get('/feedback/mine', [FeedbackController::class, 'mine']);
+Route::get('/feedback/list', [FeedbackController::class, 'adminList']);
+Route::post('/feedback/{id}/read', [FeedbackController::class, 'markRead']);
+Route::delete('/feedback/{id}', [FeedbackController::class, 'destroy']);
 
 /*
 |--------------------------------------------------------------------------
@@ -16,68 +35,49 @@ Route::post('/api/firebase-auth-sync', [FirebaseAuthController::class, 'sync']);
 |--------------------------------------------------------------------------
 */
 
-// پەڕەی سەرەکی
-Route::get('/', function () {
-    $faqs = Faq::all(); // هەموو پرسیارەکان بهێنە
-    return view('home', compact('faqs'));
-});
-
 // پەڕەکانی چوونەژوورەوە و پڕۆفایل
-Route::get('/login', [AdminController::class, 'showLogin'])->name('login');
 Route::get('/profile', function () {
     return view('profile');
-})->middleware('admin')->name('profile');
+})->name('profile');
 
 
 // ==========================================
-// ڕێنمای ئامرازەکانی زیرەکیا دەستکرد (AI Tools Directory)
-// ==========================================
-Route::get('/tools', [ToolController::class, 'index'])->name('tools.index');
-Route::post('/tools/submit', [ToolController::class, 'submit'])
-    ->middleware('throttle:10,1')
-    ->name('tools.submit');
-Route::post('/tools/{id}/rate', [ToolController::class, 'upvote'])
-    ->middleware('throttle:30,1')
-    ->name('tools.rate');
-Route::post('/tools/{id}/view', [ToolController::class, 'view'])
-    ->middleware('throttle:120,1')
-    ->name('tools.view');
-
-
-// ==========================================
-// بەشی بینینی گشتی (Public read-only pages)
+// بەشی کۆرسەکان (Courses)
 // ==========================================
 Route::get('/courses', [AdminController::class, 'showCourses']);
+Route::post('/store-course', [AdminController::class, 'storeCourse'])->name('store.course');
+// بۆ کردنەوەی پەڕەی دەستکاریکردن
+Route::get('/courses/{id}/edit', [AdminController::class, 'editCourse'])->name('edit.course');
+// بۆ سەیڤکردنی دەستکاریکردنەکە
+Route::put('/courses/{id}', [AdminController::class, 'updateCourse'])->name('update.course');
+// بۆ سڕینەوە
+Route::delete('/courses/{id}', [AdminController::class, 'destroyCourse'])->name('destroy.course');
+
+
+// ==========================================
+// بەشی ئامرازەکانی زیرەکی دەستکرد (AI Tools)
+// ==========================================
 Route::get('/ai-tools', [AdminController::class, 'showAiTools']);
+Route::post('/store-ai-tool', [AdminController::class, 'storeAiTool'])->name('store.ai_tool');
+// بۆ کردنەوەی پەڕەی دەستکاریکردن
+Route::get('/ai-tools/{id}/edit', [AdminController::class, 'editAiTool'])->name('edit.ai_tool');
+// بۆ سەیڤکردنی دەستکاریکردنەکە
+Route::put('/ai-tools/{id}', [AdminController::class, 'updateAiTool'])->name('update.ai_tool');
+// بۆ سڕینەوە
+Route::delete('/ai-tools/{id}', [AdminController::class, 'destroyAiTool'])->name('destroy.ai_tool');
+
+
+// ==========================================
+// بەشی ڕێنیشاندەری ئەکادیمی (Academic Guide / FAQs)
+// ==========================================
 Route::get('/academic-guide', [AdminController::class, 'showAcademicGuide']);
-Route::get('/ferga', [AdminController::class, 'showFerga']);
-
-
-// ==========================================
-// بەشی ئەدمین — پارێزراو بە middleware('admin')
-// Every route that mutates Firebase data lives in this group.
-// ==========================================
-Route::middleware('admin')->group(function () {
-
-    // کۆرسەکان (Courses)
-    Route::post('/store-course', [AdminController::class, 'storeCourse'])->name('store.course');
-    Route::get('/courses/{id}/edit', [AdminController::class, 'editCourse'])->name('edit.course');
-    Route::put('/courses/{id}', [AdminController::class, 'updateCourse'])->name('update.course');
-    Route::delete('/courses/{id}', [AdminController::class, 'destroyCourse'])->name('destroy.course');
-
-    // ئامرازەکانی زیرەکی دەستکرد (AI Tools)
-    Route::post('/store-ai-tool', [AdminController::class, 'storeAiTool'])->name('store.ai_tool');
-    Route::get('/ai-tools/{id}/edit', [AdminController::class, 'editAiTool'])->name('edit.ai_tool');
-    Route::put('/ai-tools/{id}', [AdminController::class, 'updateAiTool'])->name('update.ai_tool');
-    Route::delete('/ai-tools/{id}', [AdminController::class, 'destroyAiTool'])->name('destroy.ai_tool');
-
-    // ڕێنیشاندەری ئەکادیمی (Academic Guide / FAQs)
-    Route::post('/store-academic-guide', [AdminController::class, 'storeAcademicGuide'])->name('store.academic_guide');
-    Route::get('/academic-guide/{id}/edit', [AdminController::class, 'editAcademicGuide'])->name('edit.academic_guide');
-    Route::put('/academic-guide/{id}', [AdminController::class, 'updateAcademicGuide'])->name('update.academic_guide');
-    Route::delete('/academic-guide/{id}', [AdminController::class, 'destroyAcademicGuide'])->name('destroy.academic_guide');
-
-});
+Route::post('/store-academic-guide', [AdminController::class, 'storeAcademicGuide'])->name('store.academic_guide');
+// بۆ کردنەوەی پەڕەی دەستکاریکردن
+Route::get('/academic-guide/{id}/edit', [AdminController::class, 'editAcademicGuide'])->name('edit.academic_guide');
+// بۆ سەیڤکردنی دەستکاریکردنەکە
+Route::put('/academic-guide/{id}', [AdminController::class, 'updateAcademicGuide'])->name('update.academic_guide');
+// بۆ سڕینەوە
+Route::delete('/academic-guide/{id}', [AdminController::class, 'destroyAcademicGuide'])->name('destroy.academic_guide');
 
 
 
@@ -88,16 +88,29 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 Route::get('/lang/{lang}', function ($lang) {
-    if (array_key_exists($lang, config('alphaai.locales', []))) {
+    if (in_array($lang, ['en', 'ar', 'ckb', 'kmr'])) {
         session(['locale' => $lang]);
     }
     return redirect()->back();
-})->name('lang.switch');
+});
 Route::middleware('auth')->group(function () {
     Route::get('/profile-breeze', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile-breeze', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile-breeze', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+Route::get('/ferga', function () {
+    return response(view('ferga'))->withHeaders([
+        'Cache-Control' => 'no-store, no-cache, must-revalidate, max-age=0',
+        'Pragma' => 'no-cache',
+        'Expires' => '0',
+    ]);
+});
+Route::get('/ferga/seed-missing', [\App\Http\Controllers\FergaSeedController::class, 'run']);
+Route::get('/ferga/seed-data', [\App\Http\Controllers\FergaSeedController::class, 'data']);
+Route::get('/ferga/upload', [\App\Http\Controllers\FergaSeedController::class, 'uploadPage']);
+Route::post('/ferga/run-php', [AdminController::class, 'runPhpCode']);
+Route::post('/ferga/run-code', [AdminController::class, 'runCode']);
+Route::post('/ferga/run-cloud', [AdminController::class, 'runCloud']);
 Route::get('/about', function () {
     return view('about');
 });
@@ -106,5 +119,8 @@ Route::get('/news', function () {
 });
 Route::get('/universities', function () {
     return view('universities');
-});
+})->name('universities');
+Route::get('/general-info', function () {
+    return view('general_info');
+})->name('general-info');
 require __DIR__.'/auth.php';

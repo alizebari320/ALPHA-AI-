@@ -15,10 +15,9 @@ return new class extends Migration
             $table->id();
             $table->timestamps();
             $table->string('question_ckb');
-            $table->string('question_kmr');
-            $table->string('question_en');
-            $table->string('question_ar');
-            $table->text('answer');
+$table->string('question_kmr');
+$table->string('question_en');
+$table->string('question_ar');
         });
     }
 

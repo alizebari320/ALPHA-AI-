@@ -1,0 +1,855 @@
+/* ==========================================================================
+   KURD AI — "Warm Editorial" (kai-human.css)
+   --------------------------------------------------------------------------
+   A full visual redesign delivered as a skin. It is purely presentational:
+   no class is renamed, no element removed, no course, tool, category,
+   university, lesson or news item touched. Everything below only changes how
+   the existing markup looks.
+
+   Design direction
+     · Paper, not glass.  Opaque warm-linen surfaces, hairline rules, one
+       honest shadow scale. No backdrop-filter anywhere.
+     · One accent.  Terracotta does all the work; olive marks success, brick
+       marks danger. Nothing else is coloured.
+     · Editorial type.  Readex Pro (a humanist Arabic/Latin face with full
+       Sorani + Badini coverage) at real reading sizes, generous line height,
+       normal weights instead of black-on-everything.
+     · Structure over decoration.  Section rules, eyebrow labels and
+       consistent 16px radii carry the hierarchy; the star field, aurora
+       sweeps, orbs, scan beams, glare, tilt and neon glows are switched off
+       (the cosmos script is no longer even loaded).
+     · Calm motion.  Hover = a border darkening and a 1px lift, 160ms. No
+       springs, no scale, no magnetic buttons.
+
+   Cascade note: some pages include this partial BEFORE their own page sheet
+   (kai-tools.css, kai-news.css, …), and those sheets use !important freely.
+   Selectors here are therefore prefixed with `html` and use !important where
+   they must win regardless of file order.
+   ========================================================================== */
+
+/* ------------------------------------------------------------- 1. tokens */
+:root {
+    /* paper */
+    --h-canvas:      #f6f2ec;   /* page                        */
+    --h-canvas-2:    #efe9e0;   /* alternating section         */
+    --h-surface:     #fffcf8;   /* cards, nav, panels          */
+    --h-surface-2:   #f4eee5;   /* wells, insets, code         */
+    --h-line:        #e3dacb;   /* hairline                    */
+    --h-line-2:      #cfc2ae;   /* hover / emphasis hairline   */
+
+    /* ink */
+    --h-ink:         #2c231b;
+    --h-ink-2:       #5d5044;
+    --h-ink-3:       #756757;   /* 4.9:1 on canvas    */
+
+    /* accent — terracotta */
+    --h-acc:         #a8492a;
+    --h-acc-hover:   #8c3b21;
+    --h-acc-tint:    #f7e8de;
+    --h-acc-line:    #e2c4b1;
+    --h-on-acc:      #fffaf5;
+
+    /* semantics */
+    --h-ok:          #4f6b3c;
+    --h-ok-tint:     #e9efe0;
+    --h-warn:        #855f16;
+    --h-warn-tint:   #f6ecd6;
+    --h-bad:         #a63a2c;
+    --h-bad-tint:    #f8e3de;
+
+    /* one shadow scale, warm grey, never coloured */
+    --h-s1: 0 1px 2px rgba(58, 44, 31, .05);
+    --h-s2: 0 1px 2px rgba(58, 44, 31, .06), 0 8px 20px -14px rgba(58, 44, 31, .22);
+    --h-s3: 0 2px 4px rgba(58, 44, 31, .07), 0 18px 38px -22px rgba(58, 44, 31, .30);
+
+    --h-r:    14px;   /* default radius   */
+    --h-r-sm: 10px;
+    --h-r-lg: 18px;
+    --h-e:    cubic-bezier(.32, .72, .29, 1);
+
+    --h-font: 'Readex Pro', 'Noto Sans Arabic', 'Vazirmatn', system-ui, sans-serif;
+}
+
+html.dark {
+    --h-canvas:      #17130f;
+    --h-canvas-2:    #1d1813;
+    --h-surface:     #221c16;
+    --h-surface-2:   #2a231c;
+    --h-line:        #38302a;
+    --h-line-2:      #4d423a;
+
+    --h-ink:         #f4eee6;
+    --h-ink-2:       #c9bcac;
+    --h-ink-3:       #a89a8a;
+
+    --h-acc:         #d98a5c;
+    --h-acc-hover:   #eaa075;
+    --h-acc-tint:    #33241b;
+    --h-acc-line:    #543a29;
+    --h-on-acc:      #1d1409;
+
+    --h-ok:          #a5c084;
+    --h-ok-tint:     #242b1c;
+    --h-warn:        #d9b46b;
+    --h-warn-tint:   #2e2617;
+    --h-bad:         #e08a78;
+    --h-bad-tint:    #2f1d18;
+
+    --h-s1: 0 1px 2px rgba(0, 0, 0, .40);
+    --h-s2: 0 1px 3px rgba(0, 0, 0, .45), 0 10px 24px -16px rgba(0, 0, 0, .70);
+    --h-s3: 0 2px 6px rgba(0, 0, 0, .50), 0 22px 44px -26px rgba(0, 0, 0, .85);
+}
+
+/* remap the legacy design tokens so any untouched rule inherits the new
+   palette instead of the old neon one */
+html, html.dark {
+    --kai-ink: var(--h-ink);          --kai-ink-soft: var(--h-ink-2);
+    --kai-surface: var(--h-surface);  --kai-canvas: var(--h-canvas);
+    --kai-bg: var(--h-canvas);
+    --kai-glass-bg: var(--h-surface); --kai-glass-brd: var(--h-line);
+    --kai-glass-hi: transparent;      --kai-glass-blur: 0px;
+    --kai-shadow-1: var(--h-s1);      --kai-shadow-2: var(--h-s2);
+    --kai-shadow-3: var(--h-s3);      --kai-glow: var(--h-s2);
+    --kai-brand-1: var(--h-acc);      --kai-brand-2: var(--h-acc);
+    --kai-brand-3: var(--h-acc-hover);--kai-brand-4: var(--h-warn);
+    --kai-brand-5: var(--h-acc);
+    --kai-aurora-1: var(--h-line);    --kai-aurora-2: var(--h-line);
+    --kai-aurora-3: var(--h-line);    --kai-aurora-4: var(--h-line);
+    --kai-grid-line: transparent;     --kai-nodule: var(--h-line-2);
+    --kai-ao: rgba(58, 44, 31, .05);
+    --kai-r-sm: var(--h-r-sm);        --kai-r-md: var(--h-r);
+    --kai-r-lg: var(--h-r-lg);        --kai-r-xl: var(--h-r-lg);
+    --ka-glass-bg: var(--h-surface);  --ka-glass-brd: var(--h-line);
+    --ka-line-soft: var(--h-line);
+    --ka-brand-gradient: linear-gradient(90deg, var(--h-acc), var(--h-acc));
+    --kai-tools-a: var(--h-acc); --kai-tools-b: var(--h-acc); --kai-tools-c: var(--h-acc-hover); --kai-tools-d: var(--h-warn);
+    --kai-crs-a: var(--h-acc);   --kai-crs-b: var(--h-acc);   --kai-crs-c: var(--h-acc-hover);   --kai-crs-d: var(--h-warn);
+    --kai-uni-a: var(--h-acc);   --kai-uni-b: var(--h-acc);   --kai-uni-c: var(--h-warn);        --kai-uni-d: var(--h-acc-hover);
+    --kai-news-a: var(--h-acc);  --kai-news-b: var(--h-acc);  --kai-news-c: var(--h-acc-hover);  --kai-news-d: var(--h-warn);
+    --kai-gde-a: var(--h-ok);    --kai-gde-b: var(--h-acc);   --kai-gde-c: var(--h-acc);
+    --kai-abt-a: var(--h-acc);   --kai-abt-b: var(--h-ok);    --kai-abt-c: var(--h-warn);        --kai-abt-d: var(--h-acc-hover);
+    --kai-lb-a: var(--h-acc);    --kai-lb-b: var(--h-acc);    --kai-lb-c: var(--h-acc-hover);    --kai-lb-d: var(--h-warn);
+    --kai-frg-a: var(--h-acc);   --kai-frg-b: var(--h-acc);   --kai-frg-c: var(--h-acc-hover);   --kai-frg-d: var(--h-warn);
+    --kai-uni-c: var(--h-acc);
+}
+
+/* --------------------------------------------------------- 2. page canvas */
+html body {
+    background-color: var(--h-canvas) !important;
+    background-image: none !important;
+    color: var(--h-ink);
+    font-family: var(--h-font);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+}
+html body::before,
+html body::after { display: none !important; }
+
+/* alternating section bands read as paper, not as tinted glass */
+html section[class*="bg-gray-50"],
+html section[class*="bg-slate-50"],
+html section[class*="bg-white"],
+html main[class*="bg-gray-50"],
+html div[class*="bg-gray-50"]:not([class*="rounded"]) {
+    background-color: var(--h-canvas-2) !important;
+    background-image: none !important;
+}
+html section:nth-of-type(even) { background-color: var(--h-canvas) !important; }
+
+/* every injected decorative layer */
+html #kai-cosmos, html #kai-aurora-sweep, html #kai-aurora-wash, html #kai-aurora-bg,
+html .kai-orb, html .kai-grain, html .kai-grid, html .kai-shooting-star, html #kai-cursor,
+html .kai-spark, html .kai-beam, html .kai-hero-fx, html .kai-orbit, html .kai-orbit-ring,
+html .kai-sphere-halo, html .kai-aurora-ring, html .kai-grid-layer, html .kai-glass-layer,
+html .kai-glare, html .kai-matrix, html .kai-scanlines, html .kai-holo-grid,
+html .kai-code-lines, html .kai-code-deco, html .kai-uni-portal-ring, html .floating-shape,
+html .animate-blob, html .kai-stat-glow, html .kai-cat-glow, html .kai-cat-deco-arrow,
+html .lb-glow, html .lb-glow-a, html .lb-glow-b, html .lb-scan, html .kai-ripple,
+html .kbtn-spin, html .kai-barcode, html .kai-barcode-wrap, html .kai-id-strip,
+html .kai-led, html .kai-eq, html .kai-tool-signal, html .kai-mag,
+html .kai-scroll-cue, html .kai-navtrack {
+    display: none !important;
+}
+
+/* decorative pseudo-elements (rings, sweeps, hairline neons, shine sweeps) */
+html .glass-card::before, html .glass-card::after,
+html .tool-card::before, html .tool-card::after,
+html .service-card::before, html .service-card::after,
+html .course-item::before, html .course-item::after,
+html .kai-cat::before, html .kai-cat::after,
+html .kai-news-card::after, html .kai-lead::before,
+html .kai-hero::after, html .kai-hero::before,
+html .kai-sphere-stage::before, html .kai-sphere-stage::after,
+html .kai-about-hero::before, html .kai-about-hero::after,
+html .kai-about-divider::before, html .kai-about-divider::after,
+html #uni-container > .glass-card::before, html #uni-container > .glass-card::after,
+html #guide-container > .glass-card::before, html #guide-container > .glass-card::after,
+html #news-container > .glass-card::before, html #news-container > .glass-card::after,
+html section.container .grid > .glass-card::after,
+html .cat-tab::before, html .cat-tab::after,
+html .kbtn::before, html .kbtn::after,
+html .kai-chip::after, html .kai-ticker-tag::before,
+html footer h5::after {
+    display: none !important;
+    content: none !important;
+}
+
+/* frosted glass, globally off */
+html *, html *::before, html *::after {
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+}
+
+/* ------------------------------------------------------------ 3. typography */
+html body, html button, html input, html select, html textarea, html a {
+    font-family: var(--h-font);
+    letter-spacing: normal;
+}
+html h1, html h2, html h3, html h4, html h5, html h6 {
+    color: var(--h-ink);
+    font-weight: 600;
+    line-height: 1.28;
+    letter-spacing: -.01em;
+}
+html .font-black, html .font-extrabold { font-weight: 600 !important; }
+html .font-bold { font-weight: 500 !important; }
+html h1, html .text-7xl, html .text-6xl { font-weight: 650; }
+html p, html li { line-height: 1.8; color: var(--h-ink-2); }
+html .text-5xl { font-size: clamp(2rem, 4.6vw, 2.9rem) !important; }
+html .text-4xl { font-size: clamp(1.75rem, 3.6vw, 2.25rem) !important; }
+html .text-3xl { font-size: clamp(1.5rem, 3vw, 1.85rem) !important; }
+html .text-2xl { font-size: 1.4rem !important; }
+html .tracking-tight, html .tracking-tighter { letter-spacing: -.01em !important; }
+html .tracking-widest, html .tracking-\[0\.22em\], html .tracking-\[0\.2em\] { letter-spacing: .12em !important; }
+html .uppercase { letter-spacing: .1em; }
+
+/* gradient / neon text becomes solid ink */
+html .gradient-text, html .kai-grad-text, html .ka-gradient-text,
+html .kai-neon-text, html .kai-neon-title, html .text-transparent,
+html [class*="bg-clip-text"] {
+    background: none !important;
+    background-image: none !important;
+    -webkit-background-clip: border-box !important;
+    background-clip: border-box !important;
+    -webkit-text-fill-color: currentColor !important;
+    color: var(--h-ink) !important;
+    filter: none !important;
+    animation: none !important;
+    text-shadow: none !important;
+}
+html [class*="drop-shadow"], html .kai-stamp, html .kai-eyebrow, html .kai-kicker {
+    text-shadow: none !important;
+    filter: none !important;
+}
+
+/* small caps eyebrow above section titles */
+html .kai-eyebrow, html .kai-kicker, html .kai-tag {
+    color: var(--h-acc) !important;
+    font-size: .72rem !important;
+    font-weight: 600 !important;
+    letter-spacing: .14em !important;
+    text-transform: uppercase;
+    background: none !important;
+    border: 0 !important;
+    padding: 0 !important;
+}
+
+/* muted text stays legible on paper */
+html .text-gray-600, html .text-gray-500, html .text-slate-500,
+html.dark .text-gray-300, html.dark .text-gray-400 { color: var(--h-ink-2) !important; }
+html .text-gray-400, html .text-slate-400, html.dark .text-gray-500 { color: var(--h-ink-3) !important; }
+html .text-gray-700, html .text-gray-800, html .text-gray-900,
+html.dark .text-white, html.dark .text-gray-100, html.dark .text-gray-200 { color: var(--h-ink) !important; }
+
+/* ------------------------------------------------------------- 4. surfaces */
+html .glass-card, html .tool-card, html .service-card, html .course-item,
+html .kai-news-card, html .uni-card, html .kai-cat, html .kai-bento > *,
+html .lb-panel, html .ka-glass, html .kai-team, html .kai-toast,
+html .kai-acc-head, html #kai-leaderboard .lb-panel {
+    background: var(--h-surface) !important;
+    background-image: none !important;
+    border: 1px solid var(--h-line) !important;
+    border-radius: var(--h-r-lg) !important;
+    box-shadow: var(--h-s1) !important;
+    color: var(--h-ink);
+    transform: none !important;
+    animation: none !important;
+    transition: border-color .16s var(--h-e), box-shadow .16s var(--h-e),
+                transform .16s var(--h-e) !important;
+    isolation: auto;
+    overflow: hidden;
+}
+html .glass-card:hover, html .tool-card:hover, html .service-card:hover,
+html .course-item:hover, html .kai-news-card:hover, html .uni-card:hover,
+html .kai-cat:hover {
+    background: var(--h-surface) !important;
+    border-color: var(--h-line-2) !important;
+    box-shadow: var(--h-s2) !important;
+    transform: translateY(-1px) !important;
+}
+/* a card's featured variant earns an accent edge instead of a glow */
+html .kai-cat--featured, html .kai-lead {
+    border-color: var(--h-acc-line) !important;
+    box-shadow: var(--h-s2) !important;
+}
+html .kai-cat--featured { background: var(--h-acc-tint) !important; }
+
+/* nested gradients inside cards */
+html .glass-card [class*="bg-gradient"], html .tool-card [class*="bg-gradient"],
+html .kai-cat [class*="bg-gradient"], html .course-item [class*="bg-gradient"],
+html .kai-news-card [class*="bg-gradient"] { background-image: none !important; }
+
+/* icon tiles: flat terracotta square, white glyph */
+html .kai-cat-icon-bg,
+html [class*="bg-gradient-to-br"]:not(a):not(button),
+html [class*="bg-gradient-to-tr"]:not(a):not(button),
+html [class*="bg-gradient-to-b"]:not(a):not(button):not(section):not(div[class*="inset"]) {
+    background-image: none !important;
+    background-color: var(--h-acc) !important;
+    box-shadow: none !important;
+    border-radius: var(--h-r-sm) !important;
+}
+html .kai-cat-icon, html .kai-cat-icon--xl {
+    background: none !important;
+    box-shadow: none !important;
+    color: var(--h-on-acc);
+}
+
+/* gradient dividers -> hairlines */
+html [class*="bg-gradient-to-r"].h-px, html [class*="bg-gradient-to-r"].h-1,
+html [class*="bg-gradient-to-r"].h-0\.5, html .kai-divider, html .kai-divider-glow,
+html .kai-about-divider, html .lb-edge, html hr {
+    background-image: none !important;
+    background-color: var(--h-line) !important;
+    box-shadow: none !important;
+    height: 1px !important;
+    border: 0 !important;
+}
+
+/* ------------------------------------------------------------- 5. buttons */
+html a[class*="bg-gradient-to"], html button[class*="bg-gradient-to"],
+html .kbtn-primary, html .kai-cat-cta, html .kai-btn-glass, html .kbtn-glass,
+html .kai-mini-btn, html button[class*="bg-blue-6"], html button[class*="bg-indigo-6"],
+html a[class*="bg-blue-6"], html .lb-toggle-btn {
+    background-image: none !important;
+    background-color: var(--h-acc) !important;
+    border: 1px solid var(--h-acc) !important;
+    color: var(--h-on-acc) !important;
+    border-radius: var(--h-r) !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+    font-weight: 500 !important;
+    transform: none !important;
+    transition: background-color .16s var(--h-e), border-color .16s var(--h-e) !important;
+}
+html a[class*="bg-gradient-to"]:hover, html button[class*="bg-gradient-to"]:hover,
+html .kbtn-primary:hover, html .kai-cat-cta:hover, html .kai-btn-glass:hover,
+html .kbtn-glass:hover, html .kai-mini-btn:hover, html .lb-toggle-btn:hover {
+    background-color: var(--h-acc-hover) !important;
+    border-color: var(--h-acc-hover) !important;
+    box-shadow: none !important;
+    transform: none !important;
+}
+html a[class*="bg-gradient-to"] svg, html button[class*="bg-gradient-to"] svg,
+html .kbtn-primary svg, html .kai-cat-cta svg { transform: none !important; }
+
+/* secondary / ghost */
+html .kbtn:not(.kbtn-primary):not(.kbtn-danger):not(.kbtn-success),
+html .ka-icon-btn, html .topic-btn, html button.bg-white, html a.bg-white,
+html button[class*="bg-gray-1"], html button[class*="bg-gray-2"] {
+    background: var(--h-surface) !important;
+    background-image: none !important;
+    border: 1px solid var(--h-line) !important;
+    color: var(--h-ink) !important;
+    border-radius: var(--h-r) !important;
+    box-shadow: none !important;
+    font-weight: 500 !important;
+    transform: none !important;
+}
+html .kbtn:not(.kbtn-primary):not(.kbtn-danger):not(.kbtn-success):hover,
+html .ka-icon-btn:hover, html .topic-btn:hover,
+html button.bg-white:hover, html a.bg-white:hover {
+    background: var(--h-surface-2) !important;
+    border-color: var(--h-line-2) !important;
+}
+html .topic-btn.bg-indigo-600, html .kbtn-success {
+    background: var(--h-acc) !important;
+    border-color: var(--h-acc) !important;
+    color: var(--h-on-acc) !important;
+}
+html .kbtn-success { background: var(--h-ok) !important; border-color: var(--h-ok) !important; color: #fff !important; }
+html .kbtn-danger, html button[class*="bg-red-5"], html button[class*="bg-red-6"] {
+    background: var(--h-bad) !important; border-color: var(--h-bad) !important; color: #fff !important;
+}
+
+/* pills / tabs / chips */
+html .cat-tab, html .kai-chip, html .lb-tab, html .kai-glass-chip {
+    background: transparent !important;
+    background-image: none !important;
+    border: 1px solid var(--h-line) !important;
+    color: var(--h-ink-2) !important;
+    border-radius: 999px !important;
+    box-shadow: none !important;
+    font-weight: 500 !important;
+    transform: none !important;
+    transition: background-color .16s var(--h-e), color .16s var(--h-e),
+                border-color .16s var(--h-e) !important;
+}
+html .cat-tab:hover, html .kai-chip:hover, html .lb-tab:hover {
+    background: var(--h-surface-2) !important;
+    border-color: var(--h-line-2) !important;
+    color: var(--h-ink) !important;
+    transform: none !important;
+}
+html .cat-tab.active, html .kai-chip.is-active, html .lb-tab.active {
+    background: var(--h-acc) !important;
+    border-color: var(--h-acc) !important;
+    color: var(--h-on-acc) !important;
+    box-shadow: none !important;
+    transform: none !important;
+}
+html .cat-tab .tab-badge {
+    background: var(--h-surface-2) !important;
+    color: var(--h-ink-2) !important;
+    font-weight: 500 !important;
+}
+html .cat-tab.active .tab-badge {
+    background: rgba(255, 250, 245, .22) !important;
+    color: var(--h-on-acc) !important;
+}
+
+/* badges keep meaning, lose the glow */
+html .kai-badge, html .kai-cat-badge, html .kai-cat-count, html .kai-id-badge,
+html .kai-auto-badge, html .kai-stat-chip, html .kai-done-badge, html .kai-lock-badge,
+html .kai-ticker-tag, html .kai-acc-num, html .kai-team-status {
+    background: var(--h-acc-tint) !important;
+    background-image: none !important;
+    border: 1px solid var(--h-acc-line) !important;
+    color: var(--h-acc) !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+    border-radius: 999px !important;
+    font-weight: 500 !important;
+}
+html .kai-badge--ok, html .kai-badge--done, html .kai-done-badge {
+    background: var(--h-ok-tint) !important; border-color: var(--h-ok) !important; color: var(--h-ok) !important;
+}
+html .kai-badge--locked, html .kai-lock-badge {
+    background: var(--h-surface-2) !important; border-color: var(--h-line) !important; color: var(--h-ink-3) !important;
+}
+
+html a:focus-visible, html button:focus-visible, html input:focus-visible,
+html select:focus-visible, html textarea:focus-visible, html [tabindex]:focus-visible {
+    outline: 2px solid var(--h-acc) !important;
+    outline-offset: 2px !important;
+}
+
+/* ---------------------------------------------------- 6. nav / hero / foot */
+html .ka-nav, html nav.sticky, html .ka-nav__shell, html #ka-drawer,
+html .ka-drawer-inner {
+    background: var(--h-surface) !important;
+    background-image: none !important;
+    border-color: var(--h-line) !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+}
+html .ka-nav { border-bottom: 1px solid var(--h-line) !important; }
+html .ka-navlinks {
+    background: transparent !important;
+    border: 0 !important;
+    padding: 0 !important;
+    gap: .1rem !important;
+}
+html .ka-navlinks__pill {
+    background: var(--h-acc-tint) !important;
+    background-image: none !important;
+    border: 0 !important;
+    box-shadow: none !important;
+    border-radius: 999px !important;
+}
+html .ka-navlink {
+    color: var(--h-ink-2) !important;
+    font-weight: 500 !important;
+    text-shadow: none !important;
+    border-radius: 999px !important;
+}
+html .ka-navlink:hover { color: var(--h-ink) !important; }
+html .ka-navlink.is-active, html .ka-navlink[aria-current] { color: var(--h-acc) !important; }
+html .ka-wordmark { color: var(--h-ink) !important; font-weight: 600 !important; }
+html .ka-wordmark.ka-gradient-text {
+    color: var(--h-ink-3) !important;
+    font-weight: 500 !important;
+    letter-spacing: .18em !important;
+}
+html .ka-vt-logo img { border-radius: var(--h-r-sm) !important; filter: none !important; transform: none !important; }
+html.dark .ka-vt-logo img { filter: none !important; }
+
+/* hero: warm ink band, light type — the one high-contrast moment */
+html .kai-hero, html .kai-about-hero,
+html header[class*="min-h-"], html header[class*="py-24"], html header[class*="py-20"],
+html header[class*="py-16"] {
+    background: var(--h-canvas-2) !important;
+    background-image: none !important;
+    border-bottom: 1px solid var(--h-line) !important;
+    min-height: 0 !important;
+    isolation: auto;
+}
+html .kai-hero { padding-block: clamp(3.5rem, 8vw, 6rem) !important; }
+html .kai-hero *, html .kai-about-hero * { text-shadow: none !important; }
+html .kai-hero h1, html .kai-hero h2, html .kai-hero .kai-neon-title,
+html .kai-hero [class*="bg-clip-text"], html .kai-about-hero h1, html .kai-about-hero h2 {
+    color: var(--h-ink) !important;
+}
+html .kai-hero p, html .kai-hero .text-slate-200\/90, html .kai-hero .text-slate-400 {
+    color: var(--h-ink-2) !important;
+}
+html .kai-typewriter { color: var(--h-acc) !important; }
+html .kai-caret { background: var(--h-acc) !important; box-shadow: none !important; }
+html .kai-hero .kai-stat-chip,
+html .kai-hero .inline-flex[class*="rounded-full"] {
+    background: var(--h-surface) !important;
+    border: 1px solid var(--h-line) !important;
+    color: var(--h-ink-2) !important;
+    box-shadow: none !important;
+}
+html .kai-hero .kai-tick { color: var(--h-ok) !important; }
+html .kai-sphere-stage { min-height: 340px !important; }
+html #kai-neuro-sphere { opacity: .55; filter: saturate(.7); }
+html .kai-orbit-core {
+    background: var(--h-surface) !important;
+    border: 1px solid var(--h-line) !important;
+    box-shadow: none !important;
+    color: var(--h-ink) !important;
+    border-radius: var(--h-r-lg) !important;
+    animation: none !important;
+}
+html .kai-orbit-core__signal, html .kai-orbit-core__sub, html .kai-orbit-status {
+    color: var(--h-ink-3) !important;
+    background: none !important;
+    border: 0 !important;
+    box-shadow: none !important;
+}
+html .kai-orbit-core__signal i, html .kai-orbit-status i,
+html .kai-id-status i, html .kai-stat-dot {
+    background: var(--h-ok) !important;
+    box-shadow: none !important;
+}
+html .kai-chip {   /* floating tech labels around the sphere */
+    background: var(--h-surface) !important;
+    border: 1px solid var(--h-line) !important;
+    color: var(--h-ink-2) !important;
+    box-shadow: none !important;
+    animation: none !important;
+}
+html .kai-chip .kai-chip-dot { background: var(--h-acc) !important; box-shadow: none !important; }
+/* the decorative SVG wave under the hero */
+html .kai-hero svg path { fill: var(--h-canvas) !important; opacity: 1 !important; }
+
+html footer {
+    background: var(--h-surface) !important;
+    background-image: none !important;
+    border-top: 1px solid var(--h-line) !important;
+    color: var(--h-ink-2);
+}
+html footer h5 { color: var(--h-ink) !important; }
+html .ka-footlink { color: var(--h-ink-2) !important; }
+html .ka-footlink:hover { color: var(--h-acc) !important; }
+
+/* ------------------------------------------------- 7. forms, code, meters */
+html input:not([type="checkbox"]):not([type="radio"]):not([type="range"]),
+html select, html textarea {
+    background: var(--h-surface) !important;
+    background-image: none !important;
+    border: 1px solid var(--h-line) !important;
+    color: var(--h-ink) !important;
+    border-radius: var(--h-r) !important;
+    box-shadow: none !important;
+    font-family: var(--h-font);
+}
+html input::placeholder, html textarea::placeholder { color: var(--h-ink-3) !important; }
+html input:focus, html select:focus, html textarea:focus {
+    border-color: var(--h-acc) !important;
+    outline: 2px solid color-mix(in srgb, var(--h-acc) 30%, transparent) !important;
+    outline-offset: 0 !important;
+}
+html pre, html code, html .prose-kurd pre, html .kai-console-head {
+    background: var(--h-surface-2) !important;
+    border: 1px solid var(--h-line) !important;
+    border-radius: var(--h-r-sm) !important;
+    color: var(--h-ink) !important;
+}
+html .kai-progress-track, html .kai-progress-track--slim, html .lb-bar-track {
+    background: var(--h-surface-2) !important;
+    background-image: none !important;
+    box-shadow: none !important;
+    border-radius: 999px !important;
+}
+html .kai-progress-fill, html .lb-bar-fill {
+    background: var(--h-acc) !important;
+    background-image: none !important;
+    box-shadow: none !important;
+}
+html .kai-progress-pct, html .kai-progress-pct--grad, html .kai-progress-label {
+    color: var(--h-ink-2) !important;
+    -webkit-text-fill-color: currentColor !important;
+    background: none !important;
+}
+
+/* ------------------------------------------------------------- 8. motion */
+html .kai-tilt, html .kai-lift, html .kai-uni-flip, html .kai-team-avatar,
+html .kai-cat-stack, html .kai-featured-row, html .kai-vt {
+    transform: none !important;
+    animation: none !important;
+    filter: none !important;
+    perspective: none !important;
+}
+html .animate-pulse, html .animate-ping, html .kai-eq i, html .kai-tool-signal i,
+html .lb-live, html .kai-id-status i, html .kai-orbit-core__signal i,
+html .kai-orbit-status i, html .kai-sphere-halo, html .kai-neon-title,
+html .kai-cat, html .cat-header, html .tool-card, html .kai-card-enter {
+    animation: none !important;
+}
+html .tool-card:hover svg, html .service-card:hover svg { filter: none !important; }
+html .group:hover [class*="group-hover\:rotate"],
+html .group:hover [class*="group-hover\:scale"],
+html .group:hover [class*="group-hover\:-translate"],
+html .group\/btn:hover [class*="group-hover\/btn\:rotate"] { transform: none !important; }
+html .kai-reveal, html .animate-slide-up, html .animate-fade-in, html .animate-fade,
+html .kai-hero-in, html [class*="kai-hero-in--"] {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+}
+
+/* ------------------------------------------ 9. tame Tailwind decorations */
+html .rounded-\[2rem\], html .rounded-\[2\.5rem\], html .rounded-\[3rem\],
+html .rounded-\[1\.75rem\], html .rounded-\[28px\], html .rounded-\[24px\],
+html .rounded-3xl, html .rounded-2xl { border-radius: var(--h-r-lg) !important; }
+html .rounded-xl, html .rounded-lg { border-radius: var(--h-r) !important; }
+
+html .shadow-2xl, html .shadow-xl, html .shadow-lg { box-shadow: var(--h-s2) !important; }
+html .shadow-md, html .shadow-sm, html .shadow { box-shadow: var(--h-s1) !important; }
+html [class*="shadow-\["] { box-shadow: var(--h-s1) !important; }
+html .mix-blend-multiply, html .mix-blend-lighten, html .mix-blend-screen,
+html .mix-blend-overlay { mix-blend-mode: normal !important; }
+html .blur-3xl, html .blur-2xl, html .blur-xl, html .blur-lg { filter: none !important; }
+html .ring-1, html .ring-2, html .ring { box-shadow: none !important; }
+html .border-2, html .border-4 { border-width: 1px !important; }
+html [class*="border-t-4"], html [class*="border-b-4"] { border-top-width: 1px !important; border-bottom-width: 1px !important; }
+html .divide-y > * + *, html .divide-x > * + * { border-color: var(--h-line) !important; }
+html [class*="border-gray-"], html [class*="border-slate-"],
+html [class*="border-blue-"], html [class*="border-purple-"],
+html [class*="border-indigo-"], html [class*="border-cyan-"] { border-color: var(--h-line) !important; }
+html [class*="bg-white/"], html [class*="bg-black/"],
+html [class*="bg-gray-800/"], html [class*="bg-gray-900/"] {
+    background-color: var(--h-surface) !important;
+}
+html .prose-kurd a, html main a.underline {
+    color: var(--h-acc) !important;
+    text-decoration-color: var(--h-acc-line);
+    text-underline-offset: 3px;
+}
+
+/* accent text utilities → the single accent */
+html [class*="text-blue-"], html [class*="text-indigo-"], html [class*="text-purple-"],
+html [class*="text-cyan-"], html [class*="text-sky-"], html [class*="text-violet-"],
+html [class*="text-pink-"], html [class*="text-rose-"], html [class*="text-fuchsia-"] {
+    color: var(--h-acc) !important;
+}
+html [class*="text-emerald-"], html [class*="text-green-"], html [class*="text-teal-"] { color: var(--h-ok) !important; }
+html [class*="text-amber-"], html [class*="text-yellow-"], html [class*="text-orange-"] { color: var(--h-warn) !important; }
+html [class*="text-red-"] { color: var(--h-bad) !important; }
+html [class*="bg-blue-1"], html [class*="bg-indigo-1"], html [class*="bg-purple-1"],
+html [class*="bg-cyan-1"], html [class*="bg-blue-5"][class*="/10"] { background-color: var(--h-acc-tint) !important; }
+
+/* --------------------------------------------- 10. component clean-ups
+   Specific places where a page sheet or an inline style still painted the
+   old skin. Each of these was found by auditing computed styles in the
+   browser (contrast, leftover cool hues, leftover animation), not guessed. */
+
+/* category tabs: kurdai-design.css also styles `.kai-tabs .cat-tab.active`
+   with !important, which beat the generic active rule and left white-on-paper
+   text. Match that specificity. */
+html .kai-tabs .cat-tab.active,
+html .kai-tabs .cat-tab.is-active,
+html section .cat-tab.active {
+    background: var(--h-acc) !important;
+    background-image: none !important;
+    border-color: var(--h-acc) !important;
+    color: var(--h-on-acc) !important;
+}
+html .kai-tabs .cat-tab.active .tab-badge,
+html section .cat-tab.active .tab-badge {
+    background: rgba(255, 250, 245, .24) !important;
+    color: var(--h-on-acc) !important;
+}
+
+/* leaderboard: gradient title, gold pulse rank, floating crown, glass toggle */
+html .lb-title, html .kai-stat-num, html .lb-model, html .lb-col-score span {
+    background: none !important;
+    background-image: none !important;
+    -webkit-text-fill-color: currentColor !important;
+    color: var(--h-ink) !important;
+    animation: none !important;
+}
+html .kai-stat-num { color: var(--h-ink-2) !important; }
+html .lb-rank, html .lb-rank-1, html .lb-rank-2, html .lb-rank-3 {
+    background: var(--h-acc-tint) !important;
+    background-image: none !important;
+    color: var(--h-acc) !important;
+    border: 1px solid var(--h-acc-line) !important;
+    box-shadow: none !important;
+    animation: none !important;
+}
+html .lb-crown { animation: none !important; }
+html .lb-toggle-btn, html #lb-toggle-label {
+    background: var(--h-surface) !important;
+    border-color: var(--h-line) !important;
+    color: var(--h-ink) !important;
+}
+
+/* news: ticker, image date stamp, read button */
+html .kai-ticker-item { color: var(--h-ink-2) !important; }
+html .kai-ticker-track { animation: none !important; }
+html .kai-ticker-tag { animation: none !important; }
+html .kai-stamp, html [class*="bg-black/"] .kai-stamp,
+html .kai-news-card .absolute[class*="bg-black"] {
+    background: rgba(30, 22, 16, .78) !important;
+    color: #fffaf5 !important;
+    border: 0 !important;
+}
+html .kai-read-btn {
+    background: var(--h-acc) !important;
+    background-image: none !important;
+    color: var(--h-on-acc) !important;
+    border: 1px solid var(--h-acc) !important;
+}
+html .kai-read-btn:hover {
+    background: var(--h-acc-hover) !important;
+    border-color: var(--h-acc-hover) !important;
+}
+
+/* universities: degree chips were orange-100 on orange-100 */
+html [class*="bg-orange-1"], html [class*="bg-amber-1"], html [class*="bg-yellow-1"] {
+    background-color: var(--h-warn-tint) !important;
+    color: var(--h-warn) !important;
+    border-color: var(--h-warn) !important;
+}
+html [class*="bg-emerald-1"], html [class*="bg-green-1"], html [class*="bg-teal-1"] {
+    background-color: var(--h-ok-tint) !important;
+    color: var(--h-ok) !important;
+}
+html [class*="bg-red-1"], html [class*="bg-rose-1"] {
+    background-color: var(--h-bad-tint) !important;
+    color: var(--h-bad) !important;
+}
+
+/* about: per-member conic beam ring + per-member accent text */
+html .kai-team-ring { display: none !important; }
+html .kai-team-uni {
+    color: var(--h-acc) !important;
+    background: var(--h-acc-tint) !important;
+    border-color: var(--h-acc-line) !important;
+}
+html .kai-team-name { color: var(--h-ink) !important; }
+html .kai-team-link, html .kai-team-contacts a {
+    background: var(--h-surface-2) !important;
+    border: 1px solid var(--h-line) !important;
+    color: var(--h-ink) !important;
+}
+
+/* ferga: XP / save toasts were white text on a gradient we flattened away,
+   and the lesson wells carried a cool inline border */
+html .xp-popup {
+    background: var(--h-ink) !important;
+    background-image: none !important;
+    color: #fffaf5 !important;
+    border: 0 !important;
+    border-radius: var(--h-r) !important;
+    box-shadow: var(--h-s3) !important;
+    animation: none !important;
+}
+html .xp-popup * { color: #fffaf5 !important; }
+html #display-content.ai-lesson-content > .rendered-content-box,
+html .rendered-content-box {
+    background: var(--h-surface) !important;
+    border: 1px solid var(--h-line) !important;
+    border-radius: var(--h-r-lg) !important;
+    box-shadow: var(--h-s1) !important;
+}
+html .kai-progress-track, html .kai-progress-track--slim {
+    border: 1px solid var(--h-line) !important;
+    box-shadow: none !important;
+}
+
+/* card body copy: .kai-cat-sub is set by kai-aurora-pro.css at 4.38:1 */
+html .kai-cat-sub, html .kai-cat-soon-note { color: var(--h-ink-2) !important; }
+html .kai-cat-title { color: var(--h-ink) !important; font-weight: 600 !important; }
+
+/* hero HUD labels sat at ~3:1 */
+html .kai-orbit-core__signal, html .kai-orbit-core__sub,
+html .kai-orbit-status, html .kai-orbit-status b, html .kai-orbit-status span {
+    color: var(--h-ink-2) !important;
+}
+html .kai-cat-icon { animation: none !important; }
+html .kbtn, html .kbtn-primary { animation: none !important; }
+
+/* dark inverted bands (the CTA strip, the footer) keep light type: the section
+   gradient is flattened to ink, so anything inside that assumed a coloured
+   backdrop is remapped to the on-ink pair. */
+html section[class*="from-blue-6"],
+html section[class*="from-indigo-6"],
+html section[class*="from-purple-6"],
+html section[class*="from-purple-7"],
+html footer[class*="bg-gray-9"] {
+    background: var(--h-ink) !important;
+    background-image: none !important;
+    border: 0 !important;
+}
+html section[class*="from-blue-6"] *,
+html section[class*="from-indigo-6"] *,
+html section[class*="from-purple-6"] *,
+html section[class*="from-purple-7"] * { color: #fdf8f2 !important; }
+html section[class*="from-blue-6"] h1, html section[class*="from-blue-6"] h2,
+html section[class*="from-blue-6"] h3, html section[class*="from-indigo-6"] h3 { color: #fffdfa !important; }
+html section[class*="from-blue-6"] a[class*="bg-white"]:not([class*="/"]),
+html section[class*="from-indigo-6"] a[class*="bg-white"]:not([class*="/"]) {
+    background: #fffdfa !important;
+    border-color: #fffdfa !important;
+    color: var(--h-ink) !important;
+}
+html section[class*="from-blue-6"] a[class*="bg-white/"],
+html section[class*="from-indigo-6"] a[class*="bg-white/"] {
+    background: transparent !important;
+    border: 1px solid rgba(253, 248, 242, .38) !important;
+    color: #fdf8f2 !important;
+}
+html section[class*="from-blue-6"] a[class*="bg-white/"]:hover {
+    background: rgba(253, 248, 242, .12) !important;
+}
+html footer[class*="bg-gray-9"], html footer[class*="bg-gray-9"] p,
+html footer[class*="bg-gray-9"] li, html footer[class*="bg-gray-9"] span { color: #d8cec2 !important; }
+html footer[class*="bg-gray-9"] h4, html footer[class*="bg-gray-9"] h5,
+html footer[class*="bg-gray-9"] .text-white { color: #fffdfa !important; }
+html footer[class*="bg-gray-9"] a { color: #d8cec2 !important; }
+html footer[class*="bg-gray-9"] a:hover { color: #fffdfa !important; }
+html footer[class*="bg-gray-9"] [class*="bg-gray-8"],
+html footer[class*="bg-gray-9"] [class*="bg-white/"] {
+    background: rgba(253, 248, 242, .08) !important;
+    border-color: rgba(253, 248, 242, .16) !important;
+}
+
+/* tool-page stat pills (kai-tools.css sets its own colour at ~3:1) */
+html .kai-stat, html .kai-stat-num, html .kai-tool-idx {
+    background: var(--h-surface) !important;
+    border: 1px solid var(--h-line) !important;
+    color: var(--h-ink-2) !important;
+    box-shadow: none !important;
+}
+html .kai-tool-idx { background: none !important; border: 0 !important; }
+html .lb-row { animation: none !important; }
+html .kai-cat-letter { color: var(--h-ink) !important; }
+
+@media (prefers-reduced-motion: reduce) {
+    html * { animation: none !important; transition: none !important; }
+}

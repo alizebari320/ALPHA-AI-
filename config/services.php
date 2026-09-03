@@ -35,4 +35,39 @@ return [
         ],
     ],
 
+    'whatsapp' => [
+        'token' => env('WHATSAPP_API_TOKEN'),
+        'phone_number_id' => env('WHATSAPP_PHONE_NUMBER_ID'),
+        'template_name' => env('WHATSAPP_TEMPLATE_NAME', 'otp_code'),
+        'template_language' => env('WHATSAPP_TEMPLATE_LANGUAGE', 'ar'),
+        'test_mode' => env('WHATSAPP_TEST_MODE', false),
+    ],
+
+    'otp' => [
+        'expires_minutes' => (int) env('OTP_EXPIRES_MINUTES', 10),
+        'cooldown_seconds' => (int) env('OTP_SEND_COOLDOWN_SECONDS', 60),
+        'max_attempts' => (int) env('OTP_MAX_ATTEMPTS', 5),
+    ],
+
+    /*
+    | Shared secret for machine-to-machine endpoints — currently the
+    | automated AI news pipeline (POST /api/news/automated-store).
+    */
+    'website' => [
+        'api_secret' => env('WEBSITE_API_SECRET'),
+    ],
+
+    /*
+    | Firebase Realtime Database — the live news node the site renders from.
+    | Writes need auth: a service-account key is preferred, with an
+    | admin email/password sign-in as the fallback.
+    */
+    'firebase' => [
+        'database_url' => config('kurdai.firebase.databaseURL') ?: 'https://ai-platform-adb1b-default-rtdb.firebaseio.com',
+        'credentials' => env('FIREBASE_SERVICE_ACCOUNT', base_path('firebase_credentials.json')),
+        'api_key' => config('kurdai.firebase.api_key'),
+        'admin_email' => env('FIREBASE_ADMIN_EMAIL'),
+        'admin_password' => env('FIREBASE_ADMIN_PASSWORD'),
+    ],
+
 ];

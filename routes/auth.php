@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\ConfirmablePasswordController;
+use App\Http\Controllers\Auth\EmailAuthController;
+use App\Http\Controllers\Auth\SocialAuthController;
 use App\Http\Controllers\Auth\EmailVerificationNotificationController;
 use App\Http\Controllers\Auth\EmailVerificationPromptController;
 use App\Http\Controllers\Auth\NewPasswordController;
@@ -33,6 +35,14 @@ Route::middleware('guest')->group(function () {
 
     Route::post('reset-password', [NewPasswordController::class, 'store'])
         ->name('password.store');
+
+    Route::post('auth/social', [SocialAuthController::class, 'exchange'])
+        ->middleware('throttle:10,1')
+        ->name('auth.social');
+
+    Route::post('auth/email', [EmailAuthController::class, 'login'])
+        ->middleware('throttle:10,1')
+        ->name('auth.email');
 });
 
 Route::middleware('auth')->group(function () {

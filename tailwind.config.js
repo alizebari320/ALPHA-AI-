@@ -1,63 +1,51 @@
-import defaultTheme from 'tailwindcss/defaultTheme';
-import forms from '@tailwindcss/forms';
-
-/** @type {import('tailwindcss').Config} */
+/** KURD AI production Tailwind build — replaces the Play CDN (runtime compiler). */
 export default {
     darkMode: 'class',
     content: [
-        './vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php',
-        './storage/framework/views/*.php',
         './resources/views/**/*.blade.php',
+        './public/js/**/*.js',
+        './resources/js/**/*.js',
     ],
-
     theme: {
         extend: {
-            colors: {
-                graphite: '#0c0c0e',
-                ink: '#0c0c0e',
-                panel: '#151518',
-                gold: '#f0b429',
-                golddeep: '#a16207',
-                cream: '#f3efe6',
-
-                // AI Tools directory — exact spec palette
-                surface: '#0D0D0E',
-                card: '#18181B',
-                accent: '#F59E0B',
-                edge: '#27272A',
-            },
             fontFamily: {
-                sans: ['Inter', ...defaultTheme.fontFamily.sans],
-                display: ['Oswald', 'sans-serif'],
-                mega: ['Bebas Neue', 'sans-serif'],
-                mono: ['JetBrains Mono', ...defaultTheme.fontFamily.mono],
-                kurdish: ['"Noto Naskh Arabic"', '"Segoe UI"', 'Tahoma', 'sans-serif'],
+                sans: ['"Noto Sans Arabic"', 'sans-serif'],
             },
-            boxShadow: {
-                offset: '4px 4px 0px 0px rgba(245,158,11,0.2)',
-                'offset-lg': '6px 6px 0px 0px rgba(245,158,11,0.35)',
+            animation: {
+                blob: 'blob 7s infinite',
+                'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                float: 'float 6s ease-in-out infinite',
+                'fade-up': 'fadeUp 0.6s ease-out',
+                'fade-in': 'fadeIn 0.8s ease-out',
+                'slide-up': 'slideUp 0.5s ease-out',
             },
             keyframes: {
-                'card-in': {
-                    '0%': { opacity: '0', transform: 'translateY(14px) scale(.97)' },
-                    '100%': { opacity: '1', transform: 'translateY(0) scale(1)' },
+                blob: {
+                    '0%': { transform: 'translate(0px, 0px) scale(1)' },
+                    '33%': { transform: 'translate(30px, -50px) scale(1.1)' },
+                    '66%': { transform: 'translate(-20px, 20px) scale(0.9)' },
+                    '100%': { transform: 'translate(0px, 0px) scale(1)' },
                 },
-                'modal-in': {
-                    '0%': { opacity: '0', transform: 'translateY(24px) scale(.96)' },
-                    '100%': { opacity: '1', transform: 'translateY(0) scale(1)' },
+                float: {
+                    '0%, 100%': { transform: 'translateY(0px)' },
+                    '50%': { transform: 'translateY(-20px)' },
                 },
-                'toast-in': {
-                    '0%': { opacity: '0', transform: 'translateY(16px)' },
+                fadeUp: {
+                    '0%': { opacity: '0', transform: 'translateY(30px)' },
+                    '100%': { opacity: '1', transform: 'translateY(0)' },
+                },
+                fadeIn: {
+                    '0%': { opacity: '0' },
+                    '100%': { opacity: '1' },
+                },
+                slideUp: {
+                    '0%': { opacity: '0', transform: 'translateY(20px)' },
                     '100%': { opacity: '1', transform: 'translateY(0)' },
                 },
             },
-            animation: {
-                'card-in': 'card-in .38s cubic-bezier(.16,1,.3,1) both',
-                'modal-in': 'modal-in .3s cubic-bezier(.16,1,.3,1) both',
-                'toast-in': 'toast-in .28s cubic-bezier(.16,1,.3,1) both',
-            },
         },
     },
-
-    plugins: [forms],
+    corePlugins: {
+        preflight: true,
+    },
 };

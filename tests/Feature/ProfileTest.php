@@ -12,25 +12,13 @@ class ProfileTest extends TestCase
 
     public function test_profile_page_is_displayed(): void
     {
-        // /profile is the admin console and is gated by AdminMiddleware.
-        $admin = User::factory()->create([
-            'email' => config('alphaai.admin_emails')[0],
-        ]);
+        $user = User::factory()->create();
 
         $response = $this
-            ->actingAs($admin)
+            ->actingAs($user)
             ->get('/profile');
 
         $response->assertOk();
-    }
-
-    public function test_profile_page_is_not_visible_to_non_admins(): void
-    {
-        $user = User::factory()->create(['email' => 'random@example.com']);
-
-        $this->actingAs($user)
-            ->get('/profile')
-            ->assertForbidden();
     }
 
     public function test_profile_information_can_be_updated(): void
@@ -39,14 +27,14 @@ class ProfileTest extends TestCase
 
         $response = $this
             ->actingAs($user)
-            ->patch('/profile-breeze', [
+            ->patch('/profile', [
                 'name' => 'Test User',
                 'email' => 'test@example.com',
             ]);
 
         $response
             ->assertSessionHasNoErrors()
-            ->assertRedirect('/profile-breeze');
+            ->assertRedirect('/profile');
 
         $user->refresh();
 
@@ -61,14 +49,14 @@ class ProfileTest extends TestCase
 
         $response = $this
             ->actingAs($user)
-            ->patch('/profile-breeze', [
+            ->patch('/profile', [
                 'name' => 'Test User',
                 'email' => $user->email,
             ]);
 
         $response
             ->assertSessionHasNoErrors()
-            ->assertRedirect('/profile-breeze');
+            ->assertRedirect('/profile');
 
         $this->assertNotNull($user->refresh()->email_verified_at);
     }
@@ -79,7 +67,7 @@ class ProfileTest extends TestCase
 
         $response = $this
             ->actingAs($user)
-            ->delete('/profile-breeze', [
+            ->delete('/profile', [
                 'password' => 'password',
             ]);
 
@@ -97,14 +85,14 @@ class ProfileTest extends TestCase
 
         $response = $this
             ->actingAs($user)
-            ->from('/profile-breeze')
-            ->delete('/profile-breeze', [
+            ->from('/profile')
+            ->delete('/profile', [
                 'password' => 'wrong-password',
             ]);
 
         $response
             ->assertSessionHasErrorsIn('userDeletion', 'password')
-            ->assertRedirect('/profile-breeze');
+            ->assertRedirect('/profile');
 
         $this->assertNotNull($user->fresh());
     }
