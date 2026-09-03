@@ -111,16 +111,10 @@ Route::get('/ferga/upload', [\App\Http\Controllers\FergaSeedController::class, '
 Route::post('/ferga/run-php', [AdminController::class, 'runPhpCode']);
 Route::post('/ferga/run-code', [AdminController::class, 'runCode']);
 Route::post('/ferga/run-cloud', [AdminController::class, 'runCloud']);
-Route::get('/about', function () {
-    return view('about');
-});
 Route::get('/news', function () {
     return view('news');
 });
 Route::get('/universities', function () {
     return view('universities');
 })->name('universities');
-Route::get('/general-info', function () {
-    return view('general_info');
-})->name('general-info');
 require __DIR__.'/auth.php';

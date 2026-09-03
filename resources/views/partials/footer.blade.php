@@ -43,7 +43,6 @@
                     <ul class="space-y-3 text-sm text-gray-600 dark:text-gray-400">
                         <li><a href="/academic-guide" class="ka-footlink lang-str" data-so="ڕێنیشاندەر"    data-ba="ڕێبەر">ڕێنیشاندەر</a></li>
                         <li><a href="/universities"   class="ka-footlink lang-str" data-so="زانکۆکان"      data-ba="زانکۆ">زانکۆکان</a></li>
-                        <li><a href="/about"          class="ka-footlink lang-str" data-so="دەربارەی ئێمە" data-ba="دەربارەی مە">دەربارەی ئێمە</a></li>
                     </ul>
                 </div>
             </div>
@@ -51,8 +50,8 @@
 
         <div class="border-t border-[var(--ka-line-soft)] py-6">
             <p class="text-center text-sm text-gray-500 dark:text-gray-500 lang-str"
-               data-so="گەشەپێدراوە لەلایەن تیمی کورد ئەی ئای © ٢٠٢٦"
-               data-ba="هاتیە پێشڤەبرن ژ لایێ تیمێ کورد ئەی ئای © ٢٠٢٦">گەشەپێدراوە لەلایەن تیمی کورد ئەی ئای © ٢٠٢٦</p>
+               data-so="گەشەپێدراوە لەلایەن تیمی ئەلفا ئەی ئای © ٢٠٢٦"
+               data-ba="هاتیە پێشڤەبرن ژ لایێ تیمێ ئەلفا ئەی ئای © ٢٠٢٦">گەشەپێدراوە لەلایەن تیمی ئەلفا ئەی ئای © ٢٠٢٦</p>
         </div>
     </div>
 

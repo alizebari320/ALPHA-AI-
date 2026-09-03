@@ -35,15 +35,6 @@
         <header class="w-full lg:max-w-4xl max-w-[335px] text-sm mb-6 not-has-[nav]:hidden">
             @if (Route::has('login'))
                 <nav class="flex items-center justify-end gap-4">
-                    <section id="about" class="py-16 text-center">
-    <div class="max-w-3xl mx-auto bg-gray-900 p-8 rounded-2xl border border-gray-700">
-        <h2 class="text-3xl font-bold text-blue-400 mb-4">دەربارەی ئێمە</h2>
-        <p class="text-gray-300">
-            Kurd AI پرۆژەیەکی پێشەنگە بۆ خزمەتکردنی گەنجانی کورد لە بواری زیرەکی دەستکرد و پرۆگرامینگ. 
-            ئامانجمان فێرکردنی زانستی سەردەمە بە زمانی کوردی.
-        </p>
-    </div>
-</section>
                 @auth
                         <a
                             href="{{ url('/dashboard') }}"

@@ -1,6 +1,6 @@
 {{--
     ============================================================
-    KURD AI — ناڤبار (shared navigation)
+    ALPHA AI — ناڤبار (shared navigation)
     ============================================================
     Usage:  @include('partials.nav', ['active' => 'home'])
 
@@ -21,8 +21,6 @@
         ['key' => 'ai-tools',       'href' => '/ai-tools',        'so' => 'تووڵەکان',     'ba' => 'ئامراز'],
         ['key' => 'academic-guide', 'href' => '/academic-guide',  'so' => 'ڕێنیشاندەر',   'ba' => 'ڕێبەر'],
         ['key' => 'universities',   'href' => '/universities',    'so' => 'زانکۆکان',     'ba' => 'زانکۆ'],
-        ['key' => 'general-info',   'href' => '/general-info',    'so' => 'زانیاری گشتی', 'ba' => 'زانیاری گشتی'],
-        ['key' => 'about',          'href' => '/about',           'so' => 'دەربارەی ئێمە','ba' => 'دەربارەی مە'],
     ];
 @endphp
 
@@ -35,7 +33,7 @@
                 <div class="relative flex-shrink-0">
                     <div class="absolute -inset-2.5 rounded-full blur-xl opacity-0 group-hover:opacity-60 transition-opacity duration-500"
                          style="background: var(--ka-brand-gradient);"></div>
-                    <img src="/logo.jpg" alt="Kurd AI Logo"
+                    <img src="/logo.jpg" alt="ALPHA AI Logo"
                          class="relative z-10 h-10 md:h-11 w-auto object-contain rounded-xl dark:invert drop-shadow-md
                                 group-hover:scale-110 group-hover:-rotate-3 transition-transform duration-500"
                          style="transition-timing-function: var(--ka-spring);">
@@ -43,7 +41,7 @@
                 <div class="hidden sm:flex flex-col justify-center leading-none">
                     <span class="ka-wordmark text-xl md:text-2xl font-bold tracking-tight text-gray-900 dark:text-white
                                  group-hover:text-blue-600 dark:group-hover:text-cyan-400 transition-colors duration-300">
-                        KURD AI
+                        ALPHA AI
                     </span>
                     <span class="ka-wordmark ka-gradient-text text-[0.55rem] md:text-[0.6rem] font-bold tracking-[0.22em] mt-1">
                         INNOVATION · FUTURE

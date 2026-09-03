@@ -4,18 +4,18 @@
 <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="/favicon.png" type="image/png">
-    <title>سەرەکی - کورد ئەی ئای</title>
+    <title>سەرەکی - ئەلفا ئەی ئای</title>
 
-    <meta name="description" content="Kurd AI - پلاتفۆرمی فێربوونی زیرەکی دەستکرد و پرۆگرامسازی بە زمانی کوردی">
-    <meta name="keywords" content="Kurd AI, کورد ئەی ئای, زیرەکی دەستکرد, پرۆگرامسازی, کوردی, فێربوون, AI, programming">
+    <meta name="description" content="ALPHA AI - پلاتفۆرمی فێربوونی زیرەکی دەستکرد و پرۆگرامسازی بە زمانی کوردی">
+    <meta name="keywords" content="ALPHA AI, ئەلفا ئەی ئای, زیرەکی دەستکرد, پرۆگرامسازی, کوردی, فێربوون, AI, programming">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://alpha-ai.com">
-    <meta property="og:title" content="KURD AI - پلاتفۆرمی فێربوونی زیرەکی دەستکرد">
+    <meta property="og:title" content="ALPHA AI - پلاتفۆرمی فێربوونی زیرەکی دەستکرد">
     <meta property="og:description" content="فێربوونی زیرەکی دەستکرد و پرۆگرامسازی بە زمانی کوردی، لەگەڵ کۆرس، ئامرازەکانی AI، و ڕێنیشاندەری ئەکادیمی">
     <meta property="og:image" content="https://alpha-ai.com/logo.jpg">
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:url" content="https://alpha-ai.com">
-    <meta property="twitter:title" content="KURD AI - پلاتفۆرمی فێربوونی زیرەکی دەستکرد">
+    <meta property="twitter:title" content="ALPHA AI - پلاتفۆرمی فێربوونی زیرەکی دەستکرد">
     <meta property="twitter:description" content="فێربوونی زیرەکی دەستکرد و پرۆگرامسازی بە زمانی کوردی، لەگەڵ کۆرس، ئامرازەکانی AI، و ڕێنیشاندەری ئەکادیمی">
     <meta property="twitter:image" content="https://alpha-ai.com/logo.jpg">
 
@@ -103,7 +103,7 @@
                 </div>
 
                 <h2 class="kai-neon-title kai-hero-in--d1 text-5xl md:text-6xl xl:text-7xl font-black mb-3 tracking-tight leading-tight">
-                    KURD AI
+                    ALPHA AI
                 </h2>
                 <p class="text-xl md:text-2xl font-black text-slate-200/90 mb-2 kai-hero-in--d2 lang-str"
                    data-so="دەروازەیەک بەرەو داهاتووی ژیریی دەستکرد"
@@ -144,7 +144,7 @@
                 <div id="kai-neuro-sphere"></div>
                 <div class="kai-orbit-core">
                     <span class="kai-orbit-core__signal"><i></i> NEURAL CORE</span>
-                    <strong>KURD AI</strong>
+                    <strong>ALPHA AI</strong>
                     <span class="kai-orbit-core__sub">LEARN / BUILD / SHARE</span>
                 </div>
                 <span class="kai-chip kai-chip--a"><span class="kai-chip-dot"></span>Python</span>
@@ -152,7 +152,7 @@
                 <span class="kai-chip kai-chip--c"><span class="kai-chip-dot"></span>JavaScript</span>
                 <span class="kai-chip kai-chip--d"><span class="kai-chip-dot"></span>PyTorch</span>
                 <span class="kai-chip kai-chip--e"><span class="kai-chip-dot"></span>LLM</span>
-                <span class="kai-orbit-status"><i></i><span>KURD AI SYSTEM ONLINE</span><b>01</b></span>
+                <span class="kai-orbit-status"><i></i><span>ALPHA AI SYSTEM ONLINE</span><b>01</b></span>
             </div>
 
         </div>
@@ -179,7 +179,7 @@
     <div class="container mx-auto max-w-7xl relative z-10">
         <div class="text-center mb-16">
             <span class="inline-block px-4 py-1.5 bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 text-sm font-black rounded-full mb-4">بەشەکان</span>
-            <h3 class="text-4xl md:text-5xl font-black mb-4 text-gray-900 dark:text-white kai-grad-text lang-str" data-so="بەشەکانی پلاتفۆرمی کورد ئەی ئای" data-ba="بەشێن پلاتفۆرما کورد ئەی ئای">بەشەکانی پلاتفۆرمی کورد ئەی ئای</h3>
+            <h3 class="text-4xl md:text-5xl font-black mb-4 text-gray-900 dark:text-white kai-grad-text lang-str" data-so="بەشەکانی پلاتفۆرمی ئەلفا ئەی ئای" data-ba="بەشێن پلاتفۆرما ئەلفا ئەی ئای">بەشەکانی پلاتفۆرمی ئەلفا ئەی ئای</h3>
             <p class="text-gray-500 dark:text-gray-400 text-lg max-w-2xl mx-auto lang-str" data-so="هەموو ئەوەی پێویستە بۆ فێربوون و پەرەپێدان لە بواری ژیریی دەستکرددا، لە یەک شوێن." data-ba="هەمی ئەوا پێدڤی بۆ فێربوون و پێشڤەبرنێ د بوارێ ژیرییا دەستکرد دا، د ئێک جهی دا.">هەموو ئەوەی پێویستە بۆ فێربوون و پەرەپێدان لە بواری ژیریی دەستکرددا، لە یەک شوێن.</p>
         </div>
         
@@ -265,19 +265,7 @@
                 <p class="kai-cat-sub lang-str" data-so="دوایین هەواڵ و ڕووداوەکانی جیهانی تەکنەلۆژیا و زیرەکی دەستکرد." data-ba="دوماهیک نووچە و ڕووداوێن جیهانا تەکنەلۆژیایێ و ژیرییا دەستکرد.">دوایین هەواڵ و ڕووداوەکانی جیهانی تەکنەلۆژیا و زیرەکی دەستکرد.</p>
                         <span class="kai-cat-count lang-str" data-so="بەردەوام نوێ دەکرێتەوە" data-ba="بەردەوام دێتە نویکرن">بەردەوام نوێ دەکرێتەوە</span>
             </a>
-            <a href="/about" class="kai-cat kai-tilt group" style="--i:6; --beam-a:#fb7185; --beam-b:#d946ef; --kai-cat-glow-c:#fb718526;">
-                <span class="kai-beam"></span>
-                <span class="kai-cat-glow"></span>
-                <span class="kai-cat-deco-arrow"><svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7-7 7M21 12H3"/></svg></span>
-                <span class="kai-cat-icon">
-                    <span class="kai-cat-icon-bg bg-gradient-to-br from-rose-400 to-pink-400"></span>
-                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
-                </span>
-                <h4 class="kai-cat-title lang-str" data-so="دەربارەی ئێمە" data-ba="دەربارەی مە">دەربارەی ئێمە</h4>
-                <p class="kai-cat-sub lang-str" data-so="زانیاری دەربارەی تیمەکەمان، ئامانجەکانمان و پەیوەندیکردن پێمان." data-ba="پێزانین دەربارەی تیمێ مە، ئامانجێن مە و پەیوەندیکرن پێ مە.">زانیاری دەربارەی تیمەکەمان، ئامانجەکانمان و پەیوەندیکردن پێمان.</p>
-                        <span class="kai-cat-count lang-str" data-so="زیاتر بزانە" data-ba="زێدەتر بزانە">زیاتر بزانە</span>
-            </a>
-        
+
     </div>
 </section>
 
@@ -287,8 +275,8 @@
     
     <div class="container mx-auto max-w-7xl relative z-10">
         <div class="text-center mb-16">
-            <span class="inline-block px-4 py-1.5 bg-indigo-100 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-300 text-sm font-black rounded-full mb-4 lang-str" data-so="بۆچی کورد ئەی ئای؟" data-ba="بۆچی کورد ئەی ئای؟">بۆچی کورد ئەی ئای؟</span>
-            <h3 class="text-4xl md:text-5xl font-black mb-4 text-gray-900 dark:text-white kai-grad-text lang-str" data-so="بۆچی Kurd AI هەڵبژێرین؟" data-ba="بۆچی Kurd AI هەڵبژێری؟">بۆچی Kurd AI هەڵبژێرین؟</h3>
+            <span class="inline-block px-4 py-1.5 bg-indigo-100 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-300 text-sm font-black rounded-full mb-4 lang-str" data-so="بۆچی ئەلفا ئەی ئای؟" data-ba="بۆچی ئەلفا ئەی ئای؟">بۆچی ئەلفا ئەی ئای؟</span>
+            <h3 class="text-4xl md:text-5xl font-black mb-4 text-gray-900 dark:text-white kai-grad-text lang-str" data-so="بۆچی ALPHA AI هەڵبژێرین؟" data-ba="بۆچی ALPHA AI هەڵبژێری؟">بۆچی ALPHA AI هەڵبژێرین؟</h3>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -335,11 +323,10 @@
         <p class="text-xl text-blue-100 mb-10 max-w-2xl mx-auto lang-str" data-so="بەشداربە لە گەشەپێدانی تواناکانت لە بواری ژیریی دەستکرددا، بە تەواوی خۆڕایی." data-ba="بەشداربە د پێشڤەبرنا شیانێن خۆ دا د بوارێ ژیرییا دەستکرد دا، ب تەواوی بێ بەرامبەر.">بەشداربە لە گەشەپێدانی تواناکانت لە بواری ژیریی دەستکرددا، بە تەواوی خۆڕایی.</p>
         <div class="flex flex-wrap justify-center gap-4">
             <a href="/ferga" class="px-10 py-4 bg-white text-indigo-700 font-black rounded-2xl text-lg shadow-xl hover:shadow-2xl hover:-translate-y-1 transition-all lang-str" data-so="دەستپێبکە ئێستا" data-ba="دەستپێبکە نوکە">دەستپێبکە ئێستا</a>
-            <a href="/about" class="px-10 py-4 bg-white/10 text-white font-black rounded-2xl text-lg border border-white/30 hover:bg-white/20 hover:-translate-y-1 transition-all lang-str" data-so="زیاتر بزانە" data-ba="زێدەتر بزانە">زیاتر بزانە</a>
         </div>
     </div>
 </section>
- 
+
 <!-- ===== فووتەری سەرەکی (Footer) ===== -->
 <footer class="bg-gray-900 dark:bg-[#050a18] text-gray-400">
     <div class="container mx-auto max-w-7xl px-4 py-16">
@@ -347,9 +334,9 @@
             
             <div>
                 <div class="flex items-center gap-3 mb-6">
-                    <img src="logo.jpg" alt="Kurd AI" class="h-10 w-auto object-contain dark:invert">
+                    <img src="logo.jpg" alt="ALPHA AI" class="h-10 w-auto object-contain dark:invert">
                     <div>
-                        <h4 class="text-lg font-black text-white">KURD AI</h4>
+                        <h4 class="text-lg font-black text-white">ALPHA AI</h4>
                         <span class="text-[0.5rem] font-black tracking-widest text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-400">INNOVATION - FUTURE</span>
                     </div>
                 </div>
@@ -371,14 +358,13 @@
                 <ul class="space-y-3 text-sm">
                     <li><a href="/academic-guide" class="hover:text-blue-400 transition lang-str" data-so="ڕێنیشاندەر" data-ba="ڕێبەر">ڕێنیشاندەر</a></li>
                     <li><a href="/universities" class="hover:text-blue-400 transition lang-str" data-so="زانکۆکان" data-ba="زانکۆ">زانکۆکان</a></li>
-                    <li><a href="/about" class="hover:text-blue-400 transition lang-str" data-so="دەربارەی ئێمە" data-ba="دەربارەی مە">دەربارەی ئێمە</a></li>
                 </ul>
             </div>
 
         </div>
     </div>
     <div class="border-t border-gray-800 py-6">
-        <p class="text-center text-sm text-gray-500 lang-str" data-so="گەشەپێدراوە لەلایەن تیمی کورد ئەی ئای &copy; ٢٠٢٦" data-ba="هاتیە پێشڤەبرن ژ لایێ تیمێ کورد ئەی ئای &copy; ٢٠٢٦">گەشەپێدراوە لەلایەن تیمی کورد ئەی ئای &copy; ٢٠٢٦</p>
+        <p class="text-center text-sm text-gray-500 lang-str" data-so="گەشەپێدراوە لەلایەن تیمی ئەلفا ئەی ئای &copy; ٢٠٢٦" data-ba="هاتیە پێشڤەبرن ژ لایێ تیمێ ئەلفا ئەی ئای &copy; ٢٠٢٦">گەشەپێدراوە لەلایەن تیمی ئەلفا ئەی ئای &copy; ٢٠٢٦</p>
     </div>
 </footer>
 

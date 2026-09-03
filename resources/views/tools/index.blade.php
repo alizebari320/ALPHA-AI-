@@ -36,7 +36,6 @@
                 <a href="/" class="px-3 py-2 rounded-lg text-sm text-zinc-400 hover:text-accent transition-colors">{{ __('Home') }}</a>
                 <a href="{{ route('tools.index') }}" class="px-3 py-2 rounded-lg text-sm text-accent border-2 border-accent/30 bg-accent/10">{{ __('AI Tools') }}</a>
                 <a href="/news" class="px-3 py-2 rounded-lg text-sm text-zinc-400 hover:text-accent transition-colors">{{ __('News') }}</a>
-                <a href="/about" class="px-3 py-2 rounded-lg text-sm text-zinc-400 hover:text-accent transition-colors">{{ __('About') }}</a>
             </nav>
 
             {{-- language switcher --}}

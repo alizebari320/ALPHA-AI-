@@ -5,7 +5,7 @@
      ========================================== --}}
 
 {{-- Visit beacon for ALL visitors (admins and members) --}}
-<script>if (window.KaiTrack) { try { window.KaiTrack.visit('about'); } catch (e) {} }</script>
+<script>if (window.KaiTrack) { try { window.KaiTrack.visit('profile'); } catch (e) {} }</script>
 
     <div id="kai-site-analytics" class="hidden kai-analytics-console mt-24 pt-16 border-t border-gray-200/60 dark:border-gray-800">
 
@@ -35,7 +35,6 @@
                 <button data-tab="overview" class="kai-tab-btn px-3 py-1.5 rounded-xl text-xs font-black transition">سەرەکی</button>
                 <button data-tab="universities" class="kai-tab-btn px-3 py-1.5 rounded-xl text-xs font-black transition">زانکۆکان</button>
                 <button data-tab="ferga" class="kai-tab-btn px-3 py-1.5 rounded-xl text-xs font-black transition">فێرگە</button>
-                <button data-tab="general_info" class="kai-tab-btn px-3 py-1.5 rounded-xl text-xs font-black transition">زانیاری گشتی</button>
                 <button data-tab="courses" class="kai-tab-btn px-3 py-1.5 rounded-xl text-xs font-black transition">کۆرسەکان</button>
                 <button data-tab="academic_guide" class="kai-tab-btn px-3 py-1.5 rounded-xl text-xs font-black transition">ڕێنیشاندەر</button>
                 <button data-tab="ai_tools" class="kai-tab-btn px-3 py-1.5 rounded-xl text-xs font-black transition">تووڵەکان</button>
@@ -143,7 +142,7 @@
 
     <script type="application/json" id="kurdai-firebase-config">{!! json_encode(config('kurdai.firebase'), 15) !!}</script>
     <script type="module">
-        const SEC_TITLES = { universities: 'سەردانی زانکۆکان', ferga: 'سەردانی فێرگە', general_info: 'سەردانی زانیاری گشتی', courses: 'سەردانی کۆرسەکان', academic_guide: 'سەردانی ڕێنیشاندەر', ai_tools: 'سەردانی تووڵەکان', news: 'سەردانی هەواڵەکان' };
+        const SEC_TITLES = { universities: 'سەردانی زانکۆکان', ferga: 'سەردانی فێرگە', courses: 'سەردانی کۆرسەکان', academic_guide: 'سەردانی ڕێنیشاندەر', ai_tools: 'سەردانی تووڵەکان', news: 'سەردانی هەواڵەکان' };
 
         let currentLang = localStorage.getItem('site-lang') || 'so';
         const L = (so, ba) => currentLang === 'ba' ? ba : so;

@@ -55,8 +55,8 @@
        so non-SPA links never cost a byte or log an error. */
     var SPA_PATHS = {
         '/': 1, '/ferga': 1, '/courses': 1, '/news': 1, '/ai-tools': 1,
-        '/academic-guide': 1, '/universities': 1, '/general-info': 1,
-        '/about': 1, '/feedback': 1, '/profile': 1
+        '/academic-guide': 1, '/universities': 1,
+        '/feedback': 1, '/profile': 1
     };
     function isSpaPath(pathname) {
         return SPA_PATHS[pathname] === 1;
