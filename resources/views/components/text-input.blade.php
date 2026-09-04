@@ -1,3 +1,3 @@
 @props(['disabled' => false])
 
-<input @disabled($disabled) {{ $attributes->merge(['class' => 'al-input']) }}>
+<input @disabled($disabled) {{ $attributes->merge(['class' => 'a1-input']) }}>

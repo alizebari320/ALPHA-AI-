@@ -1,70 +1,64 @@
 <!DOCTYPE html>
-<html lang="ckb" dir="rtl">
+<html lang="ckb" dir="rtl" class="dark">
 <head>
-    @include('partials.alpha-head')
+    @include('partials.a1-head')
     <title>ALPHA AI — @yield('title')</title>
 </head>
-<body class="al-body">
+<body class="a1">
 
-@include('partials.alpha-nav', ['active' => 'universities'])
+@include('partials.a1-rail', ['active' => 'universities'])
 
-<script type="application/json" id="kurdai-firebase-config">{!! json_encode(config('kurdai.firebase'), 15) !!}</script>
-<script type="application/json" id="kurdai-imgbb-config">{!! json_encode(config('kurdai.imgbb.api_key'), 15) !!}</script>
-<script src="/js/kai-firebase.js?v=1" data-kai-shared defer></script>
 
-<main class="al-container al-section">
+<div class="a1-main">
+    <div class="a1-page">
 
-    <header style="margin-bottom: 26px">
-        <span class="al-kicker lang-str" data-so="خوێندن" data-ba="خوێندن">خوێندن</span>
-        <h1 style="font-size: 1.9rem" class="lang-str" data-so="زانکۆکان" data-ba="زانکۆ">زانکۆکان</h1>
-    </header>
+        <div class="a1-strip"><span class="a1-strip__dot"></span><span class="a1-strip__crumb">ALPHA / UNIS</span></div>
 
-    <div class="al-adminbar" id="al-adminbar" style="display:none">
-        <span class="al-tag al-tag--accent lang-str" data-so="دەسەڵاتی ئەدمین" data-ba="دەسەڵاتا ئەدمین">دەسەڵاتی ئەدمین</span>
-        <button type="button" id="al-add-open" class="al-btn al-btn--solid al-btn--sm lang-str" data-so="+ زانکۆی نوێ" data-ba="+ زانکۆیا نوی">+ زانکۆی نوێ</button>
-    </div>
-
-    <div class="al-grid" id="al-unis"></div>
-
-    {{-- add modal --}}
-    <div class="al-modal" id="al-add-modal" hidden>
-        <div class="al-modal__box">
-            <div class="al-modal__head">
-                <h3 class="lang-str" data-so="زیادکردنی زانکۆ" data-ba="زێدەکرنا زانکۆیێ">زیادکردنی زانکۆ</h3>
-                <button type="button" class="al-iconbtn" data-al-close="al-add-modal">✕</button>
-            </div>
-            <form id="al-add-form" class="al-modal__body">
-                <label class="al-field"><span class="al-field__label">Name (سۆرانی)</span>
-                    <input type="text" id="uni_name_so" required class="al-input"></label>
-                <label class="al-field"><span class="al-field__label">Name (بادینی)</span>
-                    <input type="text" id="uni_name_ba" required class="al-input"></label>
-                <label class="al-field"><span class="al-field__label">Logo URL</span>
-                    <input type="url" id="uni_logo_url" dir="ltr" class="al-input" placeholder="https://..."></label>
-                <label class="al-field"><span class="al-field__label">Web URL</span>
-                    <input type="url" id="uni_web_url" dir="ltr" class="al-input" placeholder="https://..."></label>
-                <button type="submit" id="submit-form-btn" class="al-btn al-btn--solid" style="width:100%">
-                    <span class="lang-str" data-so="زیادکردن" data-ba="زێدەکرن">زیادکردن</span></button>
-            </form>
+        <div class="a1-section-head">
+            <h2 class="lang-str" data-so="زانکۆکان" data-ba="زانکۆ">زانکۆکان</h2>
+            <span class="a1-index" id="a1-count">—</span>
         </div>
-    </div>
 
-    {{-- schedule modal --}}
-    <div class="al-modal" id="al-schedule-modal" hidden>
-        <div class="al-modal__box">
-            <div class="al-modal__head">
-                <h3 class="lang-str" data-so="خشتەی هەفتانە" data-ba="خشتەیا هەفتانە">خشتەی هەفتانە</h3>
-                <button type="button" class="al-iconbtn" data-al-close="al-schedule-modal">✕</button>
-            </div>
-            <div class="al-modal__body" id="al-schedule-body"></div>
+        <div class="a1-hrow" style="margin-bottom:22px">
+            <span></span>
+            <button type="button" id="a1-add-open" class="a1-btn a1-btn--accent a1-btn--sm lang-str admin-only" data-so="+ زانکۆی نوێ" data-ba="+ زانکۆیا نوی" style="display:none">+ زانکۆی نوێ</button>
         </div>
+
+        <div class="a1-rows" id="a1-unis"></div>
+
+        <div class="a1-sheet" id="a1-add-sheet" hidden>
+            <div class="a1-sheet__box">
+                <div class="a1-sheet__head">
+                    <span class="lang-str" data-so="زانکۆی نوێ" data-ba="زانکۆیا نوی">زانکۆی نوێ</span>
+                    <button type="button" class="a1-btn a1-btn--quiet a1-btn--sm" data-a1-close="a1-add-sheet">✕</button>
+                </div>
+                <form id="a1-add-form" class="a1-sheet__body">
+                    <label class="a1-field"><span class="a1-field__label">NAME — سۆرانی</span><input type="text" id="uni_name_so" required class="a1-input"></label>
+                    <label class="a1-field"><span class="a1-field__label">NAME — بادینی</span><input type="text" id="uni_name_ba" required class="a1-input"></label>
+                    <label class="a1-field"><span class="a1-field__label">LOGO URL</span><input type="url" id="uni_logo_url" dir="ltr" class="a1-input" placeholder="https://"></label>
+                    <label class="a1-field"><span class="a1-field__label">WEB URL</span><input type="url" id="uni_web_url" dir="ltr" class="a1-input" placeholder="https://"></label>
+                    <button type="submit" class="a1-btn a1-btn--accent" style="width:100%">
+                        <span class="lang-str" data-so="پاشەکەوت" data-ba="پاشەکەفت">پاشەکەوت</span></button>
+                </form>
+            </div>
+        </div>
+
+        <div class="a1-sheet" id="a1-schedule-sheet" hidden>
+            <div class="a1-sheet__box">
+                <div class="a1-sheet__head">
+                    <span class="lang-str" data-so="خشتەی هەفتانە" data-ba="خشتەیا هەفتانە">خشتەی هەفتانە</span>
+                    <button type="button" class="a1-btn a1-btn--quiet a1-btn--sm" data-a1-close="a1-schedule-sheet">✕</button>
+                </div>
+                <div class="a1-sheet__body" id="a1-schedule-body"></div>
+            </div>
+        </div>
+
+        @include('partials.a1-foot')
     </div>
-
-</main>
-
-@include('partials.alpha-foot')
+</div>
 
 <script type="module">
-    import { getDatabase, ref as dbRef, push, set, update, remove, onValue } from "/js/firebase10/firebase-database.js";
+    import { getDatabase, ref as dbRef, push, set, remove, onValue } from "/js/firebase10/firebase-database.js";
 
     const KaiF = window.KaiFirebase || {};
     let app = KaiF.app ? KaiF.app() : null;
@@ -75,7 +69,7 @@
     if (window.KaiTrack) window.KaiTrack.visit('universities');
 
     function esc(s) { return String(s == null ? '' : s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
-    function T(obj, base) { return (obj && (obj[base + '_' + currentLang] || obj[base + '_so'])) || ''; }
+    function T(o, b) { return (o && (o[b + '_' + currentLang] || o[b + '_so'])) || ''; }
     function whenUser(cb) {
         if (KaiF.whenReady) KaiF.whenReady(function (st) { cb(st && st.user ? st.user : null); });
         else if (KaiF.onAuthStateChanged) KaiF.onAuthStateChanged(cb);
@@ -86,63 +80,56 @@
     whenUser(function (user) {
         if (user && ADMIN_EMAILS.includes(String(user.email || '').toLowerCase())) {
             window.isAdmin = true;
-            document.getElementById('al-adminbar').style.display = '';
+            document.querySelectorAll('.admin-only').forEach(el => el.style.display = '');
         }
     });
 
     const DAYS = { so: ['شەممە','یەکشەممە','دووشەممە','سێشەممە','چوارشەممە','پێنجشەممە','هەینی'], ba: ['شەم','یەکشەم','دوشەم','سێشەم','چوارشەم','پێنجشەم','هەینی'] };
 
-    function renderUnis() {
-        const box = document.getElementById('al-unis');
+    function render() {
+        const box = document.getElementById('a1-unis');
         const entries = Object.entries(unisData);
-        if (!entries.length) {
-            box.innerHTML = `<div class="al-empty lang-str" data-so="هێشتا هیچ زانکۆیێک زیاد نەکراوە" data-ba="هێشتا چ زانکۆ نەهاتینە زێدەکرن">هێشتا هیچ زانکۆیێک زیاد نەکراوە</div>`;
-            return;
-        }
+        document.getElementById('a1-count').textContent = entries.length + ' ITEMS';
+        if (!entries.length) { box.innerHTML = `<div class="a1-empty">EMPTY</div>`; return; }
         const isAdmin = window.isAdmin === true;
         box.innerHTML = entries.map(([id, u]) => `
-            <article class="al-card al-fade-in">
-                <div class="al-item__media" style="aspect-ratio:4/3">
-                    ${u.logo_url ? `<img src="${esc(u.logo_url)}" loading="lazy" alt="${esc(T(u,'name'))}" style="object-fit:contain;padding:18px">` : ''}
+            <article class="a1-row">
+                <div class="a1-row__glyph">${u.logo_url ? `<img src="${esc(u.logo_url)}" loading="lazy" alt="" style="object-fit:contain;padding:10px">` : 'U'}</div>
+                <div>
+                    <div class="a1-row__title">${esc(T(u,'name'))}</div>
                 </div>
-                <div class="al-item__body">
-                    <div class="al-item__title">${esc(T(u,'name'))}</div>
-                    <div style="display:flex;gap:8px;margin-top:14px;flex-wrap:wrap">
-                        ${u.web_url ? `<a href="${esc(u.web_url)}" target="_blank" rel="noopener" class="al-btn al-btn--solid al-btn--sm" style="flex:1">↗ <span class="lang-str" data-so="سەردان" data-ba="سەردان">سەردان</span></a>` : ''}
-                        <button type="button" data-schedule="${esc(id)}" class="al-btn al-btn--ghost al-btn--sm">🗓 <span class="lang-str" data-so="خشتە" data-ba="خشتە">خشتە</span></button>
-                        ${isAdmin ? `<button type="button" data-del="${esc(id)}" class="al-btn al-btn--danger al-btn--sm lang-str" data-so="سڕینەوە" data-ba="سڕینەوە">سڕینەوە</button>` : ''}
-                    </div>
+                <div class="a1-row__actions">
+                    ${u.web_url ? `<a href="${esc(u.web_url)}" target="_blank" rel="noopener" class="a1-btn a1-btn--accent a1-btn--sm">↗ <span class="lang-str" data-so="کردارەوە" data-ba="ڤەکرن">کردارەوە</span></a>` : ''}
+                    <button type="button" data-schedule="${esc(id)}" class="a1-btn a1-btn--line a1-btn--sm">🗓 <span class="lang-str" data-so="خشتە" data-ba="خشتە">خشتە</span></button>
+                    ${isAdmin ? `<button type="button" data-del="${esc(id)}" class="a1-btn a1-btn--quiet a1-btn--sm lang-str" data-so="سڕینەوە" data-ba="سڕینەوە">سڕینەوە</button>` : ''}
                 </div>
             </article>`).join('');
-
         box.querySelectorAll('[data-del]').forEach(b => b.addEventListener('click', async () => {
-            if (confirm('دڵنیایت لە سڕینەوە؟') && db) await remove(dbRef(db, 'universities/' + b.dataset.del));
+            if (confirm('سڕینەوە؟') && db) await remove(dbRef(db, 'universities/' + b.dataset.del));
         }));
         box.querySelectorAll('[data-schedule]').forEach(b => b.addEventListener('click', () => openSchedule(b.dataset.schedule)));
     }
 
     function openSchedule(uniId) {
         const u = unisData[uniId] || {};
-        const modal = document.getElementById('al-schedule-modal');
-        const body = document.getElementById('al-schedule-body');
         const schedules = u.schedules || {};
         const days = DAYS[currentLang] || DAYS.so;
         const rows = Object.keys(schedules).length
             ? Object.entries(schedules).map(([day, info]) => `
-                <div class="al-card al-card--pad" style="padding:12px 16px;margin-bottom:8px">
+                <div style="border:1px solid var(--a1-line);padding:12px 16px;margin-bottom:8px">
                     <strong style="font-size:0.9rem">${esc(days[day] || day)}</strong>
-                    <p style="font-size:0.85rem;color:var(--al-muted);margin-top:4px">${esc(typeof info === 'string' ? info : (info.text || ''))}</p>
+                    <p style="font-size:0.85rem;color:var(--a1-dim);margin:4px 0 0">${esc(typeof info === 'string' ? info : (info.text || ''))}</p>
                 </div>`).join('')
-            : `<div class="al-empty" style="padding:20px">خشتە بەردەست نییە</div>`;
-        body.innerHTML = `<h4 style="margin-bottom:14px">${esc(T(u,'name'))}</h4>` + rows;
-        modal.hidden = false;
+            : `<div class="a1-empty">—</div>`;
+        document.getElementById('a1-schedule-body').innerHTML = `<h3 style="margin-bottom:14px">${esc(T(u,'name'))}</h3>` + rows;
+        document.getElementById('a1-schedule-sheet').hidden = false;
     }
 
     function applyLanguage() {
         const lt = document.getElementById('lang-text');
         if (lt) lt.textContent = currentLang === 'so' ? 'بادینی' : 'سۆرانی';
         document.querySelectorAll('.lang-str').forEach(el => { el.textContent = el.getAttribute('data-' + currentLang) || el.getAttribute('data-so'); });
-        renderUnis();
+        render();
     }
     document.getElementById('lang-toggle').addEventListener('click', () => {
         currentLang = currentLang === 'so' ? 'ba' : 'so';
@@ -150,19 +137,19 @@
         applyLanguage();
     });
 
-    function closeModal(id) { document.getElementById(id).hidden = true; }
-    document.querySelectorAll('[data-al-close]').forEach(b => b.addEventListener('click', () => closeModal(b.dataset.alClose)));
-    document.getElementById('al-add-open').addEventListener('click', () => { document.getElementById('al-add-modal').hidden = false; });
+    function closeSheet(id) { document.getElementById(id).hidden = true; }
+    document.querySelectorAll('[data-a1-close]').forEach(b => b.addEventListener('click', () => closeSheet(b.dataset.a1Close)));
+    document.getElementById('a1-add-open').addEventListener('click', () => { document.getElementById('a1-add-sheet').hidden = false; });
 
     function subscribe(fdb) {
-        onValue(dbRef(fdb, 'universities'), (s) => { unisData = s.val() || {}; renderUnis(); });
+        onValue(dbRef(fdb, 'universities'), (s) => { unisData = s.val() || {}; render(); });
     }
     window.KaiPageReady(function () {
         if (db) subscribe(db);
         else if (KaiF.whenReady) KaiF.whenReady(function (S) { if (S && S.db) { db = S.db; subscribe(db); } });
     });
 
-    document.getElementById('al-add-form').addEventListener('submit', async (e) => {
+    document.getElementById('a1-add-form').addEventListener('submit', async (e) => {
         e.preventDefault();
         if (!db) return;
         await set(push(dbRef(db, 'universities')), {
@@ -171,8 +158,8 @@
             logo_url: document.getElementById('uni_logo_url').value,
             web_url: document.getElementById('uni_web_url').value
         });
-        document.getElementById('al-add-form').reset();
-        closeModal('al-add-modal');
+        document.getElementById('a1-add-form').reset();
+        closeSheet('a1-add-sheet');
     });
 
     applyLanguage();

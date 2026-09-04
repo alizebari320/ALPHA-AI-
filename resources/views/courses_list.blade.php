@@ -1,62 +1,54 @@
 <!DOCTYPE html>
-<html lang="ckb" dir="rtl">
+<html lang="ckb" dir="rtl" class="dark">
 <head>
-    @include('partials.alpha-head')
+    @include('partials.a1-head')
     <title>ALPHA AI — @yield('title')</title>
 </head>
-<body class="al-body">
+<body class="a1">
 
-@include('partials.alpha-nav', ['active' => 'courses'])
+@include('partials.a1-rail', ['active' => 'courses'])
 
-<script type="application/json" id="kurdai-firebase-config">{!! json_encode(config('kurdai.firebase'), 15) !!}</script>
-<script type="application/json" id="kurdai-imgbb-config">{!! json_encode(config('kurdai.imgbb.api_key'), 15) !!}</script>
-<script src="/js/kai-firebase.js?v=1" data-kai-shared defer></script>
 
-<main class="al-container al-section">
+<div class="a1-main">
+    <div class="a1-page">
 
-    <header style="margin-bottom: 26px">
-        <span class="al-kicker lang-str" data-so="کۆرس" data-ba="کۆرس">کۆرس</span>
-        <h1 style="font-size: 1.9rem" class="lang-str" data-so="کۆرسەکان" data-ba="کۆرس">کۆرسەکان</h1>
-    </header>
+        <div class="a1-strip"><span class="a1-strip__dot"></span><span class="a1-strip__crumb">ALPHA / COURSES</span></div>
 
-    <div class="al-adminbar" id="al-adminbar" style="display:none">
-        <span class="al-tag al-tag--accent lang-str" data-so="دەسەڵاتی ئەدمین" data-ba="دەسەڵاتا ئەدمین">دەسەڵاتی ئەدمین</span>
-        <button type="button" id="al-add-open" class="al-btn al-btn--solid al-btn--sm lang-str" data-so="+ کۆرسی نوێ" data-ba="+ کۆرسێ نوی">+ کۆرسی نوێ</button>
-    </div>
-
-    <div class="al-grid" id="al-courses"></div>
-
-    {{-- ---------- add modal ---------- --}}
-    <div class="al-modal" id="al-add-modal" hidden>
-        <div class="al-modal__box">
-            <div class="al-modal__head">
-                <h3 class="lang-str" data-so="زیادکردنی کۆرس" data-ba="زێدەکرنا کۆرسی">زیادکردنی کۆرس</h3>
-                <button type="button" class="al-iconbtn" data-al-close="al-add-modal">✕</button>
-            </div>
-            <form id="al-add-form" class="al-modal__body">
-                <label class="al-field"><span class="al-field__label lang-str" data-so="ناونیشان (سۆرانی)" data-ba="ناونیشان (سۆرانی)">ناونیشان (سۆرانی)</span>
-                    <input type="text" id="title_so" required class="al-input"></label>
-                <label class="al-field"><span class="al-field__label lang-str" data-so="ناونیشان (بادینی)" data-ba="ناونیشان (بادینی)">ناونیشان (بادینی)</span>
-                    <input type="text" id="title_ba" required class="al-input"></label>
-                <label class="al-field"><span class="al-field__label lang-str" data-so="وەسف (سۆرانی)" data-ba="وەسف (سۆرانی)">وەسف (سۆرانی)</span>
-                    <textarea id="desc_so" rows="3" class="al-textarea"></textarea></label>
-                <label class="al-field"><span class="al-field__label lang-str" data-so="وەسف (بادینی)" data-ba="وەسف (بادینی)">وەسف (بادینی)</span>
-                    <textarea id="desc_ba" rows="3" class="al-textarea"></textarea></label>
-                <label class="al-field"><span class="al-field__label">Video URL</span>
-                    <input type="url" id="video_url" dir="ltr" class="al-input" placeholder="https://..."></label>
-                <label class="al-field"><span class="al-field__label lang-str" data-so="نرخ" data-ba="نرخ">نرخ</span>
-                    <input type="number" id="price" min="0" class="al-input"></label>
-                <label class="al-field"><span class="al-field__label lang-str" data-so="وێنە" data-ba="وێنە">وێنە</span>
-                    <input type="file" id="course_image_input" accept="image/*" class="al-input"></label>
-                <button type="submit" id="submit-form-btn" class="al-btn al-btn--solid" style="width:100%">
-                    <span class="lang-str" data-so="زیادکردن" data-ba="زێدەکرن">زیادکردن</span></button>
-            </form>
+        <div class="a1-section-head">
+            <h2 class="lang-str" data-so="کۆرسەکان" data-ba="کۆرس">کۆرسەکان</h2>
+            <span class="a1-index" id="a1-count">—</span>
         </div>
+
+        <div class="a1-hrow" style="margin-bottom:22px">
+            <span></span>
+            <button type="button" id="a1-add-open" class="a1-btn a1-btn--accent a1-btn--sm lang-str admin-only" data-so="+ کۆرسی نوێ" data-ba="+ کۆرسێ نوی" style="display:none">+ کۆرسی نوێ</button>
+        </div>
+
+        <div class="a1-rows" id="a1-courses"></div>
+
+        <div class="a1-sheet" id="a1-add-sheet" hidden>
+            <div class="a1-sheet__box">
+                <div class="a1-sheet__head">
+                    <span class="lang-str" data-so="کۆرسی نوێ" data-ba="کۆرسێ نوی">کۆرسی نوێ</span>
+                    <button type="button" class="a1-btn a1-btn--quiet a1-btn--sm" data-a1-close="a1-add-sheet">✕</button>
+                </div>
+                <form id="a1-add-form" class="a1-sheet__body">
+                    <label class="a1-field"><span class="a1-field__label">TITLE — سۆرانی</span><input type="text" id="title_so" required class="a1-input"></label>
+                    <label class="a1-field"><span class="a1-field__label">TITLE — بادینی</span><input type="text" id="title_ba" required class="a1-input"></label>
+                    <label class="a1-field"><span class="a1-field__label">DESC — سۆرانی</span><textarea id="desc_so" rows="3" class="a1-textarea"></textarea></label>
+                    <label class="a1-field"><span class="a1-field__label">DESC — بادینی</span><textarea id="desc_ba" rows="3" class="a1-textarea"></textarea></label>
+                    <label class="a1-field"><span class="a1-field__label">VIDEO URL</span><input type="url" id="video_url" dir="ltr" class="a1-input" placeholder="https://"></label>
+                    <label class="a1-field"><span class="a1-field__label">PRICE ($)</span><input type="number" id="price" min="0" class="a1-input" placeholder="0"></label>
+                    <label class="a1-field"><span class="a1-field__label">IMAGE</span><input type="file" id="course_image_input" accept="image/*" class="a1-input"></label>
+                    <button type="submit" id="submit-form-btn" class="a1-btn a1-btn--accent" style="width:100%">
+                        <span class="lang-str" data-so="پاشەکەوت" data-ba="پاشەکەفت">پاشەکەوت</span></button>
+                </form>
+            </div>
+        </div>
+
+        @include('partials.a1-foot')
     </div>
-
-</main>
-
-@include('partials.alpha-foot')
+</div>
 
 <script type="module">
     import { getDatabase, ref as dbRef, push, set, remove, onValue } from "/js/firebase10/firebase-database.js";
@@ -67,35 +59,35 @@
     const IMGBB_API_KEY = JSON.parse((document.getElementById('kurdai-imgbb-config') || {}).textContent || 'null');
 
     let currentLang = localStorage.getItem('site-lang') || 'so';
-    let firebaseDataCache = {};
+    let cache = {};
     if (window.KaiTrack) window.KaiTrack.visit('courses');
 
     function esc(s) { return String(s == null ? '' : s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
-    function T(obj, base) { return (obj && (obj[base + '_' + currentLang] || obj[base + '_so'])) || ''; }
+    function T(o, b) { return (o && (o[b + '_' + currentLang] || o[b + '_so'])) || ''; }
 
-    function renderCourses(data) {
-        const box = document.getElementById('al-courses');
-        if (!data || !Object.keys(data).length) {
-            box.innerHTML = `<div class="al-empty lang-str" data-so="هێشتا هیچ کۆرسێک نییە" data-ba="هێشتا چ کۆرس نین">هێشتا هیچ کۆرسێک نییە</div>`;
-            return;
-        }
+    function render() {
+        const box = document.getElementById('a1-courses');
+        document.getElementById('a1-count').textContent = Object.keys(cache).length + ' ITEMS';
+        const entries = Object.entries(cache);
+        if (!entries.length) { box.innerHTML = `<div class="a1-empty">EMPTY</div>`; return; }
         const isAdmin = window.isAdmin === true;
-        box.innerHTML = Object.entries(data).map(([id, c]) => `
-            <article class="al-card al-fade-in">
-                <div class="al-item__media">${c.image_url ? `<img src="${esc(c.image_url)}" loading="lazy" alt="${esc(T(c,'title'))}">` : ''}
-                </div>
-                <div class="al-item__body">
-                    <div class="al-item__title">${esc(T(c,'title'))}</div>
-                    <p class="al-item__desc">${esc(T(c,'desc'))}</p>
-                    <div style="display:flex;align-items:center;gap:10px;margin-top:14px;flex-wrap:wrap">
-                        ${Number(c.price) > 0 ? `<span class="al-tag al-tag--accent">$${esc(c.price)}</span>` : `<span class="al-tag lang-str" data-so="خۆڕایی" data-ba="بەخش">خۆڕایی</span>`}
-                        ${c.video_url ? `<a href="${esc(c.video_url)}" target="_blank" rel="noopener" class="al-btn al-btn--solid al-btn--sm" style="flex:1">▶ <span class="lang-str" data-so="سەیرکردن" data-ba="تحەپلێدان">سەیرکردن</span></a>` : ''}
-                        ${isAdmin ? `<button type="button" data-del="${esc(id)}" class="al-btn al-btn--danger al-btn--sm lang-str" data-so="سڕینەوە" data-ba="سڕینەوە">سڕینەوە</button>` : ''}
+        box.innerHTML = entries.map(([id, c]) => `
+            <article class="a1-row">
+                <div class="a1-row__glyph">${c.image_url ? `<img src="${esc(c.image_url)}" loading="lazy" alt="">` : '▶'}</div>
+                <div>
+                    <div class="a1-row__title">${esc(T(c,'title'))}</div>
+                    <p class="a1-row__desc">${esc(T(c,'desc'))}</p>
+                    <div class="a1-row__meta">
+                        ${Number(c.price) > 0 ? `<span class="a1-tag a1-tag--accent">$${esc(c.price)}</span>` : `<span class="a1-tag">FREE</span>`}
                     </div>
+                </div>
+                <div class="a1-row__actions">
+                    ${c.video_url ? `<a href="${esc(c.video_url)}" target="_blank" rel="noopener" class="a1-btn a1-btn--accent a1-btn--sm">▶ <span class="lang-str" data-so="سەیر" data-ba="تحەپل">سەیر</span></a>` : ''}
+                    ${isAdmin ? `<button type="button" data-del="${esc(id)}" class="a1-btn a1-btn--quiet a1-btn--sm lang-str" data-so="سڕینەوە" data-ba="سڕینەوە">سڕینەوە</button>` : ''}
                 </div>
             </article>`).join('');
         box.querySelectorAll('[data-del]').forEach(b => b.addEventListener('click', async () => {
-            if (confirm('دڵنیایت لە سڕینەوە؟') && db) { await remove(dbRef(db, 'courses/' + b.dataset.del)); }
+            if (confirm('سڕینەوە؟') && db) await remove(dbRef(db, 'courses/' + b.dataset.del));
         }));
     }
 
@@ -103,7 +95,7 @@
         const lt = document.getElementById('lang-text');
         if (lt) lt.textContent = currentLang === 'so' ? 'بادینی' : 'سۆرانی';
         document.querySelectorAll('.lang-str').forEach(el => { el.textContent = el.getAttribute('data-' + currentLang) || el.getAttribute('data-so'); });
-        renderCourses(firebaseDataCache);
+        render();
     }
     document.getElementById('lang-toggle').addEventListener('click', () => {
         currentLang = currentLang === 'so' ? 'ba' : 'so';
@@ -111,41 +103,37 @@
         applyLanguage();
     });
 
-    function openModal(id) { document.getElementById(id).hidden = false; }
-    function closeModal(id) { document.getElementById(id).hidden = true; }
-    document.querySelectorAll('[data-al-close]').forEach(b => b.addEventListener('click', () => closeModal(b.dataset.alClose)));
-    document.getElementById('al-add-open').addEventListener('click', () => openModal('al-add-modal'));
-
-    const ADMIN_EMAILS = ["team@alpha-ai.com", "alphaaiteam@gmail.com"];
-    window.isAdmin = false;
     function whenUser(cb) {
         if (KaiF.whenReady) KaiF.whenReady(function (st) { cb(st && st.user ? st.user : null); });
         else if (KaiF.onAuthStateChanged) KaiF.onAuthStateChanged(cb);
     }
+    const ADMIN_EMAILS = ["team@alpha-ai.com", "alphaaiteam@gmail.com"];
+    window.isAdmin = false;
     whenUser(function (user) {
         if (user && ADMIN_EMAILS.includes(String(user.email || '').toLowerCase())) {
             window.isAdmin = true;
-            document.getElementById('al-adminbar').style.display = '';
+            document.querySelectorAll('.admin-only').forEach(el => el.style.display = '');
         }
     });
 
+    function closeSheet(id) { document.getElementById(id).hidden = true; }
+    document.querySelectorAll('[data-a1-close]').forEach(b => b.addEventListener('click', () => closeSheet(b.dataset.a1Close)));
+    document.getElementById('a1-add-open').addEventListener('click', () => { document.getElementById('a1-add-sheet').hidden = false; });
+
     function subscribe(fdb) {
-        onValue(dbRef(fdb, 'courses'), (snapshot) => {
-            firebaseDataCache = snapshot.val() || {};
-            renderCourses(firebaseDataCache);
-        });
+        onValue(dbRef(fdb, 'courses'), (snapshot) => { cache = snapshot.val() || {}; render(); });
     }
     window.KaiPageReady(function () {
         if (db) subscribe(db);
         else if (KaiF.whenReady) KaiF.whenReady(function (S) { if (S && S.db) { db = S.db; subscribe(db); } });
     });
 
-    let isUploading = false;
-    document.getElementById('al-add-form').addEventListener('submit', async (e) => {
+    let busy = false;
+    document.getElementById('a1-add-form').addEventListener('submit', async (e) => {
         e.preventDefault();
-        if (isUploading || !db) return;
+        if (busy || !db) return;
         const btn = document.getElementById('submit-form-btn');
-        isUploading = true; btn.disabled = true; btn.style.opacity = .6;
+        busy = true; btn.disabled = true;
         try {
             let image_url = '';
             const file = document.getElementById('course_image_input').files[0];
@@ -153,7 +141,7 @@
                 const fd = new FormData(); fd.append('image', file);
                 const res = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`, { method: 'POST', body: fd });
                 const rData = await res.json();
-                if (!rData.success) throw new Error('upload failed');
+                if (!rData.success) throw new Error('upload');
                 image_url = rData.data.url;
             }
             await set(push(dbRef(db, 'courses')), {
@@ -165,13 +153,10 @@
                 price: Number(document.getElementById('price').value) || 0,
                 image_url: image_url
             });
-            document.getElementById('al-add-form').reset();
-            closeModal('al-add-modal');
-        } catch (err) {
-            alert('نەتوانرا زیاد بکرێت — دووبارە هەوڵ بدەرەوە');
-        } finally {
-            isUploading = false; btn.disabled = false; btn.style.opacity = 1;
-        }
+            document.getElementById('a1-add-form').reset();
+            closeSheet('a1-add-sheet');
+        } catch (err) { alert('نەمانتوانی پاشەکەوت بکەین'); }
+        finally { busy = false; btn.disabled = false; }
     });
 
     applyLanguage();

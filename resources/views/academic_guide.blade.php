@@ -1,56 +1,51 @@
 <!DOCTYPE html>
-<html lang="ckb" dir="rtl">
+<html lang="ckb" dir="rtl" class="dark">
 <head>
-    @include('partials.alpha-head')
+    @include('partials.a1-head')
     <title>ALPHA AI — @yield('title')</title>
 </head>
-<body class="al-body">
+<body class="a1">
 
-@include('partials.alpha-nav', ['active' => 'academic-guide'])
+@include('partials.a1-rail', ['active' => 'academic-guide'])
 
-<script type="application/json" id="kurdai-firebase-config">{!! json_encode(config('kurdai.firebase'), 15) !!}</script>
-<script src="/js/kai-firebase.js?v=1" data-kai-shared defer></script>
 
-<main class="al-container al-section">
+<div class="a1-main">
+    <div class="a1-page">
 
-    <header style="margin-bottom: 26px">
-        <span class="al-kicker lang-str" data-so="ڕێبەر" data-ba="ڕێبەر">ڕێبەر</span>
-        <h1 style="font-size: 1.9rem" class="lang-str" data-so="ڕێنیشاندەری خوێندن" data-ba="ڕێبەرێ خوێندنێ">ڕێنیشاندەری خوێندن</h1>
-        <p class="al-hero__sub lang-str" data-so="وەڵامی پرسیارە باوەکانی بواری خوێندن و کار." data-ba="وەڵاما پرسیارێن باوێن بواری خوێندنێ و کار.">وەڵامی پرسیارە باوەکانی بواری خوێندن و کار.</p>
-    </header>
+        <div class="a1-strip"><span class="a1-strip__dot"></span><span class="a1-strip__crumb">ALPHA / GUIDE</span></div>
 
-    <div class="al-adminbar" id="al-adminbar" style="display:none">
-        <span class="al-tag al-tag--accent lang-str" data-so="دەسەڵاتی ئەدمین" data-ba="دەسەڵاتا ئەدمین">دەسەڵاتی ئەدمین</span>
-        <button type="button" id="al-add-open" class="al-btn al-btn--solid al-btn--sm lang-str" data-so="+ پرسیاری نوێ" data-ba="+ پرسیارێ نوی">+ پرسیاری نوێ</button>
-    </div>
-
-    <div id="al-guide" style="display:grid;gap:14px"></div>
-
-    {{-- add modal --}}
-    <div class="al-modal" id="al-add-modal" hidden>
-        <div class="al-modal__box">
-            <div class="al-modal__head">
-                <h3 class="lang-str" data-so="زیادکردنی پرسیار" data-ba="زێدەکرنا پرسیاری">زیادکردنی پرسیار</h3>
-                <button type="button" class="al-iconbtn" data-al-close="al-add-modal">✕</button>
-            </div>
-            <form id="al-add-form" class="al-modal__body">
-                <label class="al-field"><span class="al-field__label">Question (سۆرانی)</span>
-                    <input type="text" id="guide_question_so" required class="al-input"></label>
-                <label class="al-field"><span class="al-field__label">Question (بادینی)</span>
-                    <input type="text" id="guide_question_ba" class="al-input"></label>
-                <label class="al-field"><span class="al-field__label lang-str" data-so="وەڵام (سۆرانی)" data-ba="وەڵام (سۆرانی)">وەڵام (سۆرانی)</span>
-                    <textarea id="guide_answer_so" rows="4" required class="al-textarea"></textarea></label>
-                <label class="al-field"><span class="al-field__label lang-str" data-so="وەڵام (بادینی)" data-ba="وەڵام (بادینی)">وەڵام (بادینی)</span>
-                    <textarea id="guide_answer_ba" rows="4" class="al-textarea"></textarea></label>
-                <button type="submit" class="al-btn al-btn--solid" style="width:100%">
-                    <span class="lang-str" data-so="زیادکردن" data-ba="زێدەکرن">زیادکردن</span></button>
-            </form>
+        <div class="a1-section-head">
+            <h2 class="lang-str" data-so="ڕێبەری خوێندن" data-ba="ڕێبەرێ خوێندنێ">ڕێبەری خوێندن</h2>
+            <span class="a1-index" id="a1-count">—</span>
         </div>
+
+        <div class="a1-hrow" style="margin-bottom:22px">
+            <span></span>
+            <button type="button" id="a1-add-open" class="a1-btn a1-btn--accent a1-btn--sm lang-str admin-only" data-so="+ پرسیاری نوێ" data-ba="+ پرسیارێ نوی" style="display:none">+ پرسیاری نوێ</button>
+        </div>
+
+        <div class="a1-rows" id="a1-guide"></div>
+
+        <div class="a1-sheet" id="a1-add-sheet" hidden>
+            <div class="a1-sheet__box">
+                <div class="a1-sheet__head">
+                    <span class="lang-str" data-so="پرسیاری نوێ" data-ba="پرسیارێ نوی">پرسیاری نوێ</span>
+                    <button type="button" class="a1-btn a1-btn--quiet a1-btn--sm" data-a1-close="a1-add-sheet">✕</button>
+                </div>
+                <form id="a1-add-form" class="a1-sheet__body">
+                    <label class="a1-field"><span class="a1-field__label">Q — سۆرانی</span><input type="text" id="guide_question_so" required class="a1-input"></label>
+                    <label class="a1-field"><span class="a1-field__label">Q — بادینی</span><input type="text" id="guide_question_ba" class="a1-input"></label>
+                    <label class="a1-field"><span class="a1-field__label">A — سۆرانی</span><textarea id="guide_answer_so" rows="4" required class="a1-textarea"></textarea></label>
+                    <label class="a1-field"><span class="a1-field__label">A — بادینی</span><textarea id="guide_answer_ba" rows="4" class="a1-textarea"></textarea></label>
+                    <button type="submit" class="a1-btn a1-btn--accent" style="width:100%">
+                        <span class="lang-str" data-so="پاشەکەوت" data-ba="پاشەکەفت">پاشەکەوت</span></button>
+                </form>
+            </div>
+        </div>
+
+        @include('partials.a1-foot')
     </div>
-
-</main>
-
-@include('partials.alpha-foot')
+</div>
 
 <script type="module">
     import { getDatabase, ref as dbRef, push, set, remove, onValue } from "/js/firebase10/firebase-database.js";
@@ -64,7 +59,7 @@
     if (window.KaiTrack) window.KaiTrack.visit('academic_guide');
 
     function esc(s) { return String(s == null ? '' : s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
-    function T(obj, base) { return (obj && (obj[base + '_' + currentLang] || obj[base + '_so'])) || ''; }
+    function T(o, b) { return (o && (o[b + '_' + currentLang] || o[b + '_so'])) || ''; }
     function whenUser(cb) {
         if (KaiF.whenReady) KaiF.whenReady(function (st) { cb(st && st.user ? st.user : null); });
         else if (KaiF.onAuthStateChanged) KaiF.onAuthStateChanged(cb);
@@ -75,31 +70,26 @@
     whenUser(function (user) {
         if (user && ADMIN_EMAILS.includes(String(user.email || '').toLowerCase())) {
             window.isAdmin = true;
-            document.getElementById('al-adminbar').style.display = '';
+            document.querySelectorAll('.admin-only').forEach(el => el.style.display = '');
         }
     });
 
-    function renderGuide() {
-        const box = document.getElementById('al-guide');
+    function render() {
+        const box = document.getElementById('a1-guide');
         const entries = Object.entries(guideData);
-        if (!entries.length) {
-            box.innerHTML = `<div class="al-empty lang-str" data-so="هێشتا هیچ پرسیارێک نییە" data-ba="هێشتا چ پرسیار نین">هێشتا هیچ پرسیارێک نییە</div>`;
-            return;
-        }
+        document.getElementById('a1-count').textContent = entries.length + ' ITEMS';
+        if (!entries.length) { box.innerHTML = `<div class="a1-empty">EMPTY</div>`; return; }
         const isAdmin = window.isAdmin === true;
         box.innerHTML = entries.map(([id, g]) => `
-            <details class="al-card al-fade-in" style="padding:0">
-                <summary style="padding:18px 20px;cursor:pointer;font-weight:800;color:var(--al-ink);list-style:none;display:flex;justify-content:space-between;align-items:center;gap:12px">
-                    <span>${esc(T(g,'question'))}</span>
-                    <span style="color:var(--al-accent);font-size:1.2rem">+</span>
+            <details class="a1-row" style="display:block;padding-top:20px">
+                <summary style="cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;gap:12px;font-weight:800;font-size:1.05rem">
+                    <span>${esc(T(g,'question'))}</span><span style="color:var(--a1-accent)">+</span>
                 </summary>
-                <div style="padding:0 20px 18px;border-top:1px solid var(--al-line);padding-top:14px">
-                    <p style="color:var(--al-muted);line-height:1.8">${esc(T(g,'answer'))}</p>
-                    ${isAdmin ? `<button type="button" data-del="${esc(id)}" class="al-btn al-btn--danger al-btn--sm lang-str" data-so="سڕینەوە" data-ba="سڕینەوە">سڕینەوە</button>` : ''}
-                </div>
+                <p style="color:var(--a1-dim);line-height:1.9;margin:12px 0 0">${esc(T(g,'answer'))}</p>
+                ${isAdmin ? `<button type="button" data-del="${esc(id)}" class="a1-btn a1-btn--quiet a1-btn--sm lang-str" style="margin-top:10px" data-so="سڕینەوە" data-ba="سڕینەوە">سڕینەوە</button>` : ''}
             </details>`).join('');
         box.querySelectorAll('[data-del]').forEach(b => b.addEventListener('click', async () => {
-            if (confirm('دڵنیایت لە سڕینەوە؟') && db) await remove(dbRef(db, 'academic_guide/' + b.dataset.del));
+            if (confirm('سڕینەوە؟') && db) await remove(dbRef(db, 'academic_guide/' + b.dataset.del));
         }));
     }
 
@@ -107,7 +97,7 @@
         const lt = document.getElementById('lang-text');
         if (lt) lt.textContent = currentLang === 'so' ? 'بادینی' : 'سۆرانی';
         document.querySelectorAll('.lang-str').forEach(el => { el.textContent = el.getAttribute('data-' + currentLang) || el.getAttribute('data-so'); });
-        renderGuide();
+        render();
     }
     document.getElementById('lang-toggle').addEventListener('click', () => {
         currentLang = currentLang === 'so' ? 'ba' : 'so';
@@ -115,19 +105,19 @@
         applyLanguage();
     });
 
-    function closeModal(id) { document.getElementById(id).hidden = true; }
-    document.querySelectorAll('[data-al-close]').forEach(b => b.addEventListener('click', () => closeModal(b.dataset.alClose)));
-    document.getElementById('al-add-open').addEventListener('click', () => { document.getElementById('al-add-modal').hidden = false; });
+    function closeSheet(id) { document.getElementById(id).hidden = true; }
+    document.querySelectorAll('[data-a1-close]').forEach(b => b.addEventListener('click', () => closeSheet(b.dataset.a1Close)));
+    document.getElementById('a1-add-open').addEventListener('click', () => { document.getElementById('a1-add-sheet').hidden = false; });
 
     function subscribe(fdb) {
-        onValue(dbRef(fdb, 'academic_guide'), (s) => { guideData = s.val() || {}; renderGuide(); });
+        onValue(dbRef(fdb, 'academic_guide'), (s) => { guideData = s.val() || {}; render(); });
     }
     window.KaiPageReady(function () {
         if (db) subscribe(db);
         else if (KaiF.whenReady) KaiF.whenReady(function (S) { if (S && S.db) { db = S.db; subscribe(db); } });
     });
 
-    document.getElementById('al-add-form').addEventListener('submit', async (e) => {
+    document.getElementById('a1-add-form').addEventListener('submit', async (e) => {
         e.preventDefault();
         if (!db) return;
         await set(push(dbRef(db, 'academic_guide')), {
@@ -136,8 +126,8 @@
             answer_so: document.getElementById('guide_answer_so').value,
             answer_ba: document.getElementById('guide_answer_ba').value
         });
-        document.getElementById('al-add-form').reset();
-        closeModal('al-add-modal');
+        document.getElementById('a1-add-form').reset();
+        closeSheet('a1-add-sheet');
     });
 
     applyLanguage();

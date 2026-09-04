@@ -181,8 +181,8 @@
         @media (prefers-reduced-motion: reduce) { #answer-continue-bar, #answer-continue-bar * { animation: none !important; transition: none !important; } }
     </style>
 
-    <link rel="stylesheet" href="/css/alpha-theme.css?v=1">
-    <script src="/js/alpha-core.js?v=1" data-kai-shared defer></script>
+    <link rel="stylesheet" href="/css/a1.css?v=2">
+    <script src="/js/a1-core.js?v=2" data-kai-shared defer></script>
     <script src="/js/kai-firebase.js?v=1" data-kai-shared defer></script>
     <link rel="stylesheet" href="/css/kai-ferga.css?v=8">
     <script src="/js/kai-ferga.js?v=4" defer></script>
@@ -192,7 +192,8 @@
     <canvas id="confetti-canvas" class="fixed inset-0 w-full h-full pointer-events-none z-[9999]" style="display:none;"></canvas>
     <div id="xp-notification-container"></div>
 
-    @include('partials.alpha-nav', ['active' => 'ferga'])
+    @include('partials.a1-rail', ['active' => 'ferga'])
+    <div class="a1-main" style="margin-bottom:0">
 
     <!-- قۆناغی 1: هەڵبژاردنی زمان -->
     <div id="home-view" class="relative min-h-[85vh] py-16 px-4 overflow-hidden flex flex-col items-center justify-center">
@@ -1112,6 +1113,7 @@
             </div>
         </div>
     </div>
+    </div><!-- /a1-main -->
 
 </body>
 </html>
