@@ -181,8 +181,8 @@
         @media (prefers-reduced-motion: reduce) { #answer-continue-bar, #answer-continue-bar * { animation: none !important; transition: none !important; } }
     </style>
 
-    <link rel="stylesheet" href="/css/a1.css?v=3">
-    <script src="/js/a1-core.js?v=3" data-kai-shared defer></script>
+    <link rel="stylesheet" href="/css/a1.css?v=4">
+    <script src="/js/a1-core.js?v=4" data-kai-shared defer></script>
     <script src="/js/kai-firebase.js?v=2" data-kai-shared defer></script>
     <link rel="stylesheet" href="/css/kai-ferga.css?v=8">
     <script src="/js/kai-ferga.js?v=4" defer></script>

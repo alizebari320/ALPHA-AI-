@@ -6,7 +6,7 @@
 <link rel="icon" href="{{ asset('favicon-a1.svg') }}" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;700;900&family=JetBrains+Mono:wght@400;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;700;900&family=Vazirmatn:wght@400;700&family=JetBrains+Mono:wght@400;700&display=swap">
 <link rel="stylesheet" href="{{ asset('css/a1.css') }}?v=3">
 <script>
     /* dark-first: only honor explicit light choice */

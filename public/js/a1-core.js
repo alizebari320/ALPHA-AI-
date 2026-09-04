@@ -10,16 +10,29 @@
         else { fn(); }
     };
 
-    /* ---------- rail toggle ---------- */
+    /* ---------- header menu + ember glow ---------- */
     function bindRail() {
         var rail = document.getElementById('a1-rail');
         var btn = document.getElementById('a1-rail-toggle');
-        if (rail && btn) {
-            btn.addEventListener('click', function () { rail.classList.toggle('is-open'); });
-            document.addEventListener('click', function (e) {
-                if (rail.classList.contains('is-open') && !rail.contains(e.target)) rail.classList.remove('is-open');
+        var links = document.getElementById('a1-navlinks');
+        if (rail && btn && links) {
+            btn.addEventListener('click', function (e) {
+                e.stopPropagation();
+                links.classList.toggle('is-open');
+                btn.textContent = links.classList.contains('is-open') ? '✕' : '☰';
             });
-            document.addEventListener('keydown', function (e) { if (e.key === 'Escape') rail.classList.remove('is-open'); });
+            document.addEventListener('click', function (e) {
+                if (links.classList.contains('is-open') && !links.contains(e.target) && e.target !== btn) {
+                    links.classList.remove('is-open');
+                    btn.textContent = '☰';
+                }
+            });
+            document.addEventListener('keydown', function (e) { if (e.key === 'Escape') { links.classList.remove('is-open'); btn.textContent = '☰'; } });
+        }
+        if (rail) {
+            window.addEventListener('scroll', function () {
+                rail.classList.toggle('is-lit', window.scrollY > 24);
+            }, { passive: true });
         }
     }
 
