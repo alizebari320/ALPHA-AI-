@@ -68,20 +68,6 @@ Route::delete('/ai-tools/{id}', [AdminController::class, 'destroyAiTool'])->name
 
 
 // ==========================================
-// بەشی ڕێنیشاندەری ئەکادیمی (Academic Guide / FAQs)
-// ==========================================
-Route::get('/academic-guide', [AdminController::class, 'showAcademicGuide']);
-Route::post('/store-academic-guide', [AdminController::class, 'storeAcademicGuide'])->name('store.academic_guide');
-// بۆ کردنەوەی پەڕەی دەستکاریکردن
-Route::get('/academic-guide/{id}/edit', [AdminController::class, 'editAcademicGuide'])->name('edit.academic_guide');
-// بۆ سەیڤکردنی دەستکاریکردنەکە
-Route::put('/academic-guide/{id}', [AdminController::class, 'updateAcademicGuide'])->name('update.academic_guide');
-// بۆ سڕینەوە
-Route::delete('/academic-guide/{id}', [AdminController::class, 'destroyAcademicGuide'])->name('destroy.academic_guide');
-
-
-
-// ==========================================
 // بەشی لاراڤێڵ بریز (ئەگەر پێشتر ئینستاڵت کردبێت)
 // ==========================================
 Route::get('/lang/{lang}', function ($lang) {
@@ -111,7 +97,4 @@ Route::post('/ferga/run-cloud', [AdminController::class, 'runCloud']);
 Route::get('/news', function () {
     return view('news');
 });
-Route::get('/universities', function () {
-    return view('universities');
-})->name('universities');
 require __DIR__.'/auth.php';

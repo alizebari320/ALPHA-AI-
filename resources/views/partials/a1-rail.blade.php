@@ -7,8 +7,6 @@
         ['key' => 'courses',  'href' => '/courses',     'so' => 'کۆرس',      'ba' => 'کۆرس',      'ico' => '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 19.5A2.5 2.5 0 016.5 17H20V3H6.5A2.5 2.5 0 004 5.5v14z"/><path d="M4 19.5A2.5 2.5 0 006.5 22H20v-5"/></svg>'],
         ['key' => 'ai-tools', 'href' => '/ai-tools',    'so' => 'ئامراز',    'ba' => 'ئامراز',    'ico' => '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M13 2L3 14h7l-1 8 10-12h-7l1-8z"/></svg>'],
         ['key' => 'news',     'href' => '/news',        'so' => 'هەواڵ',     'ba' => 'نووچە',     'ico' => '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 4h13v14H4zM17 8h3v8a2 2 0 01-2 2M7 8h7M7 12h7"/></svg>'],
-        ['key' => 'universities', 'href' => '/universities', 'so' => 'زانکۆ', 'ba' => 'زانکۆ',    'ico' => '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3L1 9l11 6 9-4.9V17c0 1.7 2 2.6 4 1v-8"/><path d="M6 11v5c0 1.5 2.7 3 6 3s6-1.5 6-3v-5"/></svg>'],
-        ['key' => 'academic-guide', 'href' => '/academic-guide', 'so' => 'ڕێبەر', 'ba' => 'ڕێبەر', 'ico' => '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 4l-5 2v14l5-2 6 2 5-2V4l-5 2-6-2z"/><path d="M9 4v14M15 6v14"/></svg>'],
     ];
 @endphp
 <aside class="a1-rail" id="a1-rail" data-a1-auth-required>

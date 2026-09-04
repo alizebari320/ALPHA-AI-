@@ -39,7 +39,7 @@
 
         <div class="a1-section-head">
             <h2 class="lang-str" data-so="بەشەکان" data-ba="بەش">بەشەکان</h2>
-            <span class="a1-index">01 — 07</span>
+            <span class="a1-index">01 — 04</span>
         </div>
 
         <div class="a1-index-grid">
@@ -66,18 +66,6 @@
                 <h3 class="lang-str" data-so="هەواڵ" data-ba="نووچە">هەواڵ</h3>
                 <p class="lang-str" data-so="هەواڵی تەکنەلۆژیا و ژیریی دەستکرد." data-ba="نووچێن تەکنەلۆژیایێ و ژیرییا دەستکرد.">هەواڵی تەکنەلۆژیا و ژیریی دەستکرد.</p>
                 <span class="a1-go">→ /news</span>
-            </a>
-            <a href="/universities" class="a1-index-cell">
-                <span class="a1-num">05</span>
-                <h3 class="lang-str" data-so="زانکۆ" data-ba="زانکۆ">زانکۆ</h3>
-                <p class="lang-str" data-so="ڕێنمایی زانکۆکانی ناوخۆ و دەرەوە." data-ba="ڕێنمایی زانکۆێن ناڤە و دەرڤە.">ڕێنمایی زانکۆکانی ناوخۆ و دەرەوە.</p>
-                <span class="a1-go">→ /universities</span>
-            </a>
-            <a href="/academic-guide" class="a1-index-cell">
-                <span class="a1-num">06</span>
-                <h3 class="lang-str" data-so="ڕێبەری خوێندن" data-ba="ڕێبەرێ خوێندنێ">ڕێبەری خوێندن</h3>
-                <p class="lang-str" data-so="وەڵامی پرسیارە باوەکانی خوێندن و داهاتوو." data-ba="وەڵاما پرسیارێن باوێن خوێندنێ و داهاتوویێ.">وەڵامی پرسیارە باوەکانی خوێندن و داهاتوو.</p>
-                <span class="a1-go">→ /academic-guide</span>
             </a>
         </div>
 
