@@ -57,6 +57,27 @@
     let currentLang = localStorage.getItem('site-lang') || 'so';
     const CSRF = document.querySelector('meta[name="csrf-token"]').content;
 
+    /* Firebase identity for the server endpoints (X-Firebase-Id-Token) */
+    function fbToken() {
+        return new Promise(function (resolve) {
+            var fb = window.KaiFirebase;
+            if (!fb || !fb.whenReady) { resolve(''); return; }
+            fb.whenReady(function (st) {
+                if (st && st.user && typeof st.user.getIdToken === 'function') {
+                    st.user.getIdToken().then(resolve, function () { resolve(''); });
+                } else { resolve(''); }
+            });
+        });
+    }
+    async function apiFetch(url, opts) {
+        opts = opts || {};
+        opts.headers = Object.assign({ 'X-CSRF-TOKEN': CSRF, 'Accept': 'application/json' }, opts.headers || {});
+        const token = await fbToken();
+        if (token) opts.headers['X-Firebase-Id-Token'] = token;
+        return fetch(url, opts);
+    }
+    window.A1Api = { fetch: apiFetch };
+
     function applyLanguage() {
         document.querySelectorAll('.lang-str').forEach(el => { el.textContent = el.getAttribute('data-' + currentLang) || el.getAttribute('data-so'); });
         document.querySelectorAll('#fb-cat-select option').forEach(o => { o.textContent = o.getAttribute('data-' + currentLang) || o.getAttribute('data-so'); });
@@ -86,9 +107,9 @@
         const box = document.getElementById('fb-success');
         box.hidden = true;
         try {
-            const res = await fetch('/feedback/store', {
+            const res = await apiFetch('/feedback/store', {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json', 'X-CSRF-TOKEN': CSRF, 'Accept': 'application/json' },
+                headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ category: document.getElementById('fb-category').value, message: msg.value })
             });
             const data = await res.json();
@@ -103,8 +124,9 @@
 
     async function loadMine() {
         try {
-            const res = await fetch('/feedback/mine', { headers: { 'Accept': 'application/json', 'X-CSRF-TOKEN': CSRF } });
+            const res = await apiFetch('/feedback/mine');
             const data = await res.json();
+            if (!res.ok) return;
             const list = document.getElementById('fb-my-list');
             const empty = document.getElementById('fb-my-empty');
             const items = (data.data || data.items || []);
@@ -122,7 +144,8 @@
     }
     function esc(s) { return String(s == null ? '' : s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
 
-    window.KaiPageReady(loadMine);
+    if (window.KaiPageReady) { window.KaiPageReady(loadMine); }
+    else { document.addEventListener('DOMContentLoaded', loadMine); }
 })();
 </script>
 </body>

@@ -7,7 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;700;900&family=JetBrains+Mono:wght@400;700&display=swap">
-<link rel="stylesheet" href="{{ asset('css/a1.css') }}?v=2">
+<link rel="stylesheet" href="{{ asset('css/a1.css') }}?v=3">
 <script>
     /* dark-first: only honor explicit light choice */
     if (localStorage.getItem('color-theme') === 'light') {
@@ -16,8 +16,8 @@
         document.documentElement.classList.add('dark');
     }
 </script>
-<script src="{{ asset('js/a1-core.js') }}?v=2" defer></script>
+<script src="{{ asset('js/a1-core.js') }}?v=3"></script>
 <script type="application/json" id="kurdai-firebase-config">{!! json_encode(config('kurdai.firebase'), 15) !!}</script>
 <script type="application/json" id="kurdai-imgbb-config">{!! json_encode(config('kurdai.imgbb.api_key'), 15) !!}</script>
-<script src="/js/kai-firebase.js?v=1" data-kai-shared defer></script>
+<script src="/js/kai-firebase.js?v=2" data-kai-shared defer></script>
 @stack('a1-head')

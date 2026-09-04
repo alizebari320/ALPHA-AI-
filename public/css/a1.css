@@ -163,7 +163,7 @@ body.a1::before {
 
 /* ============ DISPLAY / HERO ============ */
 .a1-display {
-    font-size: clamp(2.6rem, 8vw, 5rem);
+    font-size: clamp(2.2rem, 6vw, 4rem);
     line-height: 1.05; letter-spacing: -0.035em; font-weight: 900; margin: 0;
 }
 .a1-display em {

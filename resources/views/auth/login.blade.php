@@ -13,7 +13,7 @@
         <div class="a1-strip" style="justify-content:center;border:none;padding:0;margin-bottom:8px">
             <span class="a1-strip__dot"></span><span>ALPHA / AUTH</span>
         </div>
-        <h1 class="a1-display" style="font-size:2.2rem">ALPHA<span style="color:var(--a1-accent)">.</span></h1>
+        <h1 class="a1-display" style="font-size:1.9rem">ALPHA<span style="color:var(--a1-accent)">.</span></h1>
     </div>
 
     <div id="login-error" hidden class="a1-note" style="margin-bottom:16px;border-color:var(--a1-danger);color:var(--a1-danger)"></div>
